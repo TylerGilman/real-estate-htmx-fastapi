@@ -1,0 +1,10 @@
+<!-- templates/property_detail_full.html -->
+{% extends "base.html" %}
+
+{% block title %}{{ property.title }}{% endblock %}
+
+{% block content %}
+<div id="property-detail-container">
+    {% include "property_detail.html" %}
+</div>
+{% endblock %}

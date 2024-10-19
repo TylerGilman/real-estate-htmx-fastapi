@@ -1,0 +1,27 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Real Estate Listings{% endblock %}
+
+{% block content %}
+<h1>Real Estate Listings</h1>
+<div id = "content">
+  <div class="gridContainer">
+    {% for listing in listings %}
+    <div class="listing" 
+         style="grid-column-end: span {{ 2 if listing.image_width > 250 else 1 }}; 
+                grid-row-end: span {{ 2 if listing.image_height > 250 else 1 }};">
+        <a hx-get="/property/{{ listing.id }}" preload="mouseover" preload-images="true" hx-target="#content">
+            <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
+            <div class="listing-info">
+                <h2>{{ listing.title }}</h2>
+                <p>{{ listing.description[:100] }}...</p>
+                <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

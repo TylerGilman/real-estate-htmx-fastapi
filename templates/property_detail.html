@@ -1,0 +1,27 @@
+<!-- templates/property_detail.html -->
+<div class="property-detail">
+    <div class="property-image">
+        <img src="{{ property.image_url }}" alt="{{ property.title }}">
+    </div>
+    <div class="property-info">
+        <h1>{{ property.title }}</h1>
+        <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
+        <div class="property-description">
+            {{ property.description }}
+        </div>
+        <div class="property-features">
+            <h2>Features</h2>
+            <ul>
+                <li>Bedrooms: 4</li>
+                <li>Bathrooms: 2</li>
+                <li>Square Feet: 2,500</li>
+                <li>Year Built: 2010</li>
+            </ul>
+        </div>
+        <div class="property-location">
+            <h2>Location</h2>
+            <p>123 Main St, Anytown, USA 12345</p>
+        </div>
+        <a class="button" href="/" preload>Back to Listings</a>
+    </div>
+</div>
