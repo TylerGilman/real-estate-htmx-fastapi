@@ -1,68 +1,62 @@
-<!-- templates/index.html -->
 {% extends "base.html" %}
-{% block title %}Real Estate Listings{% endblock %}
-
+{% block title %}Data-Driven Real Estate Agency{% endblock %}
 {% block head %}
 {{ super() }}
 {% endblock %}
 
 {% block content %}
-<h1>Real Estate Listings</h1>
 <div id="content">
-    <div class="gridContainer">
-        {% for listing in listings %}
-        <div class="listing"
-             data-id="{{ listing.id }}"
-             hx-get="/property/{{ listing.id }}"
-             hx-trigger="click"
-             hx-target="#content"
-             hx-push-url="true">
-            <div class="listing-image">
-                <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
-            </div>
-            <div class="listing-info">
-                <h2>{{ listing.title }}</h2>
-                <p class="address">{{ listing.address }}</p>
-            </div>
-            <div class="listing-summary">
-                <div class="details">
-                    <p>{{ listing.bedrooms }} bd | {{ listing.bathrooms }} ba | {{ listing.sqft }} sqft</p>
-                </div>
-                <p class="price">${{ "{:,.0f}".format(listing.price) }}</p>
-            </div>
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="section-title">Welcome to Cherokee Street Real Estate: a Data Driven Real Estate Agency</h1>
+            <p class="agency-intro">
+                At Cherokee Street Real Estate, we harness the power of data to revolutionize your property journey. Our small team of dedicated, tech-savvy agents is committed to delivering exceptional results.
+            </p>
         </div>
-        {% endfor %}
+    </section>
+
+
+            <h2 class="section-title">Featured Listings</h2>
+  <div class="gridContainer">
+    {% for listing in listings %}
+<div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
+    <div class="listing-image">
+        <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
     </div>
+    <div class="listing-info">
+        <h2>{{ listing.title }}</h2>
+        <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
+        <p class="details">{{ listing.bedrooms }} bd | {{ listing.bathrooms }} ba | {{ listing.square_feet }} sqft</p>
+        <p class="address">{{ listing.address }}</p>
+    </div>
+</div>
+    {% endfor %}
+  </div>
+
+    <section class="agency-description">
+        <div class="container">
+            <div class="agency-features">
+                <div class="feature">
+                    <h3>Market Predictions</h3>
+                    <p>Our predictive models help you make informed decisions about when to buy or sell.</p>
+                </div>
+            </div>
+            <a href="/about" class="learn-more-button">Learn More About Our Approach</a>
+        </div>
+    </section>
 </div>
 
 <script>
-    function applyCropsAndLayout() {
-        const listings = document.querySelectorAll('.listing');
-        const cropTypes = ['portrait', 'landscape', 'square'];
-
-        listings.forEach(listing => {
-            const randomCrop = cropTypes[Math.floor(Math.random() * cropTypes.length)];
-            listing.classList.remove('portrait', 'landscape', 'square');
-            listing.classList.add(randomCrop);
-
-            // Reset any previously set styles
-            listing.style.gridRowEnd = '';
-            listing.style.gridColumnEnd = '';
-
-            // Adjust grid span based on crop type
-            if (randomCrop === 'portrait') {
-                listing.style.gridRowEnd = 'span 2';
-            } else if (randomCrop === 'landscape') {
-                listing.style.gridColumnEnd = 'span 2';
-            }
-            // For 'square', we don't need to set any spans
-        });
-    }
-
-    // Apply crops and layout on page load
+  function applyCropsAndLayout() {
+    const listings = document.querySelectorAll('.listing');
+    const cropTypes = ['portrait', 'landscape', 'square'];
+    listings.forEach(listing => {
+        const randomCrop = cropTypes[Math.floor(Math.random() * cropTypes.length)];
+        listing.classList.remove('portrait', 'landscape', 'square');
+        listing.classList.add(randomCrop);
+    });
+}
     applyCropsAndLayout();
-
-    // Reapply crops and layout after HTMX content swap
     document.body.addEventListener('htmx:afterSwap', function(event) {
         applyCropsAndLayout();
     });

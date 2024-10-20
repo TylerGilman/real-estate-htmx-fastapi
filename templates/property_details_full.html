@@ -1,10 +1,19 @@
-<!-- templates/property_detail_full.html -->
 {% extends "base.html" %}
 
-{% block title %}{{ property.title }}{% endblock %}
+{% block title %}{{ property.title }} | Our Real Estate{% endblock %}
 
 {% block content %}
-<div id="property-detail-container">
+<div id="content">
     {% include "property_detail.html" %}
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.body.addEventListener('htmx:afterSwap', function(event) {
+        if (event.detail.target.id === 'content') {
+            document.title = event.detail.target.querySelector('.property-title').textContent + " | Our Real Estate";
+        }
+    });
+</script>
 {% endblock %}

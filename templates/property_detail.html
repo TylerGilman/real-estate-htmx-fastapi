@@ -1,27 +1,42 @@
-<!-- templates/property_detail.html -->
-<div class="property-detail">
-    <div class="property-image">
-        <img src="{{ property.image_url }}" alt="{{ property.title }}">
+<div class="property-container">
+    <header class="property-header">
+        <h1 class="property-title">{{ property.title }}</h1>
+        <div class="property-price">${{ "{:,.2f}".format(property.price) }}</div>
+    </header>
+    <img src="{{ property.image_url }}" alt="{{ property.title }}" class="property-image">
+    <div class="property-details">
+        <div class="detail-item">
+            <div class="detail-label">Bedrooms</div>
+            <div class="detail-value">{{ property.bedrooms }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Bathrooms</div>
+            <div class="detail-value">{{ property.bathrooms }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Square Feet</div>
+            <div class="detail-value">{{ property.square_feet }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Year Built</div>
+            <div class="detail-value">{{ property.year_built }}</div>
+        </div>
     </div>
-    <div class="property-info">
-        <h1>{{ property.title }}</h1>
-        <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
-        <div class="property-description">
-            {{ property.description }}
-        </div>
-        <div class="property-features">
-            <h2>Features</h2>
-            <ul>
-                <li>Bedrooms: 4</li>
-                <li>Bathrooms: 2</li>
-                <li>Square Feet: 2,500</li>
-                <li>Year Built: 2010</li>
-            </ul>
-        </div>
-        <div class="property-location">
-            <h2>Location</h2>
-            <p>123 Main St, Anytown, USA 12345</p>
-        </div>
-        <a class="button" href="/" preload>Back to Listings</a>
+    <p class="property-description">{{ property.description }}</p>
+    <div class="button-container">
+        <button hx-get="/contact-form/{{ property.id }}" 
+                hx-target="#contact-form-container"
+                hx-swap="innerHTML"
+                class="button contact-button">
+            Contact Agent
+        </button>
+        <button hx-get="/"
+                hx-push-url="true"
+                hx-target="#content"
+                hx-select="#content"
+                class="button back-button">
+            ← Back to Listings
+        </button>
     </div>
+    <div id="contact-form-container"></div>
 </div>

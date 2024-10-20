@@ -57,14 +57,20 @@ async def index(request: Request, db: Session = Depends(get_db)):
 
 @app.get("/property/{property_id}")
 async def property_detail(request: Request, property_id: int, db: Session = Depends(get_db)):
+    is_htmx = request.headers.get("HX-Request") == "true"
     property = db.query(models.Listing).filter(models.Listing.id == property_id).first()
     if property is None:
         raise HTTPException(status_code=404, detail="Property not found")
     
     context = {"request": request, "property": property}
     
-    # Always return the full page, as the preloading is handled client-side
-    return templates.TemplateResponse("property_detail.html", context)
+    if is_htmx:
+        print("htmx")
+        return templates.TemplateResponse("property_detail.html", context)
+    else:
+
+        print("not htmx")
+        return templates.TemplateResponse("property_details_full.html", context)
 
 @app.get("/admin")
 async def admin(request: Request):

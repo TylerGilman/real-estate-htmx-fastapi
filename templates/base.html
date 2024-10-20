@@ -9,21 +9,27 @@
     <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}" preload>
     <script src="https://unpkg.com/htmx-ext-preload@2.0.1/preload.js"></script>
 </head>
-<body hx-ext="preload">
+<body>
     <header>
         <nav>
-            <ul>
-                <li><a href="/" preload>Home</a></li>
-                <li><a href="/admin">Admin</a></li>
-            </ul>
+            <div class="nav-container">
+                <a href="/" class="logo-link">
+                    <img src="/static/logo.png" alt="Our Real Estate Logo" class="logo" preload>
+                </a>
+                <ul>
+                    <li><a href="/" {% if request.url.path == '/' %}class="active"{% endif %}>Home</a></li>
+                    <li><a href="/listings" {% if request.url.path == '/listings' %}class="active"{% endif %}>Listings</a></li>
+                    <li><a href="/about" {% if request.url.path == '/about' %}class="active"{% endif %}>About</a></li>
+                    <li><a href="/contact" {% if request.url.path == '/contact' %}class="active"{% endif %}>Contact</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
+
+    <main class="property-container">
+        {% block content %}{% endblock %}
     </main>
-    <footer>
-        <p>&copy; 2024 Real Estate Website</p>
-    </footer>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
