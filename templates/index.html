@@ -3,7 +3,6 @@
 {% block head %}
 {{ super() }}
 {% endblock %}
-
 {% block content %}
 <div id="content">
     <section class="hero-section">
@@ -14,24 +13,39 @@
             </p>
         </div>
     </section>
+    
 
-
-            <h2 class="section-title">Featured Listings</h2>
-  <div class="gridContainer">
-    {% for listing in listings %}
-<div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
-    <div class="listing-image">
-        <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
+    <h2 class="section-title">Featured Listings</h2>
+    <div id="search-container">
+    <!-- Add search input -->
+    <p>
+    Search By Name
+    </p>
+    <div class="search-container">
+        <input type="text" name="search" placeholder="Search properties by name..." 
+               hx-post="/search"
+               hx-trigger="keyup changed delay:1000ms"
+               hx-target="#listings-container"
+               hx-indicator=".htmx-indicator"
+               hx-swap="outerHTML">
+        <div class="htmx-indicator">Searching...</div>
     </div>
-    <div class="listing-info">
-        <h2>{{ listing.title }}</h2>
-        <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
-        <p class="details">{{ listing.bedrooms }} bd | {{ listing.bathrooms }} ba | {{ listing.square_feet }} sqft</p>
-        <p class="address">{{ listing.address }}</p>
     </div>
-</div>
-    {% endfor %}
-  </div>
+    <div id="listings-container" class="gridContainer">
+        {% for listing in listings %}
+        <div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
+            <div class="listing-image">
+                <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
+            </div>
+            <div class="listing-info">
+                <h2>{{ listing.title }}</h2>
+                <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
+                <p class="details">{{ listing.bedrooms }} bd | {{ listing.bathrooms }} ba | {{ listing.square_feet }} sqft</p>
+                <p class="address">{{ listing.address }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
     <section class="agency-description">
         <div class="container">
@@ -45,7 +59,6 @@
         </div>
     </section>
 </div>
-
 <script>
   function applyCropsAndLayout() {
     const listings = document.querySelectorAll('.listing');
@@ -55,10 +68,10 @@
         listing.classList.remove('portrait', 'landscape', 'square');
         listing.classList.add(randomCrop);
     });
-}
+  }
+  applyCropsAndLayout();
+  document.body.addEventListener('htmx:afterSwap', function(event) {
     applyCropsAndLayout();
-    document.body.addEventListener('htmx:afterSwap', function(event) {
-        applyCropsAndLayout();
-    });
+  });
 </script>
 {% endblock %}
