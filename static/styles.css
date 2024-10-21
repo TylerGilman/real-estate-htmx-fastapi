@@ -507,6 +507,11 @@ main {
     }
 }
 
+.hero-section p {
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
 .search-container {
   margin-bottom: 20px; 
 }
