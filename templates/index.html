@@ -5,60 +5,62 @@
 {% endblock %}
 {% block content %}
 <div id="content">
-    <section class="hero-section">
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="section-title">Cherokee Street Real Estate: a Data Driven Real Estate Agency</h1>
+                <p class="agency-intro">
+                    At Cherokee Street Real Estate, we harness the power of data to revolutionize your property journey. Our small team of dedicated, tech-savvy agents is committed to delivering exceptional results.
+                </p>
+            </div>
+        </section>
+        
         <div class="container">
-            <h1 class="section-title">Cherokee Street Real Estate: a Data Driven Real Estate Agency</h1>
-            <p class="agency-intro">
-                At Cherokee Street Real Estate, we harness the power of data to revolutionize your property journey. Our small team of dedicated, tech-savvy agents is committed to delivering exceptional results.
-            </p>
-        </div>
-    </section>
-    
-
-    <h2 class="section-title">Featured Listings</h2>
-    <span> Search Controls </span>
-    <div id="search-container">
-    <!-- Add search input -->
-    <div class="search-controls-container">
-        <label for="search-text">Search by Name</label>
-        <input type="text" name="search-text" id="search-text" placeholder="Search properties by name..." 
-               hx-post="/search"
-               hx-trigger="keyup changed delay:500ms"
-               hx-target="#listings-container"
-               hx-indicator=".htmx-indicator"
-               hx-swap="outerHTML">
-        <div class="htmx-indicator">Searching...</div>
-        <div id="price-controls-container">
-          <label for="search-min-price">Minimum Price</label>
-          <input id="search-min-price" type="number" name="search-min-price" placeholder="10000" 
-                 hx-post="/search"
-                 hx-trigger="keyup changed delay:500ms"
-                 hx-target="#listings-container"
-                 hx-indicator=".htmx-indicator"
-                 hx-swap="outerHTML">
-          
-          <label for="search-max-price">Maximum Price</label>
-          <input id="search-max-price" type="number" name="search-max-price" placeholder="1000000" 
-                 hx-post="/search"
-                 hx-trigger="keyup changed delay:500ms"
-                 hx-target="#listings-container"
-                 hx-indicator=".htmx-indicator"
-                 hx-swap="outerHTML">
-        </div>
-        <div id="style-controls-container"> 
-          <label for="search-style">Choose Style:</label>
-
-          <select name="search-style" id="search-style">
-            <option value="All">All</option>
-            <option value="House">House</option>
-            <option value="Apartment">Apartment</option>
-            <option value="Brownstone">Brownstone</option>
-          </select>
-      </div>
-        <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="button">Shuffle All Listings</button>
-
-    </div>
-    </div>
+            <h2 class="section-title">Featured Listings</h2>
+            <span>Search Controls</span>
+            <div id="search-container">
+              <form id="search-form">
+                <div class="search-controls-container">
+                    <label for="search-text">Search by Name</label>
+                    <input type="text" name="search-text" id="search-text" placeholder="Search properties by name..." 
+                           hx-post="/search"
+                           hx-trigger="keyup changed delay:100ms"
+                           hx-target="#listings-container"
+                           hx-indicator=".htmx-indicator"
+                           hx-swap="outerHTML">
+                    <div id="price-controls-container">
+                        <div>
+                            <label for="search-min-price">Minimum Price</label>
+                            <input id="search-min-price" type="number" name="search-min-price" placeholder="0" 
+                                   hx-post="/search"
+                                   hx-trigger="keyup changed delay:500ms"
+                                   hx-target="#listings-container"
+                                   hx-indicator=".htmx-indicator"
+                                   hx-swap="outerHTML">
+                        </div>
+                        <div>
+                            <label for="search-max-price">Maximum Price</label>
+                            <input id="search-max-price" type="number" name="search-max-price" placeholder="15,000,000" 
+                                   hx-post="/search"
+                                   hx-trigger="keyup changed delay:500ms"
+                                   hx-target="#listings-container"
+                                   hx-indicator=".htmx-indicator"
+                                   hx-swap="outerHTML">
+                        </div>
+                    </div>
+                    <div id="style-controls-container"> 
+                        <label for="search-style">Choose Style:</label>
+                        <select name="search-style" id="search-style">
+                            <option value="All">All</option>
+                            <option value="House">House</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Brownstone">Brownstone</option>
+                        </select>
+                    </div>
+                    <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="button">Shuffle All Listings</button>
+                    <div class="htmx-indicator">Searching...</div>
+                </div>
+              </form>
+            </div>
     <div id="listings-container" class="gridContainer">
         {% for listing in listings %}
         <div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
