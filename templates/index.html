@@ -16,8 +16,12 @@
         
         <div class="container">
             <h2 class="section-title">Featured Listings</h2>
-            <span>Search Controls</span>
-            <div id="search-container">
+            <button id="toggle-search" class="button">
+                Close Search Controls
+            </button>
+<div id="search-controls-wrapper" name="search-controls-wrapper">
+            <h3>Advanced Property Search Controls</h3>
+    <div id="search-container">
               <form id="search-form">
                 <div class="search-controls-container">
                     <label for="search-text">Search by Name</label>
@@ -61,6 +65,7 @@
                 </div>
               </form>
             </div>
+          </div>
     <div id="listings-container" class="gridContainer">
         {% for listing in listings %}
         <div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
@@ -89,19 +94,4 @@
         </div>
     </section>
 </div>
-<script>
-  function applyCropsAndLayout() {
-    const listings = document.querySelectorAll('.listing');
-    const cropTypes = ['portrait', 'landscape', 'square'];
-    listings.forEach(listing => {
-        const randomCrop = cropTypes[Math.floor(Math.random() * cropTypes.length)];
-        listing.classList.remove('portrait', 'landscape', 'square');
-        listing.classList.add(randomCrop);
-    });
-  }
-  applyCropsAndLayout();
-  document.body.addEventListener('htmx:afterSwap', function(event) {
-    applyCropsAndLayout();
-  });
-</script>
 {% endblock %}

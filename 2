@@ -528,23 +528,20 @@ main {
     .listing.landscape {
         grid-column: span 1;
     }
-}
-
-
-    #search-controls-wrapper {
-        transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+    
+    #search-container {
+        transition: height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
         overflow: hidden;
-        opacity: 1;
     }
 
-    #search-controls-wrapper.minimized {
-        max-height: 0 !important;
+    #search-container.minimized {
+        height: 0;
         opacity: 0;
         margin-top: 0;
         margin-bottom: 0;
-        pointer-events: none;
     }
 
     #toggle-search {
         margin-bottom: 10px;
     }
+}
