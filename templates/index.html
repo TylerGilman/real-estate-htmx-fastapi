@@ -16,7 +16,7 @@
         
         <div class="container">
             <h2 class="section-title">Featured Listings</h2>
-            <button id="toggle-search" class="button">
+            <button id="toggle-search" class="button" onclick="toggleSearchControls()">
                 Close Search Controls
             </button>
 <div id="search-controls-wrapper" name="search-controls-wrapper">
@@ -93,5 +93,32 @@
             <a href="/about" class="learn-more-button">Learn More About Our Approach</a>
         </div>
     </section>
+<script preload>
+// Global variable to store the toggle function
+let globalToggleSearchControls;
+
+function applyCropsAndLayout() {
+    const listings = document.querySelectorAll('.listing');
+    const cropTypes = ['portrait', 'landscape', 'square'];
+    listings.forEach(listing => {
+        const randomCrop = cropTypes[Math.floor(Math.random() * cropTypes.length)];
+        listing.classList.remove('portrait', 'landscape', 'square');
+        listing.classList.add(randomCrop);
+    });
+}
+
+// Initial setup
+document.addEventListener('DOMContentLoaded', function() {
+    applyCropsAndLayout();
+});
+
+// Setup after HTMX content swap
+document.body.addEventListener('htmx:afterSwap', function(event) {
+    applyCropsAndLayout();
+});
+
+// Attempt to initialize immediately in case the DOM is already loaded
+initializeSearchControls();
+</script>
 </div>
 {% endblock %}

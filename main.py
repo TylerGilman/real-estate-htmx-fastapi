@@ -52,7 +52,7 @@ def property_detail(request: Request, property_id: int, db: Session = Depends(ge
     template = (
         "property_detail.html"
         if request.headers.get("HX-Request")
-        else "property_detail_full.html"
+        else "property_details_full.html"
     )
     return templates.TemplateResponse(
         template, {"request": request, "property": property}

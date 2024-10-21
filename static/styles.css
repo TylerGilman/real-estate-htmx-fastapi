@@ -532,9 +532,8 @@ main {
 
 
     #search-controls-wrapper {
-        transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
         overflow: hidden;
-        opacity: 1;
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
     }
 
     #search-controls-wrapper.minimized {
@@ -542,7 +541,6 @@ main {
         opacity: 0;
         margin-top: 0;
         margin-bottom: 0;
-        pointer-events: none;
     }
 
     #toggle-search {
