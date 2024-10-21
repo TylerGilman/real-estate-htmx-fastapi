@@ -7,7 +7,7 @@
 <div id="content">
     <section class="hero-section">
         <div class="container">
-            <h1 class="section-title">Welcome to Cherokee Street Real Estate: a Data Driven Real Estate Agency</h1>
+            <h1 class="section-title">Cherokee Street Real Estate: a Data Driven Real Estate Agency</h1>
             <p class="agency-intro">
                 At Cherokee Street Real Estate, we harness the power of data to revolutionize your property journey. Our small team of dedicated, tech-savvy agents is committed to delivering exceptional results.
             </p>
@@ -16,20 +16,47 @@
     
 
     <h2 class="section-title">Featured Listings</h2>
+    <span> Search Controls </span>
     <div id="search-container">
     <!-- Add search input -->
-    <p>
-    Search By Name
-    </p>
     <div class="search-controls-container">
-        <input type="text" name="search" placeholder="Search properties by name..." 
+        <label for="search-text">Search by Name</label>
+        <input type="text" name="search-text" id="search-text" placeholder="Search properties by name..." 
                hx-post="/search"
                hx-trigger="keyup changed delay:500ms"
                hx-target="#listings-container"
                hx-indicator=".htmx-indicator"
                hx-swap="outerHTML">
         <div class="htmx-indicator">Searching...</div>
-        <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="button">Randomize</button>
+        <div id="price-controls-container">
+          <label for="search-min-price">Minimum Price</label>
+          <input id="search-min-price" type="number" name="search-min-price" placeholder="10000" 
+                 hx-post="/search"
+                 hx-trigger="keyup changed delay:500ms"
+                 hx-target="#listings-container"
+                 hx-indicator=".htmx-indicator"
+                 hx-swap="outerHTML">
+          
+          <label for="search-max-price">Maximum Price</label>
+          <input id="search-max-price" type="number" name="search-max-price" placeholder="1000000" 
+                 hx-post="/search"
+                 hx-trigger="keyup changed delay:500ms"
+                 hx-target="#listings-container"
+                 hx-indicator=".htmx-indicator"
+                 hx-swap="outerHTML">
+        </div>
+        <div id="style-controls-container"> 
+          <label for="search-style">Choose Style:</label>
+
+          <select name="search-style" id="search-style">
+            <option value="All">All</option>
+            <option value="House">House</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Brownstone">Brownstone</option>
+          </select>
+      </div>
+        <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="button">Shuffle All Listings</button>
+
     </div>
     </div>
     <div id="listings-container" class="gridContainer">
