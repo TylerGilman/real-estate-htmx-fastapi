@@ -21,7 +21,7 @@
             </button>
 <div id="search-controls-wrapper" name="search-controls-wrapper">
             <h3>Advanced Property Search Controls</h3>
-    <div id="search-container">
+    <div id="search-container container">
               <form id="search-form">
                 <div class="search-controls-container">
                     <label for="search-text">Search by Name</label>
@@ -66,6 +66,7 @@
               </form>
             </div>
           </div>
+        </div>
     <div id="listings-container" class="gridContainer">
         {% for listing in listings %}
         <div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
