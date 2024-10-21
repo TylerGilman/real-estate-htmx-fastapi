@@ -7,16 +7,16 @@
 <div id="content">
         <section class="hero-section">
             <div class="container">
-                <h1 class="section-title">Cherokee Street Real Estate: a Data Driven Real Estate Agency</h1>
+                <h1 class="section-title">Cherokee Street: Data Driven Real Estate</h1>
                 <p class="agency-intro">
-                    At Cherokee Street Real Estate, we harness the power of data to revolutionize your property journey. Our small team of dedicated, tech-savvy agents is committed to delivering exceptional results.
+                    "At Cherokee Street Real Estate, our small team of tech-savvy agents is committed to delivering exceptional results."
                 </p>
             </div>
         </section>
         
         <div class="container">
             <h2 class="section-title">Featured Listings</h2>
-            <button id="toggle-search" class="button" onclick="toggleSearchControls()">
+            <button id="toggle-search" class="button">
                 Close Search Controls
             </button>
 <div id="search-controls-wrapper" name="search-controls-wrapper">
@@ -118,8 +118,6 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
     applyCropsAndLayout();
 });
 
-// Attempt to initialize immediately in case the DOM is already loaded
-initializeSearchControls();
 </script>
 </div>
 {% endblock %}
