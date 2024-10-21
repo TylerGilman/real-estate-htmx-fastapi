@@ -21,7 +21,7 @@
     <p>
     Search By Name
     </p>
-    <div class="search-container">
+    <div class="search-controls-container">
         <input type="text" name="search" placeholder="Search properties by name..." 
                hx-post="/search"
                hx-trigger="keyup changed delay:500ms"
@@ -29,6 +29,7 @@
                hx-indicator=".htmx-indicator"
                hx-swap="outerHTML">
         <div class="htmx-indicator">Searching...</div>
+        <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="button">Randomize</button>
     </div>
     </div>
     <div id="listings-container" class="gridContainer">

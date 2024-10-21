@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, cast, String, func
 from sqlalchemy.dialects.postgresql import TSVECTOR
+import random
 
 from Levenshtein import distance as levenshtein_distance
 from database import SessionLocal, engine
@@ -63,6 +64,17 @@ async def search(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse("partials/listings.html", {
         "request": request,
         "listings": sorted_listings
+    })
+
+
+@app.post("/randomize")
+async def randomize(request: Request, db: Session = Depends(get_db)):
+    # Fetch all listings
+    listings = db.query(models.Listing).all()
+    random.shuffle(listings)
+    return templates.TemplateResponse("partials/listings.html", {
+        "request": request,
+        "listings": listings
     })
 
 @app.get("/admin")

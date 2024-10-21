@@ -15,7 +15,7 @@ if not PEXELS_API_KEY:
 
 pexels = API(PEXELS_API_KEY)
 
-def get_house_images(count: int = 10):
+def get_house_images(count: int = 100):
     images = []
     page = 1
     while len(images) < count:
@@ -32,7 +32,7 @@ def get_house_images(count: int = 10):
             break
     return images[:count]
 
-def generate_sample_listings(db: Session, count: int = 10):
+def generate_sample_listings(db: Session, count: int = 100):
     images = get_house_images(count)
     
     for i, image in enumerate(images, 1):
