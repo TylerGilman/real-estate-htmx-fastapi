@@ -1,0 +1,23 @@
+{% for property in properties %}
+<div class="listing" 
+     hx-get="/property/{{ property.tax_id }}" 
+     hx-trigger="click" 
+     hx-target="#content" 
+     hx-push-url="true">
+    <div class="listing-image">
+        <img src="{{ property.image_url }}" alt="{{ property.property_address }}">
+    </div>
+    <div class="listing-info">
+        <h2>{{ property.property_address }}</h2>
+        <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
+        {% if property.property_type.value == 'residential' and property.residential_details %}
+            <p>{{ property.residential_details.bedrooms }} bd | 
+               {{ property.residential_details.bathrooms }} ba</p>
+        {% elif property.property_type.value == 'commercial' and property.commercial_details %}
+            <p>{{ property.commercial_details.sqft }} sqft | 
+               {{ property.commercial_details.industry }}</p>
+        {% endif %}
+        <p>{{ property.status }}</p>
+    </div>
+</div>
+{% endfor %}

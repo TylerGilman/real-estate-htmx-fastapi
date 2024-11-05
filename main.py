@@ -5,49 +5,62 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_, cast, String, func
 from sqlalchemy.dialects.postgresql import TSVECTOR
 import random
-
 from Levenshtein import distance as levenshtein_distance
-from database import SessionLocal, engine
-import models
+from database import SessionLocal, engine, get_db, is_db_empty
+from routes import admin
+from models import Property, ResidentialProperty, CommercialProperty, PropertyType
 
 app = FastAPI()
-
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
 templates = Jinja2Templates(directory="templates")
 
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-def is_db_empty(db: Session):
-    return db.query(models.Listing).count() == 0
+app.include_router(admin.router)
 
 
 @app.get("/")
 def index(request: Request, db: Session = Depends(get_db)):
     if is_db_empty(db):
         return templates.TemplateResponse("empty_db.html", {"request": request})
-    listings = db.query(models.Listing).all()
+
+    # Query properties with their details
+    properties = (
+        db.query(Property)
+        .outerjoin(ResidentialProperty)
+        .outerjoin(CommercialProperty)
+        .all()
+    )
+
+    # Debug print
+    print(f"Found {len(properties)} properties")
+    for prop in properties:
+        print(f"Property {prop.tax_id}: {prop.property_address}, {prop.price}")
+        if prop.property_type == PropertyType.RESIDENTIAL and prop.residential_details:
+            print(
+                f"  Residential: {prop.residential_details.bedrooms} beds, {prop.residential_details.bathrooms} baths"
+            )
+        elif prop.property_type == PropertyType.COMMERCIAL and prop.commercial_details:
+            print(
+                f"  Commercial: {prop.commercial_details.sqft} sqft, {prop.commercial_details.industry}"
+            )
+
     return templates.TemplateResponse(
-        "index.html", {"request": request, "listings": listings}
+        "index.html", {"request": request, "properties": properties}
     )
 
 
-@app.get("/property/{property_id}")
-def property_detail(request: Request, property_id: int, db: Session = Depends(get_db)):
-    property = db.query(models.Listing).filter(models.Listing.id == property_id).first()
+@app.get("/property/{tax_id}")
+def property_detail(request: Request, tax_id: str, db: Session = Depends(get_db)):
+    # Query property with its details using tax_id
+    property = (
+        db.query(Property)
+        .outerjoin(ResidentialProperty)
+        .outerjoin(CommercialProperty)
+        .filter(Property.tax_id == tax_id)
+        .first()
+    )
+
     if property is None:
-        # Handle the case where the property is not found
-        return templates.TemplateResponse(
-            "404.html", {"request": request}, status_code=404
-        )
+        raise HTTPException(status_code=404, detail="Property not found")
 
     template = (
         "property_detail.html"
@@ -63,36 +76,57 @@ def property_detail(request: Request, property_id: int, db: Session = Depends(ge
 async def search(request: Request, db: Session = Depends(get_db)):
     form = await request.form()
     search_query = form.get("search-text", "").lower()
-    # Fetch all listings
-    listings = db.query(models.Listing).all()
+    property_type = form.get("search-style", "All")
+    min_price = form.get("search-min-price")
+    max_price = form.get("search-max-price")
 
-    # Calculate similarity based on Levenshtein distance
-    def similarity_score(listing):
-        title_distance = levenshtein_distance(listing.title.lower(), search_query)
-        # price_distance = levenshtein_distance(str(listing.price), search_query)
-        # return min(title_distance, price_distance)  # Use the smallest distance as similarity score
-        return title_distance
+    # Start with base query
+    query = (
+        db.query(Property).outerjoin(ResidentialProperty).outerjoin(CommercialProperty)
+    )
 
-    # Sort listings by similarity score (lower score means higher similarity)
-    sorted_listings = sorted(listings, key=similarity_score)
+    """
+    # Apply filters
+    if search_query:
+        query = query.filter(Property.property_address.ilike(f"%{search_query}%"))
+
+    if property_type != "All":
+        query = query.filter(Property.property_type == PropertyType[property_type])
+
+    if min_price and min_price.isdigit():
+        query = query.filter(Property.price >= float(min_price))
+
+    if max_price and max_price.isdigit():
+        query = query.filter(Property.price <= float(max_price))
+    """
+
+    properties = query.all()
+    # Sort by similarity if there's a search query
+    if search_query:
+
+        def similarity_score(property):
+            return levenshtein_distance(property.property_address.lower(), search_query)
+
+        properties = sorted(properties, key=similarity_score)
+
     return templates.TemplateResponse(
-        "partials/listings.html", {"request": request, "listings": sorted_listings}
+        "partials/listings.html", {"request": request, "properties": properties}
     )
 
 
 @app.post("/randomize")
 async def randomize(request: Request, db: Session = Depends(get_db)):
-    # Fetch all listings
-    listings = db.query(models.Listing).all()
-    random.shuffle(listings)
-    return templates.TemplateResponse(
-        "partials/listings.html", {"request": request, "listings": listings}
+    properties = (
+        db.query(Property)
+        .outerjoin(ResidentialProperty)
+        .outerjoin(CommercialProperty)
+        .all()
     )
-
-
-@app.get("/admin")
-def admin(request: Request):
-    return templates.TemplateResponse("admin.html", {"request": request})
+    properties_list = list(properties)
+    random.shuffle(properties_list)
+    return templates.TemplateResponse(
+        "partials/listings.html", {"request": request, "properties": properties_list}
+    )
 
 
 if __name__ == "__main__":

@@ -1,19 +1,31 @@
 <div id="listings-container" class="gridContainer">
-    {% for listing in listings %}
-    <div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
+    {% for property in properties %}
+    <div class="listing" 
+         hx-get="/property/{{ property.tax_id }}" 
+         hx-trigger="click" 
+         hx-target="#content" 
+         hx-push-url="true">
         <div class="listing-image">
-            <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
+            <img src="{{ property.image_url }}" alt="{{ property.property_address }}">
         </div>
         <div class="listing-info">
-            <h2>{{ listing.title }}</h2>
-            <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
-            <p class="details">{{ listing.bedrooms }} bd | {{ listing.bathrooms }} ba | {{ listing.square_feet }} sqft</p>
-            <p class="address">{{ listing.address }}</p>
+            <h2>{{ property.property_address }}</h2>
+            <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
+            <p class="type">{{ property.status }} - {{ property.property_type.value|title }}</p>
+            {% if property.property_type.value == 'residential' and property.residential_details %}
+                <p class="details">
+                    {{ property.residential_details.bedrooms }} bd | 
+                    {{ property.residential_details.bathrooms }} ba | 
+                    {{ property.residential_details.r_type }}
+                </p>
+            {% elif property.property_type.value == 'commercial' and property.commercial_details %}
+                <p class="details">
+                    {{ "{:,.0f}".format(property.commercial_details.sqft) }} sqft | 
+                    {{ property.commercial_details.industry }} | 
+                    {{ property.commercial_details.c_type }}
+                </p>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
 </div>
-{% if not listings %}
-<p>No results found.</p>
-{% endif %}
-

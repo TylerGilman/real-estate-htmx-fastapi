@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
+from models import Property  # Update this import
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./real_estate.db"
 
@@ -10,3 +11,13 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+def is_db_empty(db: Session):
+    return db.query(Property).count() == 0  # Check for properties instead of listings

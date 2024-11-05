@@ -16,9 +16,14 @@
         
         <div class="container">
             <h2 class="section-title">Featured Listings</h2>
-            <button id="toggle-search" class="controls-button">
-                Close Search Controls
-            </button>
+            <div class="flex gap-x-4">
+                <button id="toggle-search" class="controls-button">
+                    Close Search Controls
+                </button>
+                <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="controls-button">
+                    Shuffle All Listings
+                </button>
+            </div>
 <div id="search-controls-wrapper" name="search-controls-wrapper">
             <h3>Advanced Property Search Controls</h3>
     <div id="search-container container">
@@ -60,28 +65,14 @@
                             <option value="Brownstone">Brownstone</option>
                         </select>
                     </div>
-                    <button hx-post="/randomize" hx-target="#listings-container" hx-swap="outerHTML" class="button">Shuffle All Listings</button>
                     <div class="htmx-indicator">Searching...</div>
                 </div>
               </form>
             </div>
           </div>
         </div>
-    <div id="listings-container" class="gridContainer">
-        {% for listing in listings %}
-        <div class="listing" hx-get="/property/{{ listing.id }}" hx-trigger="click" hx-target="#content" hx-push-url="true">
-            <div class="listing-image">
-                <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
-            </div>
-            <div class="listing-info">
-                <h2>{{ listing.title }}</h2>
-                <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
-                <p class="details">{{ listing.bedrooms }} bd | {{ listing.bathrooms }} ba | {{ listing.square_feet }} sqft</p>
-                <p class="address">{{ listing.address }}</p>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+
+    {% include "partials/listings.html" %}
 
     <section class="agency-description">
         <div class="container">

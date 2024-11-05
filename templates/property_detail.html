@@ -1,39 +1,54 @@
-<div class="property-container">
-    <header class="property-header">
-        <h1 class="property-title">{{ property.title }}</h1>
-        <div class="property-price">${{ "{:,.2f}".format(property.price) }}</div>
-    </header>
-    <img src="{{ property.image_url }}" alt="{{ property.title }}" class="property-image">
-    <div class="property-details">
-        <div class="detail-item">
-            <div class="detail-label">Bedrooms</div>
-            <div class="detail-value">{{ property.bedrooms }}</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Bathrooms</div>
-            <div class="detail-value">{{ property.bathrooms }}</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Square Feet</div>
-            <div class="detail-value">{{ property.square_feet }}</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Year Built</div>
-            <div class="detail-value">{{ property.year_built }}</div>
-        </div>
+<div class="individual-property-container">
+    <div class="individual-property-header">
+        <h1 class="individual-property-title">{{ property.property_address }}</h1>
+        <p class="individual-property-price">${{ "{:,.2f}".format(property.price) }}</p>
+        <p class="individual-property-status">{{ property.status }} - {{ property.property_type.value|title }}</p>
     </div>
-    <p class="property-description">{{ property.description }}</p>
-    <div class="button-container">
-        <button hx-get="/contact-form/{{ property.id }}" 
-                hx-target="#contact-form-container"
-                hx-swap="innerHTML"
-                class="button contact-button">
-            Contact Agent
-        </button>
-        <a href="/"
-                class="button back-button" preload>
-            ← Back to Listings
-        </a>
+
+    <img class="individual-property-image" src="{{ property.image_url }}" alt="{{ property.property_address }}">
+
+    <div class="individual-property-details">
+        {% if property.property_type.value == 'residential' and property.residential_details %}
+            <div class="individual-detail-item">
+                <div class="individual-detail-label">Bedrooms</div>
+                <div class="individual-detail-value">{{ property.residential_details.bedrooms }}</div>
+            </div>
+            <div class="individual-detail-item">
+                <div class="individual-detail-label">Bathrooms</div>
+                <div class="individual-detail-value">{{ property.residential_details.bathrooms }}</div>
+            </div>
+            <div class="individual-detail-item">
+                <div class="individual-detail-label">Type</div>
+                <div class="individual-detail-value">{{ property.residential_details.r_type }}</div>
+            </div>
+        {% elif property.property_type.value == 'commercial' and property.commercial_details %}
+            <div class="individual-detail-item">
+                <div class="individual-detail-label">Square Feet</div>
+                <div class="individual-detail-value">{{ "{:,.0f}".format(property.commercial_details.sqft) }}</div>
+            </div>
+            <div class="individual-detail-item">
+                <div class="individual-detail-label">Industry</div>
+                <div class="individual-detail-value">{{ property.commercial_details.industry }}</div>
+            </div>
+            <div class="individual-detail-item">
+                <div class="individual-detail-label">Type</div>
+                <div class="individual-detail-value">{{ property.commercial_details.c_type }}</div>
+            </div>
+        {% endif %}
     </div>
+
+    {% for agent_listing in property.listings %}
+        <div class="individual-listing-agent">
+            <h3>Listing Agent</h3>
+            <p>{{ agent_listing.agent.agent_name }}</p>
+            <p>{{ agent_listing.agent.agent_phone }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="individual-button-container">
+        <button class="individual-contact-button">Contact Agent</button>
+        <a href="/" class="individual-back-button" preload>← Back to Listings</a>
+    </div>
+
     <div id="contact-form-container"></div>
 </div>
