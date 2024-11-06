@@ -1,3 +1,4 @@
+# models.py
 from sqlalchemy import (
     Column,
     Integer,
@@ -18,28 +19,9 @@ import enum
 from datetime import datetime
 
 Base = declarative_base()
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Float,
-    ForeignKey,
-    Boolean,
-    DateTime,
-    Enum,
-    Table,
-    and_,
-    ForeignKeyConstraint,
-    PrimaryKeyConstraint,
-)
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-import enum
-from datetime import datetime
-
-Base = declarative_base()
 
 
+# Enums
 class PropertyType(enum.Enum):
     RESIDENTIAL = "residential"
     COMMERCIAL = "commercial"
@@ -57,7 +39,7 @@ class ClientType(enum.Enum):
     LESSEE = "lessee"
 
 
-# Association table for Property-Client many-to-many relationship
+# Association Tables
 property_client_association = Table(
     "property_client_association",
     Base.metadata,
@@ -72,23 +54,7 @@ property_client_association = Table(
 )
 
 
-class Client(Base):
-    __tablename__ = "clients"
-
-    ssn = Column(String, primary_key=True)
-    client_name = Column(String, nullable=False)
-    mailing_address = Column(String, nullable=False)
-    client_phone = Column(String, nullable=False)
-    client_type = Column(Enum(ClientType), nullable=False)
-    intent = Column(String, nullable=False)
-
-    properties = relationship(
-        "Property", secondary=property_client_association, back_populates="clients"
-    )
-    showings = relationship("AgentShowing", back_populates="client")
-    listings = relationship("AgentListing", back_populates="client")
-
-
+# Core Models
 class Property(Base):
     __tablename__ = "properties"
 
@@ -101,6 +67,7 @@ class Property(Base):
     image_height = Column(Integer)
     property_type = Column(Enum(PropertyType), nullable=False)
 
+    # Relationships
     residential_details = relationship(
         "ResidentialProperty",
         back_populates="property",
@@ -120,6 +87,52 @@ class Property(Base):
     )
 
 
+class Client(Base):
+    __tablename__ = "clients"
+
+    ssn = Column(String, primary_key=True)
+    client_name = Column(String, nullable=False)
+    mailing_address = Column(String, nullable=False)
+    client_phone = Column(String, nullable=False)
+    client_type = Column(Enum(ClientType), nullable=False)
+    intent = Column(String, nullable=False)
+
+    # Relationships
+    properties = relationship(
+        "Property", secondary=property_client_association, back_populates="clients"
+    )
+    showings = relationship("AgentShowing", back_populates="client")
+    listings = relationship("AgentListing", back_populates="client")
+
+
+class Brokerage(Base):
+    __tablename__ = "brokerages"
+
+    broker_id = Column(Integer, primary_key=True)
+    broker_name = Column(String, nullable=False)
+    broker_address = Column(String, nullable=False)
+    broker_phone = Column(String, nullable=False)
+
+    # Relationships
+    agents = relationship("Agent", back_populates="brokerage")
+
+
+class Agent(Base):
+    __tablename__ = "agents"
+
+    nrds = Column(String, primary_key=True)
+    ssn = Column(String, nullable=False, unique=True)
+    agent_name = Column(String, nullable=False)
+    agent_phone = Column(String, nullable=False)
+    broker_id = Column(Integer, ForeignKey("brokerages.broker_id"), nullable=False)
+
+    # Relationships
+    brokerage = relationship("Brokerage", back_populates="agents")
+    listings = relationship("AgentListing", back_populates="agent")
+    showings = relationship("AgentShowing", back_populates="agent")
+
+
+# Property Type Models
 class ResidentialProperty(Base):
     __tablename__ = "residential_properties"
 
@@ -136,6 +149,7 @@ class ResidentialProperty(Base):
         ),
     )
 
+    # Relationships
     property = relationship(
         "Property",
         back_populates="residential_details",
@@ -159,6 +173,7 @@ class CommercialProperty(Base):
         ),
     )
 
+    # Relationships
     property = relationship(
         "Property",
         back_populates="commercial_details",
@@ -166,31 +181,7 @@ class CommercialProperty(Base):
     )
 
 
-class Brokerage(Base):
-    __tablename__ = "brokerages"
-
-    broker_id = Column(Integer, primary_key=True)
-    broker_name = Column(String, nullable=False)
-    broker_address = Column(String, nullable=False)
-    broker_phone = Column(String, nullable=False)
-
-    agents = relationship("Agent", back_populates="brokerage")
-
-
-class Agent(Base):
-    __tablename__ = "agents"
-
-    nrds = Column(String, primary_key=True)
-    ssn = Column(String, nullable=False, unique=True)
-    agent_name = Column(String, nullable=False)
-    agent_phone = Column(String, nullable=False)
-    broker_id = Column(Integer, ForeignKey("brokerages.broker_id"), nullable=False)
-
-    brokerage = relationship("Brokerage", back_populates="agents")
-    listings = relationship("AgentListing", back_populates="agent")
-    showings = relationship("AgentShowing", back_populates="agent")
-
-
+# Agent Activity Models
 class AgentListing(Base):
     __tablename__ = "agent_listings"
 
@@ -210,6 +201,7 @@ class AgentListing(Base):
         ),
     )
 
+    # Relationships
     property = relationship("Property", back_populates="listings")
     agent = relationship("Agent", back_populates="listings")
     client = relationship("Client", back_populates="listings")
@@ -233,6 +225,7 @@ class AgentShowing(Base):
         ),
     )
 
+    # Relationships
     property = relationship("Property", back_populates="showings")
     agent = relationship("Agent", back_populates="showings")
     client = relationship("Client", back_populates="showings")

@@ -1,0 +1,46 @@
+<div class="agent-details-content">
+    <div class="details-grid">
+        <div class="detail-card">
+            <h4>Performance Metrics</h4>
+            <div class="metrics-list">
+                <div class="metric">
+                    <span>Active Listings</span>
+                    <span>{{ agent.active_listings_count }}</span>
+                </div>
+                <div class="metric">
+                    <span>Total Sales</span>
+                    <span>${{ "{:,.2f}".format(agent.total_sales) }}</span>
+                </div>
+                <div class="metric">
+                    <span>Showings This Month</span>
+                    <span>{{ agent.monthly_showings }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="detail-card">
+            <h4>Recent Listings</h4>
+            <div class="recent-listings">
+                {% for listing in agent.recent_listings %}
+                <div class="mini-listing">
+                    <img src="{{ listing.image_url }}" alt="{{ listing.property_address }}">
+                    <div class="mini-listing-info">
+                        <p>{{ listing.property_address }}</p>
+                        <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <h4>Monthly Performance</h4>
+            <div class="performance-chart">
+                <!-- Add a placeholder for a chart - you can add chart.js or other visualization later -->
+                <div class="chart-placeholder">
+                    Monthly performance visualization will go here
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
