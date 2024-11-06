@@ -42,6 +42,8 @@ def index(request: Request, db: Session = Depends(get_db)):
         .all()
     )
 
+    print("Properties" + str(properties))
+
     return templates.TemplateResponse(
         "index.html", {"request": request, "properties": properties}
     )

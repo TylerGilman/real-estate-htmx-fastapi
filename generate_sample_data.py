@@ -1,246 +1,259 @@
 import os
 from dotenv import load_dotenv
+import os
+from dotenv import load_dotenv
 from pexels_api import API
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import (
-    Property,
+    Brokerage, 
+    Agent, 
+    Property, 
     PropertyType,
     ResidentialProperty,
     CommercialProperty,
-    Brokerage,
-    Agent,
-    Client,
     AgentListing,
     AgentRole,
-    ClientType,
+    Client,
+    ClientType
 )
-import random
-from faker import Faker
-from datetime import datetime
-import sys
 
-# Initialize Faker
+import random
+from init_db import init_db
+from faker import Faker
+
+load_dotenv()
 fake = Faker()
 
-# Load environment variables
-load_dotenv()
+PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
+if not PEXELS_API_KEY:
+    raise ValueError("Please set the PEXELS_API_KEY in your .env file")
 
+pexels = API(PEXELS_API_KEY)
 
 def get_house_images(count: int = 50):
-    """Get images from Pexels API or return placeholder images if API fails"""
-    try:
-        PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
-        if not PEXELS_API_KEY:
-            raise ValueError("No Pexels API key found")
-
-        pexels = API(PEXELS_API_KEY)
-        images = []
-        page = 1
-
-        response = pexels.search("house", page=page, results_per_page=count)
+    print("Getting images...")
+    images = []
+    page = 1
+    while len(images) < count:
+        response = pexels.search("house", page=page, results_per_page=40)
         if response and "photos" in response:
             for photo in response["photos"]:
-                images.append(
-                    {
-                        "url": photo["src"]["large"],
-                        "width": photo["width"],
-                        "height": photo["height"],
-                    }
-                )
-            return images[:count]
+                images.append({
+                    "url": photo["src"]["large"],
+                    "width": photo["width"],
+                    "height": photo["height"]
+                })
+            page += 1
         else:
-            raise Exception("No photos found in Pexels response")
+            break
+    print(f"Got {len(images)} images")
+    return images[:count]
 
-    except Exception as e:
-        print(f"Failed to get images from Pexels: {e}")
-        print("Using placeholder images instead")
-        # Return placeholder images
-        return [
-            {
-                "url": f"https://picsum.photos/800/600?random={i}",
-                "width": 800,
-                "height": 600,
-            }
-            for i in range(count)
-        ]
-
-
-def generate_sample_data(db: Session, property_count: int = 50):
+def create_brokerage(db: Session):
+    print("Creating brokerage...")
     try:
-        print("Starting sample data generation...")
-
-        # Get images
-        print("Getting images...")
-        images = get_house_images(property_count)
-        print(f"Got {len(images)} images")
-
-        # Create a brokerage
-        print("Creating brokerage...")
         brokerage = Brokerage(
             broker_name="Cherokee Street Real Estate",
             broker_address="123 Cherokee Street",
-            broker_phone="(555) 123-4567",
+            broker_phone="(555) 123-4567"
         )
         db.add(brokerage)
         db.commit()
-        print(f"Created brokerage: {brokerage.broker_id}")
-
-        # Create agents
-        print("Creating agents...")
-        agents = []
-        for i in range(5):
-            agent = Agent(
-                nrds=f"NRDS{100000 + i}",
-                ssn=fake.unique.ssn(),
-                agent_name=fake.name(),
-                agent_phone=fake.phone_number(),
-                broker_id=brokerage.broker_id,
-            )
-            db.add(agent)
-            agents.append(agent)
-        db.commit()
-        print(f"Created {len(agents)} agents")
-
-        # Create clients
-        print("Creating clients...")
-        clients = []
-        for i in range(property_count):
-            client = Client(
-                ssn=fake.unique.ssn(),
-                client_name=fake.name(),
-                mailing_address=fake.address(),
-                client_phone=fake.phone_number(),
-                client_type=random.choice(list(ClientType)),
-                intent=random.choice(["purchase", "lease"]),
-            )
-            db.add(client)
-            clients.append(client)
-        db.commit()
-        print(f"Created {len(clients)} clients")
-
-        # Create properties
-        print("Creating properties...")
-        properties_created = 0
-        for i, image in enumerate(images):
-            try:
-                # Determine if residential or commercial
-                is_residential = random.random() < 0.7  # 70% residential
-
-                # Create base property
-                tax_id = f"TAX{100000 + i}"
-                address = fake.unique.address()
-
-                property = Property(
-                    tax_id=tax_id,
-                    property_address=address,
-                    status=random.choice(["For Sale", "For Lease"]),
-                    price=random.randint(200000, 1000000),
-                    image_url=image["url"],
-                    image_width=image["width"],
-                    image_height=image["height"],
-                    property_type=(
-                        PropertyType.RESIDENTIAL
-                        if is_residential
-                        else PropertyType.COMMERCIAL
-                    ),
-                )
-                db.add(property)
-                db.flush()
-
-                # Create property details
-                if is_residential:
-                    residential = ResidentialProperty(
-                        tax_id=tax_id,
-                        property_address=address,
-                        bedrooms=random.randint(2, 6),
-                        bathrooms=random.choice([1, 1.5, 2, 2.5, 3, 3.5, 4]),
-                        r_type=random.choice(
-                            ["Single Family", "Condo", "Townhouse", "Apartment"]
-                        ),
-                    )
-                    db.add(residential)
-                else:
-                    commercial = CommercialProperty(
-                        tax_id=tax_id,
-                        property_address=address,
-                        sqft=random.uniform(1000, 50000),
-                        industry=random.choice(
-                            ["Retail", "Office", "Industrial", "Mixed Use"]
-                        ),
-                        c_type=random.choice(
-                            [
-                                "Office Building",
-                                "Retail Space",
-                                "Warehouse",
-                                "Restaurant",
-                            ]
-                        ),
-                    )
-                    db.add(commercial)
-
-                # Create agent listing
-                listing = AgentListing(
-                    tax_id=tax_id,
-                    property_address=address,
-                    agent_nrds=random.choice(agents).nrds,
-                    client_ssn=random.choice(clients).ssn,
-                    l_agent_role=random.choice(list(AgentRole)),
-                    listing_date=datetime.now(),
-                    exclusive=random.choice([True, False]),
-                )
-                db.add(listing)
-                properties_created += 1
-
-            except Exception as e:
-                print(f"Error creating property {i}: {e}")
-                db.rollback()
-                continue
-
-            if (i + 1) % 5 == 0:
-                try:
-                    db.commit()
-                    print(f"Committed batch of 5 properties ({i + 1}/{len(images)})")
-                except Exception as e:
-                    print(f"Error committing batch: {e}")
-                    db.rollback()
-
-        # Final commit
-        try:
-            db.commit()
-        except Exception as e:
-            print(f"Error in final commit: {e}")
-            db.rollback()
-
-        print("\nData generation completed!")
-        print(f"Properties created: {properties_created}")
-
-        # Verify data
-        verification = {
-            "Properties": db.query(Property).count(),
-            "Residential": db.query(ResidentialProperty).count(),
-            "Commercial": db.query(CommercialProperty).count(),
-            "Listings": db.query(AgentListing).count(),
-            "Agents": db.query(Agent).count(),
-            "Clients": db.query(Client).count(),
-        }
-
-        print("\nDatabase verification:")
-        for key, count in verification.items():
-            print(f"{key}: {count}")
-
+        db.refresh(brokerage)
+        print("Brokerage created successfully!")
+        return brokerage
     except Exception as e:
-        print(f"Error during data generation: {e}")
         db.rollback()
+        print(f"Error creating brokerage: {e}")
         raise
 
+def create_agents(db: Session, brokerage_id: int, count: int = 5):
+    print(f"Creating {count} agents...")
+    agents = []
+    for i in range(count):
+        agent_name = fake.name()
+        agent_phone = f"(555) 555-{random.randint(1000,9999):04d}"
+        agent = Agent(
+            agent_name=agent_name,
+            agent_phone=agent_phone,
+            nrds=f"NRDS{100000 + i}",
+            ssn=f"{random.randint(100,999)}-{random.randint(10,99)}-{random.randint(1000,9999)}",
+            broker_id=brokerage_id
+        )
+        db.add(agent)
+        agents.append(agent)
+    
+    try:
+        db.commit()
+        print("Agents created successfully!")
+        return agents
+    except Exception as e:
+        db.rollback()
+        print(f"Error creating agents: {e}")
+        raise
 
-if __name__ == "__main__":
+def generate_tax_id():
+    return f"TAX{random.randint(100000, 999999)}"
+
+
+# Function to create clients
+def create_clients(db: Session, count: int = 10):
+    print(f"Creating {count} clients...")
+    clients = []
+    for i in range(count):
+        client_name = fake.name()
+        client_phone = f"(555) 000-{random.randint(1000,9999):04d}"
+        mailing_address = fake.address()
+        ssn = f"{random.randint(100, 999)}-{random.randint(10, 99)}-{random.randint(1000, 9999)}"
+        client_type = random.choice(list(ClientType))
+
+        client = Client(
+            client_phone=client_phone,
+            client_name=client_name,
+            mailing_address=mailing_address,
+            ssn=ssn,
+            client_type=client_type
+        )
+        db.add(client)
+        clients.append(client)
+
+    try:
+        db.commit()
+        print("Clients created successfully!")
+        return clients
+    except Exception as e:
+        db.rollback()
+        print(f"Error creating clients: {e}")
+        raise
+
+# Modify create_properties to associate each property with a client
+def create_properties(db: Session, agents: list, images: list, clients: list):
+    print("Creating properties...")
+    
+    residential_types = ["Single Family", "Condo", "Townhouse", "Apartment"]
+    commercial_types = ["Office Building", "Retail Space", "Warehouse", "Restaurant"]
+    industries = ["Retail", "Office", "Industrial", "Mixed Use"]
+    statuses = ["For Sale", "For Lease"]
+    
+    properties_created = 0
+    
+    for image in images:
+        try:
+            # Generate basic property info
+            tax_id = generate_tax_id()
+            address = fake.street_address()
+            price = random.randint(200000, 1500000)
+            status = random.choice(statuses)
+            is_residential = random.choice([True, False])
+            
+            # Create base property
+            property = Property(
+                tax_id=tax_id,
+                property_address=address,
+                price=price,
+                status=status,
+                property_type=PropertyType.RESIDENTIAL if is_residential else PropertyType.COMMERCIAL,
+                image_url=image["url"],
+                image_width=image["width"],
+                image_height=image["height"]
+            )
+            db.add(property)
+            db.flush()
+            
+            # Add type-specific details
+            if is_residential:
+                residential = ResidentialProperty(
+                    tax_id=tax_id,
+                    property_address=address,
+                    bedrooms=random.randint(1, 6),
+                    bathrooms=random.choice([1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]),
+                    r_type=random.choice(residential_types)
+                )
+                db.add(residential)
+            else:
+                commercial = CommercialProperty(
+                    tax_id=tax_id,
+                    property_address=address,
+                    sqft=random.randint(1000, 10000),
+                    industry=random.choice(industries),
+                    c_type=random.choice(commercial_types)
+                )
+                db.add(commercial)
+            
+            # Associate a random client with the property
+            client = random.choice(clients)
+            property.clients.append(client)
+            
+            # Create agent listing
+            agent = random.choice(agents)
+            agent_listing = AgentListing(
+                tax_id=tax_id,
+                property_address=address,
+                agent_name=agent.agent_name,
+                agent_phone=agent.agent_phone,
+                client_phone=client.client_phone,  # Use the associated client’s phone
+                l_agent_role=AgentRole.SELLER,
+                exclusive=random.choice([True, False])
+            )
+            db.add(agent_listing)
+            
+            properties_created += 1
+            
+            # Commit every 10 properties
+            if properties_created % 10 == 0:
+                db.commit()
+                print(f"Created {properties_created} properties...")
+            
+        except Exception as e:
+            db.rollback()
+            print(f"Error creating property: {e}")
+            continue
+    
+    # Final commit for any remaining properties
+    try:
+        db.commit()
+        print(f"Successfully created {properties_created} properties!")
+    except Exception as e:
+        db.rollback()
+        print(f"Error in final commit: {e}")
+        raise
+
+def generate_sample_data():
+    print("Starting sample data generation...")
+    
+    # Initialize database
+    init_db()
+    
     db = SessionLocal()
     try:
-        generate_sample_data(db)
+        # Create brokerage
+        brokerage = create_brokerage(db)
+        
+        # Create agents
+        agents = create_agents(db, brokerage.broker_id)
+        
+        # Create clients
+        clients = create_clients(db, 10)
+        
+        # Get images for properties
+        images = get_house_images(50)
+        
+        # Create properties with associated clients
+        create_properties(db, agents, images, clients)
+        
+        print("Sample data generation completed successfully!")
+        
     except Exception as e:
-        print(f"Fatal error: {e}")
-        sys.exit(1)
+        print(f"Error during data generation: {e}")
+        raise
     finally:
         db.close()
+
+if __name__ == "__main__":
+    # Remove existing database if it exists
+    if os.path.exists("real_estate.db"):
+        os.remove("real_estate.db")
+        print("Removed existing database")
+    
+    generate_sample_data()

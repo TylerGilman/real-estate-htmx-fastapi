@@ -31,112 +31,176 @@
 
 <div id="add-property-form" class="hidden admin-form">
     <h2>Add New Property</h2>
-    <form hx-post="/admin/properties" 
-          hx-encoding="multipart/form-data"
-          class="property-form"
-          hx-target="body"
-          hx-swap="outerHTML">
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Address</label>
-                <input type="text" name="property_address" required>
-            </div>
+<form hx-post="/admin/properties" 
+      hx-encoding="multipart/form-data"
+      class="property-form"
+      hx-target="body"
+      hx-swap="outerHTML">
+    <div class="form-grid">
+        <!-- Agent Selection -->
+        <div class="form-group">
+            <label>Select Agent</label>
+            <select name="agent" required onchange="updateAgentFields(this)">
+                <option value="">Choose an agent</option>
+                {% for agent in agents %}
+                <option value="{{ agent.name }}|{{ agent.phone }}">
+                    {{ agent.name }} ({{ agent.phone }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="hidden" name="agent_name">
+        <input type="hidden" name="agent_phone">
 
-            <div class="form-group">
-                <label>Price</label>
-                <input type="number" name="price" required min="0" step="0.01">
-            </div>
+        <!-- Property Information -->
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" name="property_address" required>
+        </div>
 
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" name="price" required min="0" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status" required>
+                <option value="For Sale">For Sale</option>
+                <option value="For Lease">For Lease</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Property Type</label>
+            <select name="property_type" required onchange="togglePropertyDetails(this.value)">
+                <option value="RESIDENTIAL">Residential</option>
+                <option value="COMMERCIAL">Commercial</option>
+            </select>
+        </div>
+
+        <!-- Client Information -->
+        <div class="section-header full-width">
+            <h3>Client Information</h3>
+        </div>
+
+        <div class="form-group">
+            <label>Client Name</label>
+            <input type="text" name="client_name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Client Phone</label>
+            <input type="tel" name="client_phone" required>
+        </div>
+
+        <div class="form-group">
+            <label>Client SSN (Optional)</label>
+            <input type="text" name="ssn" pattern="\d{3}-\d{2}-\d{4}" placeholder="123-45-6789">
+        </div>
+
+        <div class="form-group">
+            <label>Client Mailing Address</label>
+            <input type="text" name="client_mailing_address" required>
+        </div>
+
+        <!-- Property Information Section -->
+        <div class="section-header full-width">
+            <h3>Property Information</h3>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status" required>
+                <option value="For Sale">For Sale</option>
+                <option value="For Lease">For Lease</option>
+            </select>
+        </div>
+        <div id="residential-details" class="form-section">
             <div class="form-group">
-                <label>Status</label>
-                <select name="status" required>
-                    <option value="For Sale">For Sale</option>
-                    <option value="For Lease">For Lease</option>
+                <label>Bedrooms</label>
+                <input type="number" name="bedrooms" min="0">
+            </div>
+            <div class="form-group">
+                <label>Bathrooms</label>
+                <input type="number" name="bathrooms" min="0" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Residential Type</label>
+                <select name="r_type">
+                    <option value="Single Family">Single Family</option>
+                    <option value="Condo">Condo</option>
+                    <option value="Townhouse">Townhouse</option>
+                    <option value="Apartment">Apartment</option>
                 </select>
-            </div>
-
-            <div class="form-group">
-                <label>Property Type</label>
-                <select name="property_type" required onchange="togglePropertyDetails(this.value)">
-                    <option value="RESIDENTIAL">Residential</option>
-                    <option value="COMMERCIAL">Commercial</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Listing Agent</label>
-                <select name="agent_nrds" required>
-                    <option value="">Select Listing Agent</option>
-                    {% for agent in agents %}
-                    <option value="{{ agent.nrds }}">{{ agent.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <!-- Residential Details -->
-            <div id="residential-details" class="form-section">
-                <div class="form-group">
-                    <label>Bedrooms</label>
-                    <input type="number" name="bedrooms" min="0">
-                </div>
-                <div class="form-group">
-                    <label>Bathrooms</label>
-                    <input type="number" name="bathrooms" min="0" step="0.5">
-                </div>
-                <div class="form-group">
-                    <label>Type</label>
-                    <select name="r_type">
-                        <option value="Single Family">Single Family</option>
-                        <option value="Condo">Condo</option>
-                        <option value="Townhouse">Townhouse</option>
-                        <option value="Apartment">Apartment</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Commercial Details -->
-            <div id="commercial-details" class="form-section hidden">
-                <div class="form-group">
-                    <label>Square Feet</label>
-                    <input type="number" name="sqft" min="0">
-                </div>
-                <div class="form-group">
-                    <label>Industry</label>
-                    <select name="industry">
-                        <option value="Retail">Retail</option>
-                        <option value="Office">Office</option>
-                        <option value="Industrial">Industrial</option>
-                        <option value="Mixed Use">Mixed Use</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Commercial Type</label>
-                    <select name="c_type">
-                        <option value="Office Building">Office Building</option>
-                        <option value="Retail Space">Retail Space</option>
-                        <option value="Warehouse">Warehouse</option>
-                        <option value="Restaurant">Restaurant</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group full-width">
-                <label>Property Image</label>
-                <input type="file" name="image" accept="image/*" required class="file-input">
-            </div>
-
-            <div class="form-group full-width button-group">
-                <button type="button"
-                        onclick="document.getElementById('add-property-form').classList.add('hidden')"
-                        class="cancel-button">
-                    Cancel
-                </button>
-                <button type="submit" class="submit-button">
-                    Save Property
-                </button>
             </div>
         </div>
-    </form>
+
+        <div id="commercial-details" class="form-section hidden">
+            <div class="form-group">
+                <label>Square Feet</label>
+                <input type="number" name="sqft" min="0">
+            </div>
+            <div class="form-group">
+                <label>Industry</label>
+                <select name="industry">
+                    <option value="Retail">Retail</option>
+                    <option value="Office">Office</option>
+                    <option value="Industrial">Industrial</option>
+                    <option value="Mixed Use">Mixed Use</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Commercial Type</label>
+                <select name="c_type">
+                    <option value="Office Building">Office Building</option>
+                    <option value="Retail Space">Retail Space</option>
+                    <option value="Warehouse">Warehouse</option>
+                    <option value="Restaurant">Restaurant</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+            <label>Property Image</label>
+            <input type="file" name="image" accept="image/*" required>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button type="button" onclick="cancelForm()" class="cancel-button">Cancel</button>
+            <button type="submit" class="submit-button">Create Property</button>
+        </div>
+    </div>
+</form>
+
+<script>
+function updateAgentFields(select) {
+    if (select.value) {
+        const [name, phone] = select.value.split('|');
+        document.querySelector('input[name="agent_name"]').value = name;
+        document.querySelector('input[name="agent_phone"]').value = phone;
+    }
+}
+
+function togglePropertyDetails(type) {
+    const residential = document.getElementById('residential-details');
+    const commercial = document.getElementById('commercial-details');
+    
+    if (type === 'RESIDENTIAL') {
+        residential.classList.remove('hidden');
+        commercial.classList.add('hidden');
+    } else {
+        residential.classList.add('hidden');
+        commercial.classList.remove('hidden');
+    }
+}
+
+function cancelForm() {
+    document.getElementById('add-property-form').classList.add('hidden');
+}
+</script>
 </div>
 
         <!-- Properties List -->
@@ -224,7 +288,7 @@
                           class="cancel-button">
                       Cancel
                   </button>
-                  <button type="submit" class="submit-button">
+                  <button type="submit" class="success-button">
                       Add Agent
                   </button>
               </div>
@@ -257,8 +321,8 @@
           <div class="table-responsive">
               <div class="table-row table-header">
                   <div class="table-cell">Agent Name</div>
-                  <div class="table-cell">NRDS</div>
                   <div class="table-cell">Phone</div>
+                  <div class="table-cell">NRDS</div>
                   <div class="table-cell">Active Listings</div>
                   <div class="table-cell">Actions</div>
               </div>
@@ -266,20 +330,20 @@
               {% for agent in agents %}
               <div class="table-row">
                   <div class="table-cell">{{ agent.name }}</div>
-                  <div class="table-cell">{{ agent.nrds }}</div>
                   <div class="table-cell">{{ agent.phone }}</div>
+                  <div class="table-cell">{{ agent.nrds }}</div>
                   <div class="table-cell">{{ agent.active_listings_count }}</div>
                   <div class="table-cell actions">
                       <button 
                           class="action-button view" 
-                          hx-get="/admin/agents/{{ agent.nrds }}/details"
-                          hx-target="#agent-details-{{ agent.nrds }}"
+                          hx-get="/admin/agents/{{ agent.name | urlencode }}/{{ agent.phone | urlencode }}/details"
+                          hx-target="#agent-details-{{ agent.name | replace(' ', '-') }}-{{ agent.phone | replace('()', '') | replace(' ', '-') }}"
                           hx-swap="innerHTML">
                           View Details
                       </button>
                       <button 
                           class="action-button delete" 
-                          hx-delete="/admin/agents/{{ agent.nrds }}"
+                          hx-delete="/admin/agents/{{ agent.name | urlencode }}/{{ agent.phone | urlencode }}"
                           hx-confirm="Are you sure you want to delete this agent?"
                           hx-target="closest .table-row"
                           hx-swap="outerHTML">
@@ -287,7 +351,8 @@
                       </button>
                   </div>
               </div>
-              <div id="agent-details-{{ agent.nrds }}" class="agent-details hidden"></div>
+              <div id="agent-details-{{ agent.name | replace(' ', '-') }}-{{ agent.phone | replace('()', '') | replace(' ', '-') }}" 
+                   class="agent-details hidden"></div>
               {% endfor %}
           </div>
       </div>
@@ -339,42 +404,4 @@
         }
     </script>
 </body>
-</html><!-- Agent List -->
-<div class="admin-table">
-    <div class="table-responsive">
-        <div class="table-row table-header">
-            <div class="table-cell">Agent Name</div>
-            <div class="table-cell">NRDS</div>
-            <div class="table-cell">Phone</div>
-            <div class="table-cell">Active Listings</div>
-            <div class="table-cell">Actions</div>
-        </div>
-
-        {% for agent in agents %}
-        <div class="table-row">
-            <div class="table-cell">{{ agent.name }}</div>
-            <div class="table-cell">{{ agent.nrds }}</div>
-            <div class="table-cell">{{ agent.phone }}</div>
-            <div class="table-cell">{{ agent.active_listings_count }}</div>
-            <div class="table-cell actions">
-                <button 
-                    class="action-button view" 
-                    hx-get="/admin/agents/{{ agent.nrds }}/details"
-                    hx-target="#agent-details-{{ agent.nrds }}"
-                    hx-swap="innerHTML">
-                    View Details
-                </button>
-                <button 
-                    class="action-button delete" 
-                    hx-delete="/admin/agents/{{ agent.nrds }}"
-                    hx-confirm="Are you sure you want to delete this agent?"
-                    hx-target="closest .table-row"
-                    hx-swap="outerHTML">
-                    Delete
-                </button>
-            </div>
-        </div>
-        <div id="agent-details-{{ agent.nrds }}" class="agent-details hidden"></div>
-        {% endfor %}
-    </div>
-</div>
+</html>

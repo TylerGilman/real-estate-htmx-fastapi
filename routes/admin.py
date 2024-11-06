@@ -3,13 +3,14 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 import random
-from sqlalchemy import func, extract
+from sqlalchemy import func, extract, and_
 from typing import Optional
 from pydantic import BaseModel
 import uuid
 import os
 import shutil
 from database import get_db
+from datetime import datetime
 from models import (
     Property,
     PropertyType,
@@ -19,6 +20,9 @@ from models import (
     AgentListing,
     AgentShowing,
     Brokerage,
+    AgentRole,
+    ClientType,
+    Client
 )
 
 # Initialize router with prefix
@@ -50,9 +54,8 @@ def generate_unique_tax_id(db: Session) -> str:
 
 
 # Routes
-@router.get("")  # This will handle /admin
+@router.get("")
 async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
-    """Admin dashboard showing properties and agent statistics"""
     properties = (
         db.query(Property)
         .outerjoin(ResidentialProperty)
@@ -77,8 +80,7 @@ async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
         db.query(func.sum(Property.price))
         .join(AgentListing)
         .filter(Property.status == "For Sale")
-        .scalar()
-        or 0
+        .scalar() or 0
     ) / 1000000
 
     # Calculate total showings
@@ -91,21 +93,19 @@ async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             db.query(AgentListing)
             .join(Property)
             .filter(
-                AgentListing.agent_nrds == agent.nrds, Property.status == "For Sale"
+                AgentListing.agent_name == agent.agent_name,
+                AgentListing.agent_phone == agent.agent_phone,
+                Property.status == "For Sale"
             )
             .count()
         )
-        agents_with_stats.append(
-            {
-                "nrds": agent.nrds,
-                "name": agent.agent_name,
-                "phone": agent.agent_phone,
-                "active_listings_count": active_listings_count,
-            }
-        )
-
-    # Get list of agents for the property form
-    available_agents = db.query(Agent).all()
+        agents_with_stats.append({
+            "name": agent.agent_name,
+            "phone": agent.agent_phone,
+            "active_listings_count": active_listings_count,
+            "nrds": agent.nrds,  # Include NRDS for reference
+            "ssn": agent.ssn  # Include SSN for reference
+        })
 
     return templates.TemplateResponse(
         "admin.html",
@@ -113,24 +113,32 @@ async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             "request": request,
             "properties": properties,
             "agents": agents_with_stats,
-            "available_agents": available_agents,
             "total_agents": total_agents,
             "total_listings": total_listings,
             "total_sales": total_sales,
             "total_showings": total_showings,
-        },
+        }
     )
+
 
 
 @router.post("/properties")
 async def create_property(
     request: Request,
     db: Session = Depends(get_db),
+    agent_name: str = Form(...),
+    agent_phone: str = Form(...),
+    # Property fields
     property_address: str = Form(...),
     price: float = Form(...),
-    status: str = Form(...),
+    status: str = Form(...),  # "For Sale" or "For Lease"
     property_type: str = Form(...),
-    agent_nrds: str = Form(...),
+    # Client fields
+    client_name: str = Form(...),
+    client_phone: str = Form(...),
+    ssn: Optional[str] = Form(None),
+    client_mailing_address: str = Form(...),
+    # Image and property-specific fields remain the same
     image: UploadFile = File(...),
     bedrooms: Optional[int] = Form(None),
     bathrooms: Optional[float] = Form(None),
@@ -140,7 +148,10 @@ async def create_property(
     c_type: Optional[str] = Form(None),
 ):
     try:
-        # Save image
+        # Determine client type based on property status
+        client_type = ClientType.SELLER if status == "For Sale" else ClientType.LESSEE
+
+        # Save the uploaded file
         file_ext = image.filename.split(".")[-1]
         file_name = f"{uuid.uuid4()}.{file_ext}"
         file_path = os.path.join(UPLOAD_DIR, file_name)
@@ -148,10 +159,21 @@ async def create_property(
         with open(file_path, "wb+") as file_object:
             shutil.copyfileobj(image.file, file_object)
 
-        # Generate tax_id
-        tax_id = generate_unique_tax_id(db)
-
+        # Get or create client
+        client = db.query(Client).filter(Client.client_phone == client_phone).first()
+        if not client:
+            client = Client(
+                client_phone=client_phone,
+                client_name=client_name,
+                mailing_address=client_mailing_address,
+                ssn=ssn,
+                client_type=client_type  # Set based on property status
+            )
+            db.add(client)
+            db.flush()
+        
         # Create base property
+        tax_id = f"TAX{random.randint(100000, 999999)}"
         property = Property(
             tax_id=tax_id,
             property_address=property_address,
@@ -183,19 +205,20 @@ async def create_property(
             )
             db.add(commercial)
 
-        # Create agent listing association (always as seller agent)
+        # Create agent listing with appropriate role
         agent_listing = AgentListing(
             tax_id=tax_id,
             property_address=property_address,
-            agent_nrds=agent_nrds,
-            l_agent_role=AgentRole.SELLER,  # Always a seller agent for new listings
+            agent_name=agent_name,
+            agent_phone=agent_phone,
+            client_phone=client_phone,
+            l_agent_role=AgentRole.SELLER if status == "For Sale" else AgentRole.LESSEE,
             listing_date=datetime.utcnow(),
+            exclusive=True
         )
         db.add(agent_listing)
 
         db.commit()
-
-        # Get updated properties and stats
         return await admin_dashboard(request=request, db=db)
 
     except Exception as e:
@@ -203,14 +226,13 @@ async def create_property(
         db.rollback()
         if "file_path" in locals() and os.path.exists(file_path):
             os.remove(file_path)
-
         return templates.TemplateResponse(
             "partials/toast.html",
             {
                 "request": request,
                 "type": "error",
-                "message": f"Error creating property: {str(e)}",
-            },
+                "message": f"Error creating property: {str(e)}"
+            }
         )
 
 
@@ -321,13 +343,18 @@ async def create_agent(
         )
 
 
-@router.get("/agents/{nrds}/details")
-async def get_agent_details(request: Request, nrds: str, db: Session = Depends(get_db)):
-    """Get detailed information about a specific agent"""
-    if not nrds:
-        raise HTTPException(status_code=400, detail="NRDS number is required")
-
-    agent = db.query(Agent).filter(Agent.nrds == nrds).first()
+@router.get("/agents/{agent_name}/{agent_phone}/details")
+async def get_agent_details(
+    request: Request,
+    agent_name: str,
+    agent_phone: str,
+    db: Session = Depends(get_db)
+):
+    agent = db.query(Agent).filter(
+        Agent.agent_name == agent_name,
+        Agent.agent_phone == agent_phone
+    ).first()
+    
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
 
@@ -335,7 +362,11 @@ async def get_agent_details(request: Request, nrds: str, db: Session = Depends(g
     active_listings = (
         db.query(Property)
         .join(AgentListing)
-        .filter(AgentListing.agent_nrds == nrds, Property.status == "For Sale")
+        .filter(
+            AgentListing.agent_name == agent_name,
+            AgentListing.agent_phone == agent_phone,
+            Property.status == "For Sale"
+        )
         .all()
     )
 
@@ -343,9 +374,10 @@ async def get_agent_details(request: Request, nrds: str, db: Session = Depends(g
     current_month_showings = (
         db.query(AgentShowing)
         .filter(
-            AgentShowing.agent_nrds == nrds,
-            extract("month", AgentShowing.showing_date)
-            == extract("month", func.current_date()),
+            AgentShowing.agent_name == agent_name,
+            AgentShowing.agent_phone == agent_phone,
+            extract('month', AgentShowing.showing_date) == 
+            extract('month', func.current_date())
         )
         .count()
     )
@@ -354,9 +386,11 @@ async def get_agent_details(request: Request, nrds: str, db: Session = Depends(g
     total_sales = (
         db.query(func.sum(Property.price))
         .join(AgentListing)
-        .filter(AgentListing.agent_nrds == nrds)
-        .scalar()
-        or 0
+        .filter(
+            AgentListing.agent_name == agent_name,
+            AgentListing.agent_phone == agent_phone
+        )
+        .scalar() or 0
     )
 
     return templates.TemplateResponse(
@@ -364,15 +398,15 @@ async def get_agent_details(request: Request, nrds: str, db: Session = Depends(g
         {
             "request": request,
             "agent": {
-                "nrds": agent.nrds,
                 "name": agent.agent_name,
                 "phone": agent.agent_phone,
+                "nrds": agent.nrds,
                 "active_listings_count": len(active_listings),
                 "monthly_showings": current_month_showings,
                 "total_sales": total_sales,
-                "recent_listings": active_listings[:5],
-            },
-        },
+                "recent_listings": active_listings[:5]
+            }
+        }
     )
 
 
