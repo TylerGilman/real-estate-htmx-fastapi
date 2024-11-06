@@ -43,16 +43,6 @@
   <div id="add-property-form" class="admin-form hidden">
     <div class="form-header">
         <h2>Add New Property</h2>
-        <div class="form-controls">
-          <button class="minimize-button" onclick="toggleSection('properties-content', this)" aria-label="Minimize properties section">
-              <svg class="minimize-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20 12H4"/>
-              </svg>
-              <svg class="maximize-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 4v16m-8-8h16"/>
-              </svg>
-          </button>
-        </div>
     </div>
 <form hx-post="/admin/properties" 
       hx-encoding="multipart/form-data"
