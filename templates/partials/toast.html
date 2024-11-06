@@ -1,5 +1,8 @@
 <!-- templates/partials/toast.html -->
-<div class="toast {{ type }}" role="alert">
-    <div class="toast-content">{{ message }}</div>
-    <button onclick="this.parentElement.remove()" class="close-button">×</button>
+<div id="toast-container" class="toast-container">
+    {% if type and message %}
+    <div class="toast {{ type }}" role="alert">
+        <span>{{ message }}</span>
+    </div>
+    {% endif %}
 </div>

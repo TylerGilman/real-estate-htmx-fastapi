@@ -364,3 +364,67 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
 }
+
+.admin-form {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.form-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #343a40;
+}
+
+.form-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.control-button {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    transition: all 0.2s ease;
+}
+
+.control-button:hover {
+    background-color: #e9ecef;
+    color: #343a40;
+}
+
+.minimize-button.minimized svg {
+    transform: rotate(180deg);
+}
+
+.form-content {
+    transition: max-height 0.3s ease-in-out;
+    max-height: 2000px; /* Adjust based on your form's maximum height */
+    overflow: hidden;
+}
+
+.form-content.minimized {
+    max-height: 0;
+}
+
+.hidden {
+    display: none;
+}

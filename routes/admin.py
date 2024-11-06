@@ -6,6 +6,7 @@ import random
 from sqlalchemy import func, extract, and_
 from typing import Optional
 from pydantic import BaseModel
+from urllib.parse import unquote
 import uuid
 import os
 import shutil
@@ -410,38 +411,65 @@ async def get_agent_details(
     )
 
 
-@router.delete("/agents/{nrds}")
-async def delete_agent(request: Request, nrds: str, db: Session = Depends(get_db)):
+@router.delete("/agents/{agent_name}/{agent_phone}")
+async def delete_agent(
+    request: Request, 
+    agent_name: str, 
+    agent_phone: str, 
+    db: Session = Depends(get_db)
+):
     """Delete an agent and their related records"""
     try:
-        print(f"Attempting to delete agent with NRDS: {nrds}")  # Debug print
-        agent = db.query(Agent).filter(Agent.nrds == nrds).first()
+        # URL decode the parameters since they may contain spaces and special characters
+        agent_name = unquote(agent_name)
+        agent_phone = unquote(agent_phone)
+        
+        print(f"Attempting to delete agent: {agent_name} with phone: {agent_phone}")  # Debug print
+        
+        # Find agent by name and phone
+        agent = db.query(Agent).filter(
+            Agent.agent_name == agent_name,
+            Agent.agent_phone == agent_phone
+        ).first()
+        
         if not agent:
-            print(f"Agent not found with NRDS: {nrds}")  # Debug print
+            print(f"Agent not found: {agent_name} {agent_phone}")  # Debug print
             return templates.TemplateResponse(
                 "partials/toast.html",
                 {"request": request, "type": "error", "message": "Agent not found"},
                 status_code=404,
             )
-
+            
         # Delete related records first
         agent_listings = (
-            db.query(AgentListing).filter(AgentListing.agent_nrds == nrds).delete()
+            db.query(AgentListing)
+            .filter(
+                AgentListing.agent_name == agent_name,
+                AgentListing.agent_phone == agent_phone
+            )
+            .delete()
         )
+        
         agent_showings = (
-            db.query(AgentShowing).filter(AgentShowing.agent_nrds == nrds).delete()
+            db.query(AgentShowing)
+            .filter(
+                AgentShowing.agent_name == agent_name,
+                AgentShowing.agent_phone == agent_phone
+            )
+            .delete()
         )
-
+        
         print(
             f"Deleted {agent_listings} listings and {agent_showings} showings"
         )  # Debug print
-
+        
         # Delete the agent
         db.delete(agent)
         db.commit()
-        print(f"Successfully deleted agent {nrds}")  # Debug print
-
-        # Return an empty response with success message
+        
+        print(f"Successfully deleted agent {agent_name}")  # Debug print
+        
+        # Return success message
         return templates.TemplateResponse(
             "partials/toast.html",
             {
@@ -450,6 +478,7 @@ async def delete_agent(request: Request, nrds: str, db: Session = Depends(get_db
                 "message": "Agent deleted successfully",
             },
         )
+        
     except Exception as e:
         print(f"Error deleting agent: {str(e)}")  # Debug print
         db.rollback()
