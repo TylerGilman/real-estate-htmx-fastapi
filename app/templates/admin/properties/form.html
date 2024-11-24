@@ -1,0 +1,17 @@
+<div id="add-property-form" class="admin-form hidden">
+    <div class="form-header">
+        <h2>Add New Property</h2>
+    </div>
+    <form hx-post="/admin/properties" 
+          hx-encoding="multipart/form-data"
+          class="property-form"
+          hx-target="body"
+          hx-swap="outerHTML">
+        {% include "admin/properties/form_fields.html" %}
+        
+        <div class="button-group">
+            <button type="button" onclick="cancelForm()" class="cancel-button">Cancel</button>
+            <button type="submit" class="submit-button">Create Property</button>
+        </div>
+    </form>
+</div>

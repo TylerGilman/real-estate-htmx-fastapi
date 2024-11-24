@@ -1,0 +1,7 @@
+{# templates/admin/components/toast.html #}
+<div class="toast {{ type }}" role="alert">
+    <div class="toast-content">
+        {{ message }}
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+</div>

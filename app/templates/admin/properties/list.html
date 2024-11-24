@@ -1,0 +1,22 @@
+<div class="admin-header">
+    <div class="header-left">
+        <h1 class="section-title">Property Management</h1>
+        <button class="minimize-button" onclick="toggleSection('properties-content', this)" 
+                aria-label="Minimize properties section">
+            <svg class="minimize-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                 stroke="currentColor" stroke-width="2">
+                <path d="M20 12H4"/>
+            </svg>
+            <svg class="maximize-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                 stroke="currentColor" stroke-width="2">
+                <path d="M12 4v16m-8-8h16"/>
+            </svg>
+        </button>
+    </div>
+    <button onclick="showPropertyForm()" class="action-button">Add New Property</button>
+</div>
+
+<div id="properties-content" class="section-content">
+    {% include "admin/properties/form.html" %}
+    {% include "admin/properties/table.html" %}
+</div>

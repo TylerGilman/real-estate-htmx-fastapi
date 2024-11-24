@@ -1,0 +1,86 @@
+{# templates/admin/agents/table.html #}
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Agents</h3>
+        <p class="stat-value">{{ total_agents|default(0) }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Sales</h3>
+        <p class="stat-value">
+            {% if total_sales and total_sales > 0 %}
+                ${{ "{:,.2f}".format(total_sales / 1_000_000) }}M
+            {% else %}
+                $0
+            {% endif %}
+        </p>
+    </div>
+    <div class="stat-card">
+        <h3>Active Listings</h3>
+        <p class="stat-value">{{ total_listings|default(0) }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Commissions</h3>
+        <p class="stat-value">
+            {% if total_commissions and total_commissions > 0 %}
+                ${{ "{:,.2f}".format(total_commissions / 1_000) }}K
+            {% else %}
+                $0
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="admin-table">
+    <div class="table-responsive">
+        <div class="table-row table-header">
+            <div class="table-cell">Agent Name</div>
+            <div class="table-cell">Contact Info</div>
+            <div class="table-cell">License Info</div>
+            <div class="table-cell">Performance</div>
+            <div class="table-cell">Actions</div>
+        </div>
+
+        {% for agent in agents|default([]) %}
+        <div class="table-row">
+            <div class="table-cell">
+                <div class="agent-name">{{ agent.agent_name }}</div>
+                <div class="agent-id">NRDS: {{ agent.NRDS }}</div>
+            </div>
+            <div class="table-cell">
+                <div>
+                    {% if agent.agent_phone|length == 10 %}
+                        ({{ agent.agent_phone[:3] }}) {{ agent.agent_phone[3:6] }}-{{ agent.agent_phone[6:] }}
+                    {% else %}
+                        {{ agent.agent_phone }}
+                    {% endif %}
+                </div>
+                <div>{{ agent.agent_email }}</div>
+            </div>
+            <div class="table-cell">
+                <div>License: {{ agent.license_number }}</div>
+                <div>Expires: {{ agent.license_expiration.strftime('%Y-%m-%d') }}</div>
+            </div>
+            <div class="table-cell">
+                <div>Listings: {{ agent.listings|default([])|length }}</div>
+                <div>Sales: ${{ "{:,.0f}".format(agent.total_sales|default(0) / 1000) }}K</div>
+            </div>
+            <div class="table-cell actions">
+                <button class="action-button edit"
+                        hx-get="/admin/agents/{{ agent.agent_id }}/edit"
+                        hx-target="#agent-form-container">Edit</button>
+                <button class="action-button delete"
+                        hx-delete="/admin/agents/{{ agent.agent_id }}"
+                        hx-confirm="Are you sure you want to delete this agent?"
+                        hx-target="closest .table-row"
+                        hx-swap="outerHTML">Delete</button>
+            </div>
+        </div>
+        {% else %}
+        <div class="table-row">
+            <div class="table-cell empty-state" colspan="5">
+                <p>No agents found</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

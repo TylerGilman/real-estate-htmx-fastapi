@@ -1,0 +1,393 @@
+/* static/admin/css/admin.css */
+/* Swedish Design Variables */
+:root {
+    /* Swedish Design Colors */
+    --swedish-blue: #005293;         /* Deep Swedish blue */
+    --swedish-yellow: #FECC02;       /* Swedish flag yellow */
+    --swedish-gray: #F5F7FA;         /* Light airy gray */
+    --swedish-navy: #1B365D;         /* Dark navy */
+    --swedish-accent: #E5F3FF;       /* Light blue accent */
+    --swedish-white: #FFFFFF;
+    --swedish-text: #2C353D;
+    --swedish-success: #97B3A3;      /* Muted green */
+    --swedish-error: #E6938F;        /* Muted red */
+    
+    /* Save original variables for backward compatibility */
+    --light-blue: var(--swedish-accent);
+    --medium-light-blue: var(--swedish-blue);
+    --medium-blue: var(--swedish-blue);
+    --medium-dark-blue: var(--swedish-navy);
+    --dark-blue: var(--swedish-navy);
+    --white: var(--swedish-white);
+    --light-gray: var(--swedish-gray);
+    --medium-gray: var(--swedish-text);
+    --dark-gray: var(--swedish-text);
+    --success-green: var(--swedish-success);
+    --hover-green: var(--swedish-success);
+}
+.admin-section {
+    background: var(--swedish-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 2px solid var(--swedish-gray);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--swedish-navy);
+    margin: 0;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--swedish-blue);
+}
+
+.toggle-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.section-content {
+    padding: 1rem;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+}
+
+.section-content.collapsed {
+    max-height: 0;
+    padding: 0;
+}
+
+.action-button {
+    background-color: var(--swedish-blue);
+    color: var(--swedish-white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: var(--swedish-navy);
+}
+
+.form-container {
+    background: var(--swedish-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    transition: opacity 0.3s ease;
+}
+
+.form-container.hidden {
+    display: none;
+}
+
+.section-content {
+    transition: max-height 0.3s ease;
+}
+
+.section-content.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Toast Styles */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    background: var(--swedish-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease;
+}
+
+.toast.success {
+    border-left: 4px solid var(--swedish-success);
+}
+
+.toast.error {
+    border-left: 4px solid var(--swedish-error);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Minimize/Maximize Icon States */
+.toggle-button[aria-expanded="true"] .maximize-path {
+    display: none;
+}
+
+.toggle-button[aria-expanded="false"] .minimize-path {
+    display: none;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--swedish-white);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card h3 {
+    font-size: 0.875rem;
+    color: var(--swedish-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--swedish-navy);
+    margin: 0;
+}
+
+/* Table Styles */
+.table-responsive {
+    overflow-x: auto;
+    background: var(--swedish-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.data-table th {
+    background: var(--swedish-gray);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--swedish-navy);
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--swedish-gray);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.agent-name {
+    font-weight: 600;
+    color: var(--swedish-navy);
+}
+
+.text-muted {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.text-error { color: var(--swedish-error); }
+.text-warning { color: var(--swedish-yellow); }
+.text-success { color: var(--swedish-success); }
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: none;
+    color: var(--swedish-text);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--swedish-gray);
+}
+
+.btn-edit:hover {
+    color: var(--swedish-blue);
+}
+
+.btn-delete:hover {
+    color: var(--swedish-error);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+}
+
+.empty-state p {
+    color: var(--swedish-text);
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    background: var(--swedish-blue);
+    color: var(--swedish-white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background: var(--swedish-navy);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .data-table {
+        font-size: 0.875rem;
+    }
+    
+    .data-table td,
+    .data-table th {
+        padding: 0.75rem;
+    }
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.status-badge.for-sale {
+    background-color: var(--swedish-blue);
+    color: var(--swedish-white);
+}
+
+.status-badge.for-lease {
+    background-color: var(--swedish-yellow);
+    color: var(--swedish-text);
+}
+
+.status-badge.sold {
+    background-color: var(--swedish-success);
+    color: var(--swedish-white);
+}
+
+.status-badge.leased {
+    background-color: var(--swedish-navy);
+    color: var(--swedish-white);
+}
+
+/* Property specific styles */
+.property-title {
+    font-weight: 600;
+    color: var(--swedish-navy);
+}
+
+.property-type {
+    font-size: 0.875rem;
+}
+
+.property-price {
+    font-weight: 600;
+    color: var(--swedish-navy);
+    margin-top: 0.25rem;
+}
+
+/* Table cell alignment */
+.table-cell:nth-child(3) {
+    text-align: right;
+}
+
+/* Make sure the table is properly styled */
+.table-responsive {
+    border: 1px solid var(--swedish-gray);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 2fr 1fr;
+    border-bottom: 1px solid var(--swedish-gray);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-cell {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table-header {
+    background-color: var(--swedish-gray);
+    font-weight: 600;
+}
+
+

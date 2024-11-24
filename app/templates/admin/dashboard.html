@@ -1,0 +1,53 @@
+{# templates/admin/dashboard.html #}
+{% extends "admin/base.html" %}
+{% block content %}
+{% if error %}
+<div class="error-message">{{ error }}</div>
+{% endif %}
+
+{# Properties Section #}
+<div class="admin-section" id="properties-section">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1 class="section-title">Property Management</h1>
+            <button class="toggle-button" data-target="properties-content" aria-label="Toggle properties section">
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="minimize-path" d="M20 12H4" />
+                    <path class="maximize-path" d="M12 4v16m-8-8h16" />
+                </svg>
+            </button>
+        </div>
+        <button class="action-button" onclick="toggleForm('add-property-form')">Add New Property</button>
+    </div>
+    <div id="properties-content" class="section-content">
+        <div id="add-property-form" class="form-container hidden">
+            {% include "admin/properties/form.html" %}
+        </div>
+        {% include "admin/properties/table.html" %}
+    </div>
+</div>
+
+{# Agents Section #}
+<div class="admin-section" id="agents-section">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1 class="section-title">Agent Management</h1>
+            <button class="toggle-button" data-target="agents-content" aria-label="Toggle agents section">
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="minimize-path" d="M20 12H4" />
+                    <path class="maximize-path" d="M12 4v16m-8-8h16" />
+                </svg>
+            </button>
+        </div>
+        <button class="action-button" onclick="toggleForm('add-agent-form')">Add New Agent</button>
+    </div>
+    <div id="agents-content" class="section-content">
+        <div id="add-agent-form" class="form-container hidden">
+            {% include "admin/agents/form.html" %}
+        </div>
+        {% include "admin/agents/table.html" %}
+    </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+{% endblock %}

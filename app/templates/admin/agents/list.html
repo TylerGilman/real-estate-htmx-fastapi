@@ -1,0 +1,60 @@
+<div class="admin-section">
+    <div class="admin-header">
+        <div class="header-left">
+            <h2 class="section-title">Agent Management</h2>
+            <button class="minimize-button" 
+                    onclick="toggleSection('agents-content', this)" 
+                    aria-label="Minimize agents section">
+                <svg class="minimize-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 12H4"/>
+                </svg>
+                <svg class="maximize-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 4v16m-8-8h16"/>
+                </svg>
+            </button>
+        </div>
+        <button onclick="showAgentForm()" class="action-button">Add New Agent</button>
+    </div>
+
+    <div id="agents-content" class="section-content">
+        <!-- Agent Form -->
+        <div id="add-agent-form" class="admin-form hidden">
+            <div class="form-header">
+                <h2>Add New Agent</h2>
+                <button type="button" class="close-button" onclick="cancelForm()" aria-label="Close form">×</button>
+            </div>
+            
+            <form hx-post="/admin/agents" 
+                  class="agent-form"
+                  hx-target="#toast-container"
+                  hx-swap="beforeend">
+                {% include "admin/agents/form.html" %}
+                
+                <div class="button-group">
+                    <button type="button" onclick="cancelForm()" class="cancel-button">Cancel</button>
+                    <button type="submit" class="submit-button">Create Agent</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Agent Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Agents</h3>
+                <p class="stat-value">{{ total_agents }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Sales</h3>
+                <p class="stat-value">${{ "{:,.2f}".format(total_sales / 1_000_000) }}M</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Listings</h3>
+                <p class="stat-value">{{ total_listings }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Commissions</h3>
+                <p class="stat-value">${{ "{:,.2f}".format(total_commissions / 1_000) }}K</p>
+            </div>
+        </div>
+    </div>
+</div>

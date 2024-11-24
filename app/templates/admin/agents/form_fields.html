@@ -1,0 +1,74 @@
+<div class="form-header">Agent Information</div>
+<div class="form-grid">
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" 
+               name="agent_name" 
+               required 
+               placeholder="Enter agent's full name"
+               class="swedish-input">
+    </div>
+
+    <div class="form-group">
+        <label>NRDS Number</label>
+        <input type="text" 
+               name="NRDS" 
+               required 
+               maxlength="7"
+               placeholder="1234567"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 7)"
+               class="swedish-input">
+        <small class="help-text">7-digit NRDS ID number</small>
+    </div>
+
+    <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" 
+               name="agent_phone" 
+               required 
+               placeholder="Phone number"
+               oninput="formatPhoneNumber(this)"
+               class="swedish-input">
+        <small class="help-text">Format: (123) 456-7890</small>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" 
+               name="agent_email" 
+               required 
+               placeholder="agent@example.com"
+               class="swedish-input">
+    </div>
+
+    <div class="form-group">
+        <label>Social Security Number</label>
+        <input type="text" 
+               name="SSN" 
+               required 
+               placeholder="Enter SSN"
+               oninput="formatSSN(this)"
+               class="swedish-input">
+        <small class="help-text">Format: XXX-XX-XXXX</small>
+    </div>
+
+    <div class="form-group">
+        <label>License Number</label>
+        <input type="text" 
+               name="license_number" 
+               required 
+               placeholder="State license number"
+               class="swedish-input">
+    </div>
+
+    <div class="form-group">
+        <label>License Expiration</label>
+        <input type="date" 
+               name="license_expiration" 
+               required
+               min="{{ today }}"
+               class="swedish-input">
+    </div>
+    <!-- Hidden brokerage field -->
+    <input type="hidden" name="broker_id" value="1">
+</div>
