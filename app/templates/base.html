@@ -14,7 +14,7 @@
         <nav>
             <div class="nav-container">
                 <a href="/" class="logo-link">
-                    <img src="/app/static/logo.png" alt="Our Real Estate Logo" class="logo" preload>
+                    <img src="{{ url_for('static', path='/logo.png') }}"  alt="Our Real Estate Logo" class="logo" preload>
                 </a>
                 <ul>
                     <li><a href="/" {% if request.url.path == '/' %}class="active"{% endif %}>Home</a></li>

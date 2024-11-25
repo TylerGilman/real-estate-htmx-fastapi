@@ -126,15 +126,14 @@ async def create_property(
     status: str = Form(...),
     square_feet: int = Form(...),
     year_built: int = Form(...),
-    description: str = Form(...),
     street_address: str = Form(...),
     city: str = Form(...),
     state: str = Form(...),
     zip_code: str = Form(...),
     db: Session = Depends(get_db)
 ):
-    """Create a new property"""
     try:
+        # Create and add the property
         property = Property(
             title=title,
             property_type=property_type,
@@ -142,25 +141,33 @@ async def create_property(
             status=status,
             square_feet=square_feet,
             year_built=year_built,
-            description=description,
             street_address=street_address,
             city=city,
             state=state,
-            zip_code=zip_code
+            zip_code=zip_code,
         )
-        
         db.add(property)
         db.commit()
-        
-        logger.info(f"Property created successfully: {property.property_id}")
-        return templates.TemplateResponse(
+
+        # Render the new property row
+        property_row = templates.TemplateResponse(
+            "admin/properties/table_row.html",
+            {"request": request, "property": property},
+        )
+
+        # Render the toast
+        toast = templates.TemplateResponse(
             "admin/components/toast.html",
             {
                 "request": request,
                 "message": "Property created successfully",
-                "type": "success"
-            }
+                "type": "success",
+            },
         )
+
+        # Combine the row and toast for HTMX response
+        response_content = f"{property_row.body.decode()} {toast.body.decode()}"
+        return HTMLResponse(response_content)
     except Exception as e:
         db.rollback()
         logger.error("Failed to create property", exc_info=True)
@@ -169,8 +176,8 @@ async def create_property(
             {
                 "request": request,
                 "message": f"Error creating property: {str(e)}",
-                "type": "error"
-            }
+                "type": "error",
+            },
         )
 
 @router.delete("/properties/{property_id}")

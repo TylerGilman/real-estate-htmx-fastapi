@@ -1,17 +1,16 @@
-<div id="add-property-form" class="admin-form hidden">
-    <div class="form-header">
-        <h2>Add New Property</h2>
+<form
+    hx-post="/admin/properties"
+    hx-target=".table-responsive"
+    hx-swap="beforeend"
+    hx-on="htmx:afterSwap: showToast()"
+    method="post"
+    enctype="multipart/form-data"
+    class="space-y-4"
+>
+    {% include "admin/properties/form_fields.html" %}
+    <div>
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Create Property
+        </button>
     </div>
-    <form hx-post="/admin/properties" 
-          hx-encoding="multipart/form-data"
-          class="property-form"
-          hx-target="body"
-          hx-swap="outerHTML">
-        {% include "admin/properties/form_fields.html" %}
-        
-        <div class="button-group">
-            <button type="button" onclick="cancelForm()" class="cancel-button">Cancel</button>
-            <button type="submit" class="submit-button">Create Property</button>
-        </div>
-    </form>
-</div>
+</form>

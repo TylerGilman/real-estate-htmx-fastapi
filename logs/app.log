@@ -409,3 +409,31 @@
 {"timestamp": "2024-11-24T17:17:05.082477", "level": "INFO", "message": "Agent deleted successfully: 7", "module": "admin", "function": "delete_agent", "line": 389, "thread_id": 138372566316864}
 {"timestamp": "2024-11-24T17:17:08.381011", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 138372566316864}
 {"timestamp": "2024-11-24T17:17:25.487274", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 138372566316864}
+{"timestamp": "2024-11-24T17:18:46.011627", "level": "INFO", "message": "Starting Real Estate Management v1.0.0", "module": "main", "function": "startup_event", "line": 48, "thread_id": 139811852425024}
+{"timestamp": "2024-11-24T17:18:46.011822", "level": "INFO", "message": "Debug mode: True", "module": "main", "function": "startup_event", "line": 49, "thread_id": 139811852425024}
+{"timestamp": "2024-11-24T17:18:50.032074", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 139811852425024}
+{"timestamp": "2024-11-24T17:19:18.380991", "level": "INFO", "message": "Agent created successfully: Tyler", "module": "admin", "function": "create_agent", "line": 277, "thread_id": 139811852425024}
+{"timestamp": "2024-11-24T17:19:19.958058", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 139811852425024}
+{"timestamp": "2024-11-24T17:20:27.046424", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 139811852425024}
+{"timestamp": "2024-11-24T19:24:18.625649", "level": "INFO", "message": "Starting Real Estate Management v1.0.0", "module": "main", "function": "startup_event", "line": 48, "thread_id": 129021243705152}
+{"timestamp": "2024-11-24T19:24:18.625762", "level": "INFO", "message": "Debug mode: True", "module": "main", "function": "startup_event", "line": 49, "thread_id": 129021243705152}
+{"timestamp": "2024-11-24T19:26:20.896908", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 129021243705152}
+{"timestamp": "2024-11-24T19:32:42.759087", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 129021243705152}
+{"timestamp": "2024-11-24T19:32:43.847749", "level": "INFO", "message": "Starting Real Estate Management v1.0.0", "module": "main", "function": "startup_event", "line": 48, "thread_id": 137475519780672}
+{"timestamp": "2024-11-24T19:32:43.847858", "level": "INFO", "message": "Debug mode: True", "module": "main", "function": "startup_event", "line": 49, "thread_id": 137475519780672}
+{"timestamp": "2024-11-24T19:35:12.936688", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 137475519780672}
+{"timestamp": "2024-11-24T19:35:14.200228", "level": "INFO", "message": "Starting Real Estate Management v1.0.0", "module": "main", "function": "startup_event", "line": 48, "thread_id": 134445764175680}
+{"timestamp": "2024-11-24T19:35:14.200425", "level": "INFO", "message": "Debug mode: True", "module": "main", "function": "startup_event", "line": 49, "thread_id": 134445764175680}
+{"timestamp": "2024-11-24T19:37:20.837681", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 134445764175680}
+{"timestamp": "2024-11-24T19:37:22.090771", "level": "INFO", "message": "Starting Real Estate Management v1.0.0", "module": "main", "function": "startup_event", "line": 48, "thread_id": 132109904176960}
+{"timestamp": "2024-11-24T19:37:22.090915", "level": "INFO", "message": "Debug mode: True", "module": "main", "function": "startup_event", "line": 49, "thread_id": 132109904176960}
+{"timestamp": "2024-11-24T19:38:12.803655", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 132109904176960}
+{"timestamp": "2024-11-24T19:39:01.446063", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 132109904176960}
+{"timestamp": "2024-11-24T23:29:53.470837", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 132109904176960}
+{"timestamp": "2024-11-24T23:32:27.866179", "level": "INFO", "message": "Agent created successfully: Nick Mascolo", "module": "admin", "function": "create_agent", "line": 284, "thread_id": 132109904176960}
+{"timestamp": "2024-11-24T23:32:29.533880", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 132109904176960}
+{"timestamp": "2024-11-25T15:43:34.413653", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 132109904176960}
+{"timestamp": "2024-11-25T22:57:36.200392", "level": "INFO", "message": "Starting Real Estate Management v1.0.0", "module": "main", "function": "startup_event", "line": 48, "thread_id": 140256719120192}
+{"timestamp": "2024-11-25T22:57:36.200520", "level": "INFO", "message": "Debug mode: True", "module": "main", "function": "startup_event", "line": 49, "thread_id": 140256719120192}
+{"timestamp": "2024-11-25T22:57:46.000265", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 48, "thread_id": 140256719120192}
+{"timestamp": "2024-11-25T22:57:57.286407", "level": "INFO", "message": "Shutting down Real Estate Management", "module": "main", "function": "shutdown_event", "line": 54, "thread_id": 140256719120192}
