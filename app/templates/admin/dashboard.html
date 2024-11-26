@@ -39,16 +39,8 @@
         {# Properties Table #}
         <div class="admin-table">
             <div class="table-responsive">
-                <table id="properties-table">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Details</th>
-                            <th>Status & Price</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="properties-table" id="properties-table">
+                    <div>
                         {% for property in properties %}
                             {% include "admin/properties/table_row.html" %}
                         {% else %}
@@ -58,8 +50,7 @@
                                 </td>
                             </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
