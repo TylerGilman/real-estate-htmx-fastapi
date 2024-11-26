@@ -593,3 +593,6 @@
 {"timestamp": "2024-11-26T20:17:53.510224", "level": "INFO", "message": "Found 2 properties", "module": "admin", "function": "admin_dashboard", "line": 37, "thread_id": 136431205533504}
 {"timestamp": "2024-11-26T20:17:53.514248", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 41, "thread_id": 136431205533504}
 {"timestamp": "2024-11-26T20:17:53.522414", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 70, "thread_id": 136431205533504}
+{"timestamp": "2024-11-26T21:58:52.564269", "level": "INFO", "message": "Found 2 properties", "module": "admin", "function": "admin_dashboard", "line": 37, "thread_id": 129441718437696}
+{"timestamp": "2024-11-26T21:58:52.569001", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 41, "thread_id": 129441718437696}
+{"timestamp": "2024-11-26T21:58:52.581351", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 70, "thread_id": 129441718437696}
