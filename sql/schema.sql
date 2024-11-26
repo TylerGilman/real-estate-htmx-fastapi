@@ -1,5 +1,23 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+CREATE TABLE UserRole (
+    role_id INT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE User (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role_id INT NOT NULL,
+    agent_id INT NULL,  -- NULL for admins, populated for agents
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (role_id) REFERENCES UserRole(role_id),
+    FOREIGN KEY (agent_id) REFERENCES Agent(agent_id) ON DELETE CASCADE
+);
+
+-- Insert initial roles
+INSERT INTO UserRole (role_name) VALUES ('admin'), ('agent');
 
 -- Brokerage Table
 DROP TABLE IF EXISTS Brokerage;

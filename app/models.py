@@ -18,6 +18,29 @@ from datetime import datetime
 
 Base = declarative_base()
 
+class UserRole(Base):
+    __tablename__ = "UserRole"
+
+    role_id = Column(Integer, primary_key=True, autoincrement=True)
+    role_name = Column(String(50), nullable=False, unique=True)
+    created_at = Column(DateTime, default=func.now())
+
+    # Relationship
+    users = relationship("User", back_populates="role")
+
+class User(Base):
+    __tablename__ = "User"
+
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(100), nullable=False, unique=True)
+    password_hash = Column(String(255), nullable=False)
+    role_id = Column(Integer, ForeignKey("UserRole.role_id"), nullable=False)
+    agent_id = Column(Integer, ForeignKey("Agent.agent_id"), nullable=True)
+    created_at = Column(DateTime, default=func.now())
+
+    # Relationships
+    role = relationship("UserRole", back_populates="users")
+    agent = relationship("Agent", backref="user")
 
 # Enum Classes
 class PropertyStatus(str, enum.Enum):

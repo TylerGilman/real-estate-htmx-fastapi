@@ -78,5 +78,29 @@
     </div>
 </div>
 
+<div class="form-section">
+    <h2>Create User Account</h2>
+    <form hx-post="/admin/users" hx-target="#toast-container">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label>Agent (optional)</label>
+            <select name="agent_id">
+                <option value="">None (Admin Account)</option>
+                {% for agent in agents %}
+                <option value="{{ agent.agent_id }}">{{ agent.agent_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Create User</button>
+    </form>
+</div>
+
 <div id="toast-container" class="toast-container"></div>
 {% endblock %}

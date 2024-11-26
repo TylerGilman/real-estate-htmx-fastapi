@@ -3,9 +3,11 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, cast, String
 import random
+from fastapi.responses import HTMLResponse  # Add this import
 from Levenshtein import distance as levenshtein_distance
 from app.core.database import get_db
 from app.models import Property, ResidentialProperty, CommercialProperty
+from app.core.security import get_current_agent
 
 router = APIRouter(tags=["properties"])
 
@@ -108,3 +110,26 @@ async def randomize_properties(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(
         "partials/listings.html", {"request": request, "properties": properties_list}
     )
+
+@router.get("/agent-listings", response_class=HTMLResponse)
+async def agent_listings(
+    request: Request,
+    current_user: dict = Depends(get_current_agent),
+    db: Session = Depends(get_db)
+):
+    """Get listings for the current agent"""
+    try:
+        properties = (
+            db.query(Property)
+            .join(AgentListing)
+            .filter(AgentListing.agent_id == current_user["agent"].agent_id)
+            .all()
+        )
+        
+        return templates.TemplateResponse(
+            "properties/agent_listings.html",
+            {"request": request, "properties": properties}
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch agent listings: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Internal server error")

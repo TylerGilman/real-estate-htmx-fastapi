@@ -3,11 +3,12 @@ from fastapi import APIRouter, Request, Depends, Form, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import func, text  # Add text import here
+from sqlalchemy import func, text
 from typing import Optional
 from datetime import date
 from ..core.database import get_db
 from ..core.logging_config import logger
+from ..core.security import get_current_admin, get_password_hash
 from ..models import (
     Property,
     ResidentialProperty,
@@ -18,6 +19,8 @@ from ..models import (
     Transaction,
     PropertyStatus,
     Contract,
+    User,
+    UserRole
 )
 import random
 from fastapi import File, UploadFile
@@ -33,10 +36,61 @@ from fastapi.responses import HTMLResponse
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
+# Only the admin can add more authenticated users (agents)
+@router.post("/users", response_class=HTMLResponse)
+async def create_user(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    agent_id: Optional[int] = Form(None),
+    current_user: dict = Depends(get_current_admin),
+    db: Session = Depends(get_db)
+):
+    """Create a new user account (admin only)"""
+    try:
+        # Check if username exists
+        if db.query(User).filter(User.username == username).first():
+            raise HTTPException(status_code=400, detail="Username already exists")
+
+        # Get role
+        role = db.query(UserRole).filter(
+            UserRole.role_name == "agent" if agent_id else "admin"
+        ).first()
+
+        # Create user
+        user = User(
+            username=username,
+            password_hash=get_password_hash(password),
+            role_id=role.role_id,
+            agent_id=agent_id
+        )
+        
+        db.add(user)
+        db.commit()
+
+        return templates.TemplateResponse(
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": "User account created successfully",
+                "type": "success"
+            }
+        )
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Failed to create user account: {str(e)}", exc_info=True)
+        return templates.TemplateResponse(
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": f"Error creating user account: {str(e)}",
+                "type": "error"
+            }
+        )
 
 # Main Dashboard Route
 @router.get("", response_class=HTMLResponse)
-async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
+async def admin_dashboard(request: Request, current_user: dict = Depends(get_current_admin), db: Session = Depends(get_db)):
     """Main admin dashboard view"""
     try:
         # Get properties with logging
@@ -64,6 +118,7 @@ async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
 
         context = {
             "request": request,
+            "current_user": current_user,
             "agents": agents,
             "properties": properties,  # Make sure we're passing properties to template
             "total_agents": total_agents,
