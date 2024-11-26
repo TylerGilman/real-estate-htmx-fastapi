@@ -2,7 +2,7 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
-    Decimal,
+    DECIMAL,
     Date,
     DateTime,
     Boolean,
@@ -130,11 +130,11 @@ class Property(Base):
     tax_id = Column(String(50), unique=True, nullable=False)
     property_address = Column(String(255), nullable=False)
     status = Column(Enum(PropertyStatus), nullable=False)
-    price = Column(Decimal(15, 2), nullable=False)
-    lot_size = Column(Decimal(10, 2))
+    price = Column(DECIMAL(15, 2), nullable=False)
+    lot_size = Column(DECIMAL(10, 2))
     year_built = Column(Integer)
     zoning = Column(String(50))
-    property_tax = Column(Decimal(10, 2))
+    property_tax = Column(DECIMAL(10, 2))
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
@@ -156,9 +156,9 @@ class ResidentialProperty(Base):
 
     property_id = Column(Integer, ForeignKey("Property.property_id"), primary_key=True)
     bedrooms = Column(Integer)
-    bathrooms = Column(Decimal(3, 1))
+    bathrooms = Column(DECIMAL(3, 1))
     r_type = Column(String(50))
-    square_feet = Column(Decimal(10, 2))
+    square_feet = Column(DECIMAL(10, 2))
     garage_spaces = Column(Integer)
     has_basement = Column(Boolean)
     has_pool = Column(Boolean)
@@ -172,7 +172,7 @@ class CommercialProperty(Base):
     __tablename__ = "CommercialProperty"
 
     property_id = Column(Integer, ForeignKey("Property.property_id"), primary_key=True)
-    sqft = Column(Decimal(10, 2))
+    sqft = Column(DECIMAL(10, 2))
     industry = Column(String(255))
     c_type = Column(String(50))
     num_units = Column(Integer)
@@ -195,7 +195,7 @@ class AgentListing(Base):
     listing_date = Column(Date, nullable=False)
     expiration_date = Column(Date)
     exclusive = Column(Boolean, nullable=False)
-    asking_price = Column(Decimal(15, 2), nullable=False)
+    asking_price = Column(DECIMAL(15, 2), nullable=False)
     created_at = Column(DateTime, default=func.now())
 
     # Relationships
@@ -250,9 +250,9 @@ class Transaction(Base):
     buyer_id = Column(Integer, ForeignKey("Client.client_id"), nullable=False)
     agent_id = Column(Integer, ForeignKey("Agent.agent_id"), nullable=False)
     transaction_date = Column(Date, nullable=False)
-    amount = Column(Decimal(15, 2), nullable=False)
+    amount = Column(DECIMAL(15, 2), nullable=False)
     transaction_type = Column(Enum(TransactionType), nullable=False)
-    commission_amount = Column(Decimal(15, 2))
+    commission_amount = Column(DECIMAL(15, 2))
     closing_date = Column(Date)
     created_at = Column(DateTime, default=func.now())
 

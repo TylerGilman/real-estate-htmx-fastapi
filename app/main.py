@@ -1,63 +1,87 @@
-# app/main.py
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, Request, Depends, Form
 from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
-from pathlib import Path
-from .core.config import settings
-from .core.logging_config import logger
+from fastapi.staticfiles import StaticFiles
+from sqlalchemy.orm import Session
+from Levenshtein import distance as levenshtein_distance
+import random
+import os
+from app.database import SessionLocal, engine
+from app.models import Base, AgentListing  # Changed from Listing to AgentListing
 
-# Create the FastAPI app
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    version=settings.VERSION,
-    debug=settings.DEBUG
-)
+# Create tables
+Base.metadata.create_all(bind=engine)
 
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI()
 
-# Mount static files with explicit directory verification
-static_dir = Path(str(settings.STATIC_DIR))
-if not static_dir.exists():
-    static_dir.mkdir(parents=True)
-app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+# Get the current directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Setup templates
-templates = Jinja2Templates(directory=str(settings.TEMPLATES_DIR))
+# Mount static files with absolute path
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "app", "static")), name="static")
 
-# Import routers after app and template setup
-from .routes.admin import router as admin_router
-from .routes.properties import router as properties_router
-from .routes.main import router as main_router
+# Setup templates with absolute path
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "app", "templates"))
 
-# Include routers with prefixes
-app.include_router(main_router)
-app.include_router(properties_router, prefix="/properties", tags=["properties"])
-app.include_router(admin_router, prefix="/admin", tags=["admin"])
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-# Startup event
-@app.on_event("startup")
-async def startup_event():
-    logger.info(f"Starting {settings.PROJECT_NAME} v{settings.VERSION}")
-    logger.info(f"Debug mode: {settings.DEBUG}")
+def is_db_empty(db: Session):
+    return db.query(AgentListing).count() == 0  # Changed from Listing to AgentListing
 
-# Shutdown event
-@app.on_event("shutdown")
-async def shutdown_event():
-    logger.info(f"Shutting down {settings.PROJECT_NAME}")
+@app.get("/")
+async def index(request: Request, db: Session = Depends(get_db)):
+    if is_db_empty(db):
+        return templates.TemplateResponse("empty_db.html", {"request": request})
+    listings = db.query(AgentListing).all()  # Changed from Listing to AgentListing
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "listings": listings}
+    )
+
+@app.get("/property/{property_id}")
+async def property_detail(
+    request: Request, property_id: int, db: Session = Depends(get_db)
+):
+    property = db.query(AgentListing).filter(AgentListing.id == property_id).first()  # Changed from Listing to AgentListing
+    if property is None:
+        return templates.TemplateResponse(
+            "404.html", {"request": request}, status_code=404
+        )
+    template = (
+        "property_detail.html"
+        if request.headers.get("HX-Request")
+        else "property_details_full.html"
+    )
+    return templates.TemplateResponse(
+        template, {"request": request, "property": property}
+    )
+
+@app.post("/search")
+async def search(request: Request, db: Session = Depends(get_db)):
+    form = await request.form()
+    search_query = form.get("search-text", "").lower()
+    listings = db.query(AgentListing).all()  # Changed from Listing to AgentListing
+
+    def similarity_score(listing):
+        return levenshtein_distance(listing.title.lower(), search_query)
+
+    sorted_listings = sorted(listings, key=similarity_score)
+    return templates.TemplateResponse(
+        "partials/listings.html", {"request": request, "listings": sorted_listings}
+    )
+
+@app.post("/randomize")
+async def randomize(request: Request, db: Session = Depends(get_db)):
+    listings = db.query(AgentListing).all()  # Changed from Listing to AgentListing
+    random.shuffle(listings)
+    return templates.TemplateResponse(
+        "partials/listings.html", {"request": request, "listings": listings}
+    )
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        "app.main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=settings.DEBUG
-    )
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
