@@ -1,44 +1,41 @@
-<div class="table-row" id="property-{{ property.property_id }}">
+<div class="table-row" id="property-{{ property.property_id }}" hx-swap-oob="true">
     <div class="table-cell">
         <div class="property-title">{{ property.property_address }}</div>
         <div class="property-type text-muted">
             {% if property.residential %}
                 Residential • 
-                {{ property.residential.bedrooms or 0 }} bed, 
-                {{ property.residential.bathrooms or 0 }} bath
+                {{ property.residential.bedrooms if property.residential.bedrooms else '0' }} bed, 
+                {{ property.residential.bathrooms if property.residential.bathrooms else '0' }} bath
             {% elif property.commercial %}
                 Commercial • 
-                {{ property.commercial.industry or 'N/A' }}
+                {{ "{:,.0f}".format(property.commercial.sqft) if property.commercial.sqft else '0' }} sqft
             {% endif %}
         </div>
     </div>
-
     <div class="table-cell">
         <div>
             <span class="text-muted">Area:</span> 
-            {% if property.residential and property.residential.square_feet %}
-                {{ "{:,.0f}".format(property.residential.square_feet) }} sqft
-            {% elif property.commercial and property.commercial.sqft %}
-                {{ "{:,.0f}".format(property.commercial.sqft) }} sqft
+            {% if property.residential %}
+                {{ "{:,.0f}".format(property.residential.square_feet) if property.residential.square_feet else '0' }} sqft
+            {% elif property.commercial %}
+                {{ "{:,.0f}".format(property.commercial.sqft) if property.commercial.sqft else '0' }} sqft
             {% else %}
                 N/A
             {% endif %}
         </div>
         <div>
             <span class="text-muted">Built:</span>
-            {{ property.year_built or 'N/A' }}
+            {{ property.year_built if property.year_built else 'N/A' }}
         </div>
     </div>
-
     <div class="table-cell">
-        <div class="status-badge {{ property.status.value|lower|replace(' ', '-') }}">
+        <div class="status-badge {{ property.status.value.lower().replace(' ', '-') }}">
             {{ property.status.value }}
         </div>
         <div class="property-price">
-            ${{ "{:,.2f}".format(property.price) }}
+            ${{ "{:,.0f}".format(property.price) }}
         </div>
     </div>
-
     <div class="table-cell actions">
         <button class="action-button edit"
                 hx-get="/admin/properties/{{ property.property_id }}/edit"
@@ -47,9 +44,9 @@
         </button>
         <button class="action-button delete"
                 hx-delete="/admin/properties/{{ property.property_id }}"
-                hx-confirm="Are you sure you want to delete this property?"
                 hx-target="#property-{{ property.property_id }}"
-                hx-swap="outerHTML"
+                hx-swap="outerHTML swap:1s"
+                hx-confirm="Are you sure you want to delete this property?"
                 hx-indicator="#delete-spinner-{{ property.property_id }}">
             <span class="button-text">Delete</span>
             <span id="delete-spinner-{{ property.property_id }}" 

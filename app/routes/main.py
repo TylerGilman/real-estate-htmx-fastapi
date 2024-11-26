@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from ..core.database import get_db
-from ..models import Property, ResidentialProperty, CommercialProperty
+from typing import Optional
+import os
+from app.core.database import get_db
+from app.models import Property, ResidentialProperty, CommercialProperty
 
-router = APIRouter()
+router = APIRouter(tags=["main"])
 templates = Jinja2Templates(directory="app/templates")
 
 
@@ -14,7 +16,8 @@ def is_db_empty(db: Session) -> bool:
 
 
 @router.get("/")
-def index(request: Request, db: Session = Depends(get_db)):
+async def index(request: Request, db: Session = Depends(get_db)):
+    """Homepage route"""
     if is_db_empty(db):
         return templates.TemplateResponse(
             "properties/empty_db.html", {"request": request}
@@ -28,5 +31,55 @@ def index(request: Request, db: Session = Depends(get_db)):
     )
 
     return templates.TemplateResponse(
-        "index.html", {"request": request, "properties": properties}
+        "index.html",
+        {"request": request, "properties": properties, "user_type": "public"},
+    )
+
+
+@router.get("/about")
+async def about(request: Request):
+    """About page route"""
+    return templates.TemplateResponse("about.html", {"request": request})
+
+
+@router.get("/contact")
+async def contact(request: Request):
+    """Contact page route"""
+    return templates.TemplateResponse("contact.html", {"request": request})
+
+
+@router.get("/search")
+async def search(
+    request: Request,
+    query: Optional[str] = None,
+    property_type: Optional[str] = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    db: Session = Depends(get_db),
+):
+    """Search properties route"""
+    properties_query = (
+        db.query(Property).outerjoin(ResidentialProperty).outerjoin(CommercialProperty)
+    )
+
+    if query:
+        properties_query = properties_query.filter(
+            Property.property_address.ilike(f"%{query}%")
+        )
+
+    if min_price:
+        properties_query = properties_query.filter(Property.price >= min_price)
+
+    if max_price:
+        properties_query = properties_query.filter(Property.price <= max_price)
+
+    properties = properties_query.all()
+
+    if request.headers.get("HX-Request"):
+        return templates.TemplateResponse(
+            "partials/listings.html", {"request": request, "properties": properties}
+        )
+
+    return templates.TemplateResponse(
+        "search.html", {"request": request, "properties": properties}
     )

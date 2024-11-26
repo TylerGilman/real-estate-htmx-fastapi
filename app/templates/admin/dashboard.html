@@ -1,4 +1,3 @@
-{# templates/admin/dashboard.html #}
 {% extends "admin/base.html" %}
 {% block content %}
 {% if error %}
@@ -20,10 +19,49 @@
         <button class="action-button" onclick="toggleForm('add-property-form')">Add New Property</button>
     </div>
     <div id="properties-content" class="section-content">
+        {# Add Property Form #}
         <div id="add-property-form" class="form-container hidden">
             {% include "admin/properties/form.html" %}
         </div>
-        {% include "admin/properties/table.html" %}
+
+        {# Properties Stats #}
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Properties</h3>
+                <p class="stat-value">{{ total_properties }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Value</h3>
+                <p class="stat-value">${{ "{:,.2f}".format(total_sales) }}</p>
+            </div>
+        </div>
+
+        {# Properties Table #}
+        <div class="admin-table">
+            <div class="table-responsive">
+                <table id="properties-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Details</th>
+                            <th>Status & Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for property in properties %}
+                            {% include "admin/properties/table_row.html" %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    No properties found. Add your first property using the button above.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

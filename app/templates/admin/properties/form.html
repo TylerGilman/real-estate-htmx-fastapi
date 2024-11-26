@@ -1,16 +1,26 @@
 <form
     hx-post="/admin/properties"
-    hx-target=".table-responsive"
+    hx-target="#properties-table"
     hx-swap="beforeend"
-    hx-on="htmx:afterSwap: showToast()"
+    hx-on::after-request="this.reset()"
     method="post"
     enctype="multipart/form-data"
     class="space-y-4"
 >
     {% include "admin/properties/form_fields.html" %}
-    <div>
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+    <div class="button-group">
+        <button type="button" 
+                class="cancel-button"
+                onclick="document.getElementById('add-property-form').classList.add('hidden')">
+            Cancel
+        </button>
+        <button type="submit" 
+                class="submit-button"
+                hx-indicator="#submit-spinner">
             Create Property
+            <span id="submit-spinner" class="htmx-indicator">
+                Loading...
+            </span>
         </button>
     </div>
 </form>

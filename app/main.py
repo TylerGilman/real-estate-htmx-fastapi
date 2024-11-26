@@ -1,87 +1,47 @@
-from fastapi import FastAPI, Request, Depends, Form
+from fastapi import FastAPI, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
-from Levenshtein import distance as levenshtein_distance
-import random
 import os
-from app.database import SessionLocal, engine
-from app.models import Base, AgentListing  # Changed from Listing to AgentListing
+from app.core.database import get_db
+from app.models import Property, ResidentialProperty, CommercialProperty
+from app.routes.admin import router as admin_router
+from app.routes.properties import router as properties_router
+from app.routes.main import router as main_router
 
-# Create tables
-Base.metadata.create_all(bind=engine)
-
-app = FastAPI()
+app = FastAPI(title="Real Estate Management System")
 
 # Get the current directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Mount static files with absolute path
+# Mount static files
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "app", "static")), name="static")
 
-# Setup templates with absolute path
+# Setup templates
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "app", "templates"))
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Include routers with prefixes
+app.include_router(admin_router, prefix="/admin")
+app.include_router(properties_router, prefix="/properties")
+app.include_router(main_router)  # No prefix for main routes
 
-def is_db_empty(db: Session):
-    return db.query(AgentListing).count() == 0  # Changed from Listing to AgentListing
-
-@app.get("/")
-async def index(request: Request, db: Session = Depends(get_db)):
-    if is_db_empty(db):
-        return templates.TemplateResponse("empty_db.html", {"request": request})
-    listings = db.query(AgentListing).all()  # Changed from Listing to AgentListing
+# Error handlers
+@app.exception_handler(404)
+async def not_found_handler(request: Request, exc):
     return templates.TemplateResponse(
-        "index.html", {"request": request, "listings": listings}
+        "404.html",
+        {"request": request},
+        status_code=404
     )
 
-@app.get("/property/{property_id}")
-async def property_detail(
-    request: Request, property_id: int, db: Session = Depends(get_db)
-):
-    property = db.query(AgentListing).filter(AgentListing.id == property_id).first()  # Changed from Listing to AgentListing
-    if property is None:
-        return templates.TemplateResponse(
-            "404.html", {"request": request}, status_code=404
-        )
-    template = (
-        "property_detail.html"
-        if request.headers.get("HX-Request")
-        else "property_details_full.html"
-    )
+@app.exception_handler(500)
+async def server_error_handler(request: Request, exc):
     return templates.TemplateResponse(
-        template, {"request": request, "property": property}
-    )
-
-@app.post("/search")
-async def search(request: Request, db: Session = Depends(get_db)):
-    form = await request.form()
-    search_query = form.get("search-text", "").lower()
-    listings = db.query(AgentListing).all()  # Changed from Listing to AgentListing
-
-    def similarity_score(listing):
-        return levenshtein_distance(listing.title.lower(), search_query)
-
-    sorted_listings = sorted(listings, key=similarity_score)
-    return templates.TemplateResponse(
-        "partials/listings.html", {"request": request, "listings": sorted_listings}
-    )
-
-@app.post("/randomize")
-async def randomize(request: Request, db: Session = Depends(get_db)):
-    listings = db.query(AgentListing).all()  # Changed from Listing to AgentListing
-    random.shuffle(listings)
-    return templates.TemplateResponse(
-        "partials/listings.html", {"request": request, "listings": listings}
+        "500.html",
+        {"request": request},
+        status_code=500
     )
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
