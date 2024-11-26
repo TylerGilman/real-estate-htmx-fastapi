@@ -20,6 +20,13 @@ from ..models import (
     Contract,
 )
 import random
+from fastapi import File, UploadFile
+import os
+from datetime import datetime
+import shutil
+
+# Add at the top with other imports
+UPLOAD_DIR = "app/static/property_images"
 
 from fastapi.responses import HTMLResponse
 
@@ -156,6 +163,8 @@ async def create_property(
     lot_size: float = Form(None),
     zoning: str = Form(None),
     property_tax: float = Form(None),
+    # Add image field
+    image: UploadFile = File(None),
     # Residential specific fields
     bedrooms: int = Form(None),
     bathrooms: float = Form(None),
@@ -165,7 +174,7 @@ async def create_property(
     has_basement: bool = Form(False),
     has_pool: bool = Form(False),
     # Commercial specific fields
-    sqft: float = Form(None),
+    commercial_sqft: float = Form(None),  # Changed from sqft to commercial_sqft
     industry: str = Form(None),
     c_type: str = Form(None),
     num_units: int = Form(None),
@@ -179,7 +188,7 @@ async def create_property(
         # Generate a unique tax_id
         tax_id = f"TAX{random.randint(100000, 999999)}"
 
-        # Create base property
+        # Create base property first
         property = Property(
             tax_id=tax_id,
             property_address=property_address,
@@ -191,14 +200,36 @@ async def create_property(
             property_tax=property_tax if property_tax else None,
         )
 
-        logger.info(f"Created base property object with tax_id: {tax_id}")
-
         db.add(property)
-        db.flush()
+        db.flush()  # Get the property_id
 
-        logger.info(f"Property flushed to DB with ID: {property.property_id}")
+        # Handle image upload if provided
+        if image:
+            try:
+                # Create directory structure: property_images/year/month/property_id/
+                date_path = datetime.now().strftime("%Y/%m")
+                property_path = f"{property.property_id}"
+                full_path = os.path.join(UPLOAD_DIR, date_path, property_path)
+                os.makedirs(full_path, exist_ok=True)
 
-        # Add type-specific details
+                # Generate unique filename
+                file_name = f"{datetime.now().timestamp()}_{image.filename}"
+                file_path = os.path.join(full_path, file_name)
+
+                # Save the file
+                with open(file_path, "wb") as buffer:
+                    shutil.copyfileobj(image.file, buffer)
+
+                # Store the relative path in the database
+                property.image_url = f"/static/property_images/{date_path}/{property_path}/{file_name}"
+                logger.info(f"Saved property image: {property.image_url}")
+
+            except Exception as img_error:
+                logger.error(f"Failed to save image: {str(img_error)}", exc_info=True)
+                # Continue with property creation even if image upload fails
+                property.image_url = None
+
+        # Rest of your existing property creation code...
         if property_type.upper() == "RESIDENTIAL":
             logger.info("Adding residential details")
             residential = ResidentialProperty(
@@ -212,13 +243,12 @@ async def create_property(
                 has_pool=True if has_pool == "true" else False,
             )
             db.add(residential)
-            logger.info("Residential details added")
 
         elif property_type.upper() == "COMMERCIAL":
             logger.info("Adding commercial details")
             commercial = CommercialProperty(
                 property_id=property.property_id,
-                sqft=sqft if sqft else None,
+                sqft=commercial_sqft if commercial_sqft else None,  # Updated to use commercial_sqft
                 industry=industry if industry else None,
                 c_type=c_type if c_type else None,
                 num_units=num_units if num_units else None,
@@ -228,22 +258,17 @@ async def create_property(
             db.add(commercial)
             logger.info("Commercial details added")
 
-        # Commit the transaction
         db.commit()
         logger.info(f"Property committed to database with ID: {property.property_id}")
 
-        # After creation, verify the property exists
         created_property = db.query(Property).filter(Property.tax_id == tax_id).first()
-        logger.info(
-            f"Created property with ID: {created_property.property_id if created_property else 'Not found'}"
-        )
-
-        # Return both the row and refresh the entire table
+        
         return templates.TemplateResponse(
             "admin/properties/table_row.html",
             {"request": request, "property": created_property},
-            headers={"HX-Trigger": "propertyCreated"},  # This will trigger a refresh
+            headers={"HX-Trigger": "propertyCreated"},
         )
+
     except Exception as e:
         logger.error(f"Failed to create property", exc_info=True)
         raise

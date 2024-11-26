@@ -1,3 +1,32 @@
+DELIMITER //
+
+CREATE PROCEDURE add_property_image(
+    IN p_property_id INT,
+    IN p_file_path VARCHAR(255),
+    IN p_is_primary BOOLEAN
+)
+BEGIN
+    -- If this is primary, unset any existing primary
+    IF p_is_primary THEN
+        UPDATE PropertyImages 
+        SET is_primary = FALSE 
+        WHERE property_id = p_property_id;
+    END IF;
+
+    INSERT INTO PropertyImages (property_id, file_path, is_primary)
+    VALUES (p_property_id, p_file_path, p_is_primary);
+END //
+
+CREATE PROCEDURE get_property_images(IN p_property_id INT)
+BEGIN
+    SELECT * FROM PropertyImages
+    WHERE property_id = p_property_id
+    ORDER BY is_primary DESC, uploaded_at DESC;
+END //
+
+DELIMITER ;
+
+
 DELIMITER / /
 
 CREATE PROCEDURE delete_property(

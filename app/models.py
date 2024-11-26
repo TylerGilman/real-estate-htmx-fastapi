@@ -137,6 +137,7 @@ class Property(Base):
     property_tax = Column(DECIMAL(10, 2))
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    image_url = Column(String(255))
 
     # Relationships
     residential = relationship(

@@ -7,7 +7,7 @@ from Levenshtein import distance as levenshtein_distance
 from app.core.database import get_db
 from app.models import Property, ResidentialProperty, CommercialProperty
 
-router = APIRouter(prefix="/properties", tags=["properties"])
+router = APIRouter(tags=["properties"])
 
 templates = Jinja2Templates(directory="app/templates")
 
@@ -46,26 +46,25 @@ async def properties_list(
 @router.get("/{tax_id}")
 async def property_detail(request: Request, tax_id: str, db: Session = Depends(get_db)):
     """Get property details"""
-    property = (
-        db.query(Property)
-        .outerjoin(ResidentialProperty)
-        .outerjoin(CommercialProperty)
-        .filter(Property.tax_id == tax_id)
-        .first()
-    )
+    try:
+        # Query the property with both residential and commercial details
+        property = (
+            db.query(Property)
+            .outerjoin(ResidentialProperty)
+            .outerjoin(CommercialProperty)
+            .filter(Property.tax_id == tax_id)
+            .first()
+        )
 
-    if property is None:
+        if not property:
+            raise HTTPException(status_code=404, detail="Property not found")
+
+        return templates.TemplateResponse(
+            "properties/detail.html", {"request": request, "property": property}
+        )
+    except Exception as e:
+        print(f"Error fetching property {tax_id}: {str(e)}")
         raise HTTPException(status_code=404, detail="Property not found")
-
-    template = (
-        "properties/detail.html"
-        if not request.headers.get("HX-Request")
-        else "partials/property_detail.html"
-    )
-
-    return templates.TemplateResponse(
-        template, {"request": request, "property": property}
-    )
 
 
 @router.post("/search")

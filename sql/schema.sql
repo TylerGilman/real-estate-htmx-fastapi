@@ -1,5 +1,6 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+
 -- Brokerage Table
 DROP TABLE IF EXISTS Brokerage;
 CREATE TABLE Brokerage (
@@ -116,6 +117,15 @@ CREATE TABLE AgentListing (
     FOREIGN KEY (agent_id) REFERENCES Agent(agent_id),
     FOREIGN KEY (client_id) REFERENCES Client(client_id),
     INDEX idx_listing_date (listing_date)
+);
+
+CREATE TABLE PropertyImages (
+    image_id INT PRIMARY KEY AUTO_INCREMENT,
+    property_id INT NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (property_id) REFERENCES Property(property_id) ON DELETE CASCADE
 );
 
 -- Agent Showing Table

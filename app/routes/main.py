@@ -18,22 +18,32 @@ def is_db_empty(db: Session) -> bool:
 @router.get("/")
 async def index(request: Request, db: Session = Depends(get_db)):
     """Homepage route"""
-    if is_db_empty(db):
-        return templates.TemplateResponse(
-            "properties/empty_db.html", {"request": request}
+    try:
+        # Query properties with their details
+        properties = (
+            db.query(Property)
+            .outerjoin(ResidentialProperty)
+            .outerjoin(CommercialProperty)
+            .all()
         )
-
-    properties = (
-        db.query(Property)
-        .outerjoin(ResidentialProperty)
-        .outerjoin(CommercialProperty)
-        .all()
-    )
-
-    return templates.TemplateResponse(
-        "index.html",
-        {"request": request, "properties": properties, "user_type": "public"},
-    )
+        
+        return templates.TemplateResponse(
+            "index.html",
+            {
+                "request": request,
+                "properties": properties,
+            }
+        )
+    except Exception as e:
+        print(f"Error fetching properties: {str(e)}")
+        return templates.TemplateResponse(
+            "index.html",
+            {
+                "request": request,
+                "properties": [],
+                "error": "Failed to load properties"
+            }
+        )
 
 
 @router.get("/about")

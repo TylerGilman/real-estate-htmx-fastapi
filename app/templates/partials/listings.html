@@ -1,31 +1,62 @@
+<!-- templates/partials/listings.html -->
 <div id="listings-container" class="gridContainer">
     {% for property in properties %}
     <div class="listing" 
-         hx-get="/property/{{ property.tax_id }}" 
-         hx-trigger="click" 
-         hx-target="#content" 
-         hx-push-url="true">
+         hx-get="/properties/{{ property.tax_id }}"
+         hx-target="body"
+         hx-push-url="true"
+         role="button"
+         tabindex="0">
         <div class="listing-image">
-            <img src="{{ property.image_url }}" alt="{{ property.property_address }}">
+            <img src="{{ property.image_url|default('/static/noimage.webp') }}" 
+                 alt="{{ property.property_address }}"
+                 loading="lazy">
+            <div class="status-badge {{ property.status.value|lower|replace(' ', '-') }}">
+                {{ property.status.value }}
+            </div>
         </div>
         <div class="listing-info">
             <h2>{{ property.property_address }}</h2>
             <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
-            <p class="type">{{ property.status }} - {{ property.property_type.value|title }}</p>
-            {% if property.property_type.value == 'residential' and property.residential_details %}
+            {% if property.residential %}
                 <p class="details">
-                    {{ property.residential_details.bedrooms }} bd | 
-                    {{ property.residential_details.bathrooms }} ba | 
-                    {{ property.residential_details.r_type }}
+                    {{ property.residential.bedrooms }} bd | 
+                    {{ property.residential.bathrooms }} ba | 
+                    {{ property.residential.r_type }}
                 </p>
-            {% elif property.property_type.value == 'commercial' and property.commercial_details %}
+            {% elif property.commercial %}
                 <p class="details">
-                    {{ "{:,.0f}".format(property.commercial_details.sqft) }} sqft | 
-                    {{ property.commercial_details.industry }} | 
-                    {{ property.commercial_details.c_type }}
+                    {{ "{:,.0f}".format(property.commercial.sqft) }} sqft | 
+                    {{ property.commercial.industry }} | 
+                    {{ property.commercial.c_type }}
                 </p>
             {% endif %}
         </div>
     </div>
     {% endfor %}
 </div>
+
+<style>
+    .listing {
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .listing:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .listing:focus {
+        outline: 2px solid var(--swedish-blue);
+        outline-offset: 2px;
+    }
+
+    /* Ensure images don't cause layout shift while loading */
+    .listing-image {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background-color: var(--swedish-gray);
+    }
+
+    .listing-image im
