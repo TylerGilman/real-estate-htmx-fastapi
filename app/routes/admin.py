@@ -216,19 +216,19 @@ async def create_property(
     property_type: str = Form(...),
     price: float = Form(...),
     status: str = Form(...),
-    year_built: int = Form(None),
+    year_built: int = Form(...),
     lot_size: float = Form(None),
     zoning: str = Form(None),
     property_tax: float = Form(None),
-    image: UploadFile = File(None),  # Image field
-    bedrooms: int = Form(None),  # Residential-specific fields
+    image: UploadFile = File(None),
+    bedrooms: int = Form(None),
     bathrooms: float = Form(None),
-    r_type: str = Form(None),
+    r_type: str = Form(None), 
     square_feet: float = Form(None),
     garage_spaces: int = Form(None),
     has_basement: bool = Form(False),
     has_pool: bool = Form(False),
-    commercial_sqft: float = Form(None),  # Commercial-specific fields
+    commercial_sqft: float = Form(None),
     industry: str = Form(None),
     c_type: str = Form(None),
     num_units: int = Form(None),
@@ -237,124 +237,115 @@ async def create_property(
     db: Session = Depends(get_db),
 ):
     try:
-        logger.info(f"Creating new property: {property_address}")
-
-        # Map status to ENUM-compatible value
-        status_map = {
-            "For Sale": "FOR_SALE",
-            "Sold": "SOLD",
-            "For Lease": "FOR_LEASE",
-            "Leased": "LEASED",
-        }
-        status_db = status_map.get(status, "FOR_SALE")  # Default to "FOR_SALE" if invalid
-
-        # Validate status
-        if status not in status_map:
-            return templates.TemplateResponse(
-                "shared/toast.html",
-                {"request": request, "message": "Invalid status value. Please select a valid option."},
-            )
-
-        # Assign default values for missing optional parameters
-        year_built = year_built or 2000
-        lot_size = lot_size or 0.0
-        zoning = zoning or "Unknown"
-        property_tax = property_tax or 0.0
-        bedrooms = bedrooms or 0
-        bathrooms = bathrooms or 0.0
-        r_type = r_type or "Single Family"
-        square_feet = square_feet or 0.0
-        garage_spaces = garage_spaces or 0
-        commercial_sqft = commercial_sqft or 0.0
-        industry = industry or "General"
-        c_type = c_type or "Office"
-        num_units = num_units or 0
-        parking_spaces = parking_spaces or 0
-        zoning_type = zoning_type or "General"
-
-        # Generate a unique tax ID
+        logger.info(f"Starting property creation for {property_address}")
+        logger.info(f"Property type: {property_type}")
+        logger.info(f"Status: {status}")
+        
+        # Generate unique tax ID
         tax_id = f"TAX{random.randint(100000, 999999)}"
+        
+        # Validate status before creating property
+        try:
+            property_status = PropertyStatus(status)
+            logger.info(f"Validated status: {property_status}")
+        except ValueError as e:
+            logger.error(f"Invalid status value: {status}")
+            raise ValueError(f"Invalid status value: {status}")
 
-        # Call the `create_property` stored procedure
-        property_id = db.execute(
-            text("""
-                CALL create_property(
-                    :tax_id, :property_address, :status, :price, :lot_size, :year_built, :zoning, :property_tax,
-                    :property_type, :bedrooms, :bathrooms, :r_type, :square_feet, :garage_spaces, :has_basement,
-                    :has_pool, :commercial_sqft, :industry, :c_type, :num_units, :parking_spaces, :zoning_type,
-                    @property_id
-                )
-            """),
-            {
-                "tax_id": tax_id,
-                "property_address": property_address,
-                "status": status_db,
-                "price": price,
-                "lot_size": lot_size,
-                "year_built": year_built,
-                "zoning": zoning,
-                "property_tax": property_tax,
-                "property_type": property_type.upper(),
-                "bedrooms": bedrooms,
-                "bathrooms": bathrooms,
-                "r_type": r_type,
-                "square_feet": square_feet,
-                "garage_spaces": garage_spaces,
-                "has_basement": has_basement,
-                "has_pool": has_pool,
-                "commercial_sqft": commercial_sqft,
-                "industry": industry,
-                "c_type": c_type,
-                "num_units": num_units,
-                "parking_spaces": parking_spaces,
-                "zoning_type": zoning_type,
-            },
+        # Create base property
+        new_property = Property(
+            tax_id=tax_id,
+            property_address=property_address,
+            status=property_status,
+            price=price,
+            lot_size=lot_size if lot_size else None,
+            year_built=year_built,
+            zoning=zoning if zoning else None,
+            property_tax=property_tax if property_tax else None
         )
+        
+        logger.info("Adding base property to session")
+        db.add(new_property)
+        db.flush()  # Get ID but don't commit yet
+        logger.info(f"Base property created with ID: {new_property.property_id}")
 
+        # Add type-specific details
+        if property_type.upper() == "RESIDENTIAL":
+            logger.info("Creating residential property details")
+            residential = ResidentialProperty(
+                property_id=new_property.property_id,
+                bedrooms=bedrooms if bedrooms else None,
+                bathrooms=bathrooms if bathrooms else None,
+                r_type=r_type if r_type else None,
+                square_feet=square_feet if square_feet else None,
+                garage_spaces=garage_spaces if garage_spaces else None,
+                has_basement=has_basement,
+                has_pool=has_pool
+            )
+            db.add(residential)
+            logger.info("Residential details added")
+        elif property_type.upper() == "COMMERCIAL":
+            logger.info("Creating commercial property details")
+            commercial = CommercialProperty(
+                property_id=new_property.property_id,
+                sqft=commercial_sqft if commercial_sqft else None,
+                industry=industry if industry else None,
+                c_type=c_type if c_type else None,
+                num_units=num_units if num_units else None,
+                parking_spaces=parking_spaces if parking_spaces else None,
+                zoning_type=zoning_type if zoning_type else None
+            )
+            db.add(commercial)
+            logger.info("Commercial details added")
+        else:
+            logger.error(f"Invalid property type: {property_type}")
+            raise ValueError(f"Invalid property type: {property_type}")
 
-        # Handle image upload if provided
+        # Handle image upload
         if image:
             try:
-                os.makedirs(UPLOAD_DIR, exist_ok=True)
-                file_name = f"{datetime.now().timestamp()}_{image.filename}"
-                file_path = os.path.join(UPLOAD_DIR, file_name)
+                logger.info("Processing image upload")
+                date_path = datetime.now().strftime("%Y/%m")
+                full_path = os.path.join(UPLOAD_DIR, date_path)
+                os.makedirs(full_path, exist_ok=True)
 
+                file_name = f"{datetime.now().timestamp()}_{image.filename}"
+                file_path = os.path.join(full_path, file_name)
+                
                 with open(file_path, "wb") as buffer:
                     shutil.copyfileobj(image.file, buffer)
 
-                # Call `add_property_image` procedure
-                db.execute(
-                    text("""
-                        CALL add_property_image(:property_id, :file_path, :is_primary)
-                    """),
-                    {
-                        "property_id": property_id,
-                        "file_path": f"/static/uploads/{file_name}",
-                        "is_primary": True,
-                    },
-                )
+                new_property.image_url = f"/static/property_images/{date_path}/{file_name}"
+                logger.info(f"Image saved at: {new_property.image_url}")
+                
+            except Exception as e:
+                logger.error(f"Image upload failed: {str(e)}")
+                # Continue without image if upload fails
 
-            except Exception as img_error:
-                logger.error(f"Failed to save image: {str(img_error)}", exc_info=True)
-
-        # Commit changes
+        logger.info("Committing transaction")
         db.commit()
-        logger.info(f"Property created successfully with ID: {property_id}")
+        logger.info("Transaction committed successfully")
 
-        # Render success response
-        created_property = db.query(Property).filter(Property.property_id == property_id).first()
+        # Query the newly created property for the response
+        created_property = db.query(Property).filter(Property.tax_id == tax_id).first()
+        logger.info(f"Retrieved created property with tax_id: {tax_id}")
+        
         return templates.TemplateResponse(
             "admin/properties/table_row.html",
             {"request": request, "property": created_property},
-            headers={"HX-Trigger": "propertyCreated"},
+            headers={"HX-Trigger": "propertyCreated"}
         )
+        
     except Exception as e:
-        logger.error(f"Error creating property: {str(e)}", exc_info=True)
+        logger.error(f"Error in create_property: {str(e)}", exc_info=True)
         db.rollback()
-        # Render error message using toast template
         return templates.TemplateResponse(
             "components/toast.html",
-            {"request": request, "message": "Failed to create property. Please try again."},
+            {
+                "request": request, 
+                "message": f"Failed to create property: {str(e)}", 
+                "type": "error"
+            }
         )
 
 
