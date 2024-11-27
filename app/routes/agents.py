@@ -17,6 +17,7 @@ from ..models import (
 )
 from typing import Optional
 from datetime import date, datetime
+from sqlalchemy.orm import Session, joinedload
 
 router = APIRouter(tags=["agents"])
 templates = Jinja2Templates(directory="app/templates")
@@ -30,32 +31,33 @@ async def agent_dashboard(
     """Agent's personal dashboard"""
     try:
         agent = current_user["agent"]
-        print("Agent - " + str(agent.agent_name))
-        # Get agent's listings
-        listings = (
+        print("Agent - " + str(agent.agent_name))  # Debug print
+        
+        # Get agent's listings - check the SQL query being generated
+        listings_query = (
             db.query(Property)
             .join(AgentListing)
             .filter(AgentListing.agent_id == agent.agent_id)
-            .all()
         )
+        logger.info(f"Listings query: {str(listings_query)}")  # Log the query
+        listings = listings_query.all()
+        logger.info(f"Found {len(listings)} listings for agent")
         
-        # Get statistics
+        # Add debug prints
+        for listing in listings:
+            logger.info(f"Listing: {listing.property_address}")
+
         active_listings = len([l for l in listings if l.status in 
                              [PropertyStatus.FOR_SALE, PropertyStatus.FOR_LEASE]])
-        
+        logger.info(f"Active listings: {active_listings}")
+
+        # Get statistics
         total_sales = (
             db.query(func.sum(Transaction.amount))
             .filter(Transaction.agent_id == agent.agent_id)
             .scalar() or 0
         )
         
-        total_commissions = (
-            db.query(func.sum(Transaction.commission_amount))
-            .filter(Transaction.agent_id == agent.agent_id)
-            .scalar() or 0
-        )
-        
-        # Get upcoming showings
         upcoming_showings = (
             db.query(AgentShowing)
             .filter(
@@ -63,7 +65,6 @@ async def agent_dashboard(
                 AgentShowing.showing_date >= date.today()
             )
             .order_by(AgentShowing.showing_date)
-            .limit(5)
             .all()
         )
 
@@ -73,11 +74,9 @@ async def agent_dashboard(
             "listings": listings,
             "active_listings": active_listings,
             "total_sales": total_sales,
-            "total_commissions": total_commissions,
             "upcoming_showings": upcoming_showings
         }
         
-        logger.info(f"Agent dashboard loaded for agent {agent.agent_id}")
         return templates.TemplateResponse("agents/dashboard.html", context)
         
     except Exception as e:
@@ -149,8 +148,8 @@ async def update_property(
         logger.error(f"Failed to update property {property_id}: {str(e)}")
         raise HTTPException(status_code=500, detail="Error updating property")
 
-@router.post("/showings/book", response_class=HTMLResponse)
-async def book_showing(
+@router.post("/showings", response_class=HTMLResponse)
+async def create_showing(
     request: Request,
     property_id: int = Form(...),
     showing_date: str = Form(...),
@@ -159,29 +158,59 @@ async def book_showing(
     current_user: dict = Depends(get_current_agent),
     db: Session = Depends(get_db)
 ):
-    """Agent schedules a showing"""
+    """Schedule a new showing"""
     try:
         agent = current_user["agent"]
-        showing_datetime = datetime.strptime(showing_date, "%Y-%m-%d %H:%M:%S")
-
+        showing_datetime = datetime.strptime(showing_date, "%Y-%m-%d %H:%M")
+        
         showing = AgentShowing(
             property_id=property_id,
             agent_id=agent.agent_id,
             client_id=client_id,
             showing_date=showing_datetime,
             notes=notes,
+            agent_role=AgentRole.SELLER_AGENT
         )
-
+        
         db.add(showing)
         db.commit()
-
+        
         return templates.TemplateResponse(
-            "agents/components/showing_card.html",
-            {"request": request, "showing": showing},
+            "components/toast.html",
+            {"request": request, "message": "Showing scheduled successfully", "type": "success"}
         )
+
     except Exception as e:
-        logger.error(f"Error booking showing: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to book showing")
+        logger.error(f"Error creating showing: {str(e)}")
+        return templates.TemplateResponse(
+            "components/toast.html",
+            {"request": request, "message": "Failed to schedule showing", "type": "error"}
+        )
+
+@router.delete("/showings/{showing_id}")
+async def cancel_showing(
+    showing_id: int,
+    current_user: dict = Depends(get_current_agent),
+    db: Session = Depends(get_db)
+):
+    """Cancel a showing"""
+    try:
+        showing = db.query(AgentShowing).filter(
+            AgentShowing.showing_id == showing_id,
+            AgentShowing.agent_id == current_user["agent"].agent_id
+        ).first()
+        
+        if not showing:
+            raise HTTPException(status_code=404, detail="Showing not found")
+            
+        db.delete(showing)
+        db.commit()
+        
+        return {"message": "Showing cancelled successfully"}
+        
+    except Exception as e:
+        logger.error(f"Error cancelling showing: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to cancel showing")
 
 @router.get("/listings", response_class=HTMLResponse)
 async def agent_listings(

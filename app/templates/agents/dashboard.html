@@ -2,48 +2,178 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <h1 class="page-title">Welcome, {{ agent.agent_name }}</h1>
-
-    <!-- Stats Section -->
-    <section class="stats-container">
-        <div class="stat-card">
-            <h3>Active Listings</h3>
-            <p class="stat-value">{{ active_listings }}</p>
+    <!-- Welcome & Stats Section -->
+    <div class="section">
+        <h1>Welcome, {{ agent.agent_name }}</h1>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Active Listings</h3>
+                <p>{{ active_listings }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Sales</h3>
+                <p>${{ "{:,.2f}".format(total_sales) }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Upcoming Showings</h3>
+                <p>{{ upcoming_showings|length }}</p>
+            </div>
         </div>
-        <div class="stat-card">
-            <h3>Total Sales</h3>
-            <p class="stat-value">${{ total_sales }}</p>
-        </div>
-        <div class="stat-card">
-            <h3>Total Commissions</h3>
-            <p class="stat-value">${{ total_commissions }}</p>
-        </div>
-    </section>
+    </div>
 
     <!-- Listings Section -->
-    <section class="listings-container">
-        <h2>My Listings</h2>
-        {% for property in listings %}
-        <div class="property-card">
-            <h3>{{ property.address }}</h3>
-            <p>Price: ${{ property.price }}</p>
-            <p>Status: {{ property.status }}</p>
-            <a href="/agent/listings/{{ property.property_id }}/edit" class="btn-primary">Edit</a>
+    <div class="section">
+        <div class="section-header">
+            <h2>My Listings</h2>
         </div>
-        {% endfor %}
-    </section>
+        <div class="listings-grid">
+            {% for listing in listings %}
+            <div class="listing-card">
+                <img src="{{ listing.image_url or '/static/img/placeholder.jpg' }}" 
+                     alt="{{ listing.property_address }}">
+                <div class="listing-details">
+                    <h3>{{ listing.property_address }}</h3>
+                    <p class="price">${{ "{:,.2f}".format(listing.price) }}</p>
+                    <div class="status-badge {{ listing.status.value|lower }}">
+                        {{ listing.status.value }}
+                    </div>
+                    <div class="actions">
+                        <button hx-get="/agent/listings/{{ listing.property_id }}/edit"
+                                hx-target="#edit-form"
+                                class="btn-secondary">Edit</button>
+                        <button hx-get="/agent/listings/{{ listing.property_id }}/schedule"
+                                hx-target="#showing-form"
+                                class="btn-primary">Schedule Showing</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
     <!-- Upcoming Showings Section -->
-    <section class="showings-container">
-        <h2>Upcoming Showings</h2>
-        {% for showing in upcoming_showings %}
-        <div class="showing-card">
-            <p>Property: {{ showing.property.address }}</p>
-            <p>Client: {{ showing.client.name }}</p>
-            <p>Date: {{ showing.showing_date }}</p>
-            <p>Notes: {{ showing.notes }}</p>
+    <div class="section">
+        <div class="section-header">
+            <h2>Upcoming Showings</h2>
         </div>
-        {% endfor %}
-    </section>
+        <div class="showings-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Property</th>
+                        <th>Client</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for showing in upcoming_showings %}
+                    <tr>
+                        <td>{{ showing.showing_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ showing.property.property_address }}</td>
+                        <td>{{ showing.client.client_name }}</td>
+                        <td>
+                            <span class="status-badge">Scheduled</span>
+                        </td>
+                        <td>
+                            <button hx-get="/agent/showings/{{ showing.showing_id }}/edit"
+                                    hx-target="#edit-showing-form"
+                                    class="btn-secondary">Edit</button>
+                            <button hx-delete="/agent/showings/{{ showing.showing_id }}"
+                                    hx-confirm="Are you sure you want to cancel this showing?"
+                                    class="btn-danger">Cancel</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Forms -->
+    <div id="edit-form" class="modal hidden"></div>
+    <div id="showing-form" class="modal hidden"></div>
+    <div id="edit-showing-form" class="modal hidden"></div>
 </div>
+
+<style>
+.dashboard-container {
+    padding: 2rem;
+}
+
+.section {
+    background: var(--swedish-white);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.listing-card {
+    background: var(--swedish-accent);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.listing-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.listing-details {
+    padding: 1rem;
+}
+
+.showings-table {
+    overflow-x: auto;
+}
+
+.showings-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.showings-table th,
+.showings-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--swedish-gray);
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+</style>
 {% endblock %}
