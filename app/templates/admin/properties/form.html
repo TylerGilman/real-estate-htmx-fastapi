@@ -1,6 +1,6 @@
 <form
     hx-post="/admin/properties"
-    hx-target="#properties-table"
+    hx-target="#properties-list"
     hx-swap="beforeend"
     hx-encoding="multipart/form-data"
     class="space-y-4"
@@ -14,6 +14,7 @@
         </button>
         <button
                 class="submit-button"
+                type="submit"
                 hx-indicator="#submit-spinner">
             Create Property
             <span id="submit-spinner" class="htmx-indicator">

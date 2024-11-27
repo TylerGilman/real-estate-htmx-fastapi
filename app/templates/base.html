@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Real Estate Management{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/shared.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
     <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
     {% block extra_css %}{% endblock %}
 </head>
@@ -14,12 +14,10 @@
             <div class="nav-logo">
                 <a href="/">
                     <img src="/static/logo.png" alt="Company Logo" class="logo">
-                    <span class="logo-text">Cherokee Street Real Estate</span>
                 </a>
             </div>
             <ul class="nav-menu">
                 {% block navigation %}
-                <li><a href="/" class="nav-link">Home</a></li>
                 {% endblock %}
             </ul>
         </nav>
@@ -30,7 +28,6 @@
     <footer class="main-footer">
         <p>&copy; Cherokee Street Real Estate </p>
     </footer>
-    <script src="/static/js/shared.js"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -20,7 +20,7 @@ from ..models import (
     PropertyStatus,
     Contract,
     User,
-    UserRole
+    UserRole,
 )
 import random
 from fastapi import File, UploadFile
@@ -28,6 +28,7 @@ import os
 from datetime import datetime
 import shutil
 import logging
+
 logging.basicConfig(level=logging.INFO)
 
 # Add at the top with other imports
@@ -38,6 +39,7 @@ from fastapi.responses import HTMLResponse
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
+
 # Only the admin can add more authenticated users (agents)
 @router.post("/users", response_class=HTMLResponse)
 async def create_user(
@@ -46,7 +48,7 @@ async def create_user(
     password: str = Form(...),
     agent_id: Optional[int] = Form(None),
     current_user: dict = Depends(get_current_admin),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     """Create a new user account (admin only)"""
     try:
@@ -55,18 +57,20 @@ async def create_user(
             raise HTTPException(status_code=400, detail="Username already exists")
 
         # Get role
-        role = db.query(UserRole).filter(
-            UserRole.role_name == "agent" if agent_id else "admin"
-        ).first()
+        role = (
+            db.query(UserRole)
+            .filter(UserRole.role_name == "agent" if agent_id else "admin")
+            .first()
+        )
 
         # Create user
         user = User(
             username=username,
             password_hash=get_password_hash(password),
             role_id=role.role_id,
-            agent_id=agent_id
+            agent_id=agent_id,
         )
-        
+
         db.add(user)
         db.commit()
 
@@ -75,8 +79,8 @@ async def create_user(
             {
                 "request": request,
                 "message": "User account created successfully",
-                "type": "success"
-            }
+                "type": "success",
+            },
         )
     except Exception as e:
         db.rollback()
@@ -86,13 +90,18 @@ async def create_user(
             {
                 "request": request,
                 "message": f"Error creating user account: {str(e)}",
-                "type": "error"
-            }
+                "type": "error",
+            },
         )
+
 
 # Main Dashboard Route
 @router.get("", response_class=HTMLResponse)
-async def admin_dashboard(request: Request, current_user: dict = Depends(get_current_admin), db: Session = Depends(get_db)):
+async def admin_dashboard(
+    request: Request,
+    current_user: dict = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
     """Main admin dashboard view"""
     try:
         # Get properties with logging
@@ -221,13 +230,15 @@ async def create_property(
     zoning: str = Form(None),
     property_tax: float = Form(None),
     image: UploadFile = File(None),
+    # Residential fields
     bedrooms: int = Form(None),
     bathrooms: float = Form(None),
-    r_type: str = Form(None), 
+    r_type: str = Form(None),
     square_feet: float = Form(None),
     garage_spaces: int = Form(None),
     has_basement: bool = Form(False),
     has_pool: bool = Form(False),
+    # Commercial fields
     commercial_sqft: float = Form(None),
     industry: str = Form(None),
     c_type: str = Form(None),
@@ -240,30 +251,27 @@ async def create_property(
         logger.info(f"Starting property creation for {property_address}")
         logger.info(f"Property type: {property_type}")
         logger.info(f"Status: {status}")
-        
+
         # Generate unique tax ID
         tax_id = f"TAX{random.randint(100000, 999999)}"
-        
-        # Validate status before creating property
-        try:
-            property_status = PropertyStatus(status)
-            logger.info(f"Validated status: {property_status}")
-        except ValueError as e:
-            logger.error(f"Invalid status value: {status}")
-            raise ValueError(f"Invalid status value: {status}")
+
+        # Log all incoming data
+        logger.info(
+            f"Incoming data: price={price}, year_built={year_built}, lot_size={lot_size}"
+        )
 
         # Create base property
         new_property = Property(
             tax_id=tax_id,
             property_address=property_address,
-            status=property_status,
+            status=status,
             price=price,
             lot_size=lot_size if lot_size else None,
             year_built=year_built,
             zoning=zoning if zoning else None,
-            property_tax=property_tax if property_tax else None
+            property_tax=property_tax if property_tax else None,
         )
-        
+
         logger.info("Adding base property to session")
         db.add(new_property)
         db.flush()  # Get ID but don't commit yet
@@ -280,7 +288,7 @@ async def create_property(
                 square_feet=square_feet if square_feet else None,
                 garage_spaces=garage_spaces if garage_spaces else None,
                 has_basement=has_basement,
-                has_pool=has_pool
+                has_pool=has_pool,
             )
             db.add(residential)
             logger.info("Residential details added")
@@ -293,15 +301,12 @@ async def create_property(
                 c_type=c_type if c_type else None,
                 num_units=num_units if num_units else None,
                 parking_spaces=parking_spaces if parking_spaces else None,
-                zoning_type=zoning_type if zoning_type else None
+                zoning_type=zoning_type if zoning_type else None,
             )
             db.add(commercial)
             logger.info("Commercial details added")
-        else:
-            logger.error(f"Invalid property type: {property_type}")
-            raise ValueError(f"Invalid property type: {property_type}")
 
-        # Handle image upload
+        # Handle image upload if present
         if image:
             try:
                 logger.info("Processing image upload")
@@ -311,13 +316,14 @@ async def create_property(
 
                 file_name = f"{datetime.now().timestamp()}_{image.filename}"
                 file_path = os.path.join(full_path, file_name)
-                
+
                 with open(file_path, "wb") as buffer:
                     shutil.copyfileobj(image.file, buffer)
 
-                new_property.image_url = f"/static/property_images/{date_path}/{file_name}"
+                new_property.image_url = (
+                    f"/static/property_images/{date_path}/{file_name}"
+                )
                 logger.info(f"Image saved at: {new_property.image_url}")
-                
             except Exception as e:
                 logger.error(f"Image upload failed: {str(e)}")
                 # Continue without image if upload fails
@@ -329,23 +335,23 @@ async def create_property(
         # Query the newly created property for the response
         created_property = db.query(Property).filter(Property.tax_id == tax_id).first()
         logger.info(f"Retrieved created property with tax_id: {tax_id}")
-        
+
         return templates.TemplateResponse(
             "admin/properties/table_row.html",
             {"request": request, "property": created_property},
-            headers={"HX-Trigger": "propertyCreated"}
+            headers={"HX-Trigger": "propertyCreated"},
         )
-        
+
     except Exception as e:
         logger.error(f"Error in create_property: {str(e)}", exc_info=True)
         db.rollback()
         return templates.TemplateResponse(
             "components/toast.html",
             {
-                "request": request, 
-                "message": f"Failed to create property: {str(e)}", 
-                "type": "error"
-            }
+                "request": request,
+                "message": f"Failed to create property: {str(e)}",
+                "type": "error",
+            },
         )
 
 

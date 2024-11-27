@@ -39,10 +39,10 @@
         {# Properties Table #}
         <div class="admin-table">
             <div class="table-responsive">
-                <div class="properties-table" id="properties-table">
-                    <div>
+                <div class="properties-table" id="properties-list">
                         {% for property in properties %}
                             {% include "admin/properties/table_row.html" %}
+                        <tr>
                         {% else %}
                             <tr>
                                 <td colspan="4" class="empty-state">
@@ -50,7 +50,6 @@
                                 </td>
                             </tr>
                         {% endfor %}
-                </div>
             </div>
         </div>
     </div>
@@ -79,26 +78,26 @@
 </div>
 
 <div class="form-section">
-    <h2>Create User Account</h2>
+    <h2 class="section-title">Create User Account</h2>
     <form hx-post="/admin/users" hx-target="#toast-container">
         <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" required>
+            <label class="form-label">Username</label>
+            <input type="text" name="username" required class="form-input">
         </div>
         <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
+            <label class="form-label">Password</label>
+            <input type="password" name="password" required class="form-input">
         </div>
         <div class="form-group">
-            <label>Agent (optional)</label>
-            <select name="agent_id">
+            <label class="form-label">Agent (optional)</label>
+            <select name="agent_id" class="form-select">
                 <option value="">None (Admin Account)</option>
                 {% for agent in agents %}
                 <option value="{{ agent.agent_id }}">{{ agent.agent_name }}</option>
                 {% endfor %}
             </select>
         </div>
-        <button type="submit">Create User</button>
+        <button type="submit" class="admin-btn admin-btn-primary">Create User</button>
     </form>
 </div>
 

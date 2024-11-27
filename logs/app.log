@@ -944,3 +944,315 @@
 {"timestamp": "2024-11-27T03:45:11.017583", "level": "INFO", "message": "Listings query: SELECT `Property`.property_id AS `Property_property_id`, `Property`.tax_id AS `Property_tax_id`, `Property`.property_address AS `Property_property_address`, `Property`.status AS `Property_status`, `Property`.price AS `Property_price`, `Property`.lot_size AS `Property_lot_size`, `Property`.year_built AS `Property_year_built`, `Property`.zoning AS `Property_zoning`, `Property`.property_tax AS `Property_property_tax`, `Property`.created_at AS `Property_created_at`, `Property`.updated_at AS `Property_updated_at`, `Property`.image_url AS `Property_image_url` \nFROM `Property` INNER JOIN `AgentListing` ON `Property`.property_id = `AgentListing`.property_id \nWHERE `AgentListing`.agent_id = %(agent_id_1)s", "module": "agents", "function": "agent_dashboard", "line": 42, "thread_id": 127046227777344}
 {"timestamp": "2024-11-27T03:45:11.019410", "level": "INFO", "message": "Found 0 listings for agent", "module": "agents", "function": "agent_dashboard", "line": 44, "thread_id": 127046227777344}
 {"timestamp": "2024-11-27T03:45:11.019533", "level": "INFO", "message": "Active listings: 0", "module": "agents", "function": "agent_dashboard", "line": 52, "thread_id": 127046227777344}
+{"timestamp": "2024-11-27T03:58:23.780296", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 135008772491072}
+{"timestamp": "2024-11-27T03:58:23.783701", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 135008772491072}
+{"timestamp": "2024-11-27T03:58:23.792780", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 135008772491072}
+{"timestamp": "2024-11-27T19:27:22.947575", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:27:22.954405", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:27:22.971547", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:00.387466", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:00.389342", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:00.395440", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:15.280410", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:15.288135", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:15.313699", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:20.662753", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:20.668001", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:30:20.688562", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:32:25.310283", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:32:25.316415", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:32:25.338178", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:33:50.692932", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:33:50.694811", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:33:50.703177", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:33:55.550725", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:33:55.553680", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:33:55.563854", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:35:45.820947", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:35:45.823632", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:35:45.831465", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:36:57.895485", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:36:57.898479", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:36:57.907297", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:37:02.140953", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:37:02.146480", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:37:02.164089", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:03.036947", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:03.041067", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:03.052515", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:25.962441", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:25.964912", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:25.976021", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:57.123579", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:57.126835", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:39:57.138496", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:40:28.783521", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:40:28.790211", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:40:28.813136", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:40:58.613099", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:40:58.617397", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:40:58.637852", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:09.502828", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:09.508252", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:09.528982", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:14.704204", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:14.706000", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:14.712946", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:28.173282", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:28.177579", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:28.197017", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:52.440810", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:52.446267", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:41:52.465765", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:42:27.368169", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:42:27.371227", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:42:27.382291", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:42:47.179007", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:42:47.184517", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:42:47.203216", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:48:44.843250", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:48:44.849897", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:48:44.872175", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:50:40.580776", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:50:40.585726", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:50:40.599010", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:51:43.360470", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:51:43.366377", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:51:43.392431", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:52:41.400629", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:52:41.403360", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:52:41.413444", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:53:31.249853", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:53:31.256455", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:53:31.278522", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:54:24.957624", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:54:24.963361", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:54:24.979911", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:54:29.188721", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:54:29.193521", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:54:29.208399", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 140335909934912}
+{"timestamp": "2024-11-27T19:56:22.370650", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:56:22.375369", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:56:22.393493", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:07.058500", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:07.060941", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:07.068314", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:32.201396", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:32.203569", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:32.211996", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:42.862834", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:42.868255", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:42.888822", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:53.313851", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:53.316562", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:57:53.326965", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:58:13.924545", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:58:13.929273", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:58:13.946594", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:03.173961", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:03.180296", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:03.203121", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:26.585828", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:26.590878", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:26.610169", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:38.098770", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:38.103597", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T19:59:38.124275", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:00.595733", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:00.598995", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:00.613315", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:07.444770", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:07.446837", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:07.454708", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 131834122360640}
+{"timestamp": "2024-11-27T20:00:23.365174", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:23.371223", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:23.386532", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:25.593509", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:25.595975", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:25.604917", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:28.220316", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:28.222593", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:28.230648", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:38.258021", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:38.260220", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:00:38.268876", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:03:45.036106", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:03:45.041673", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:03:45.061029", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:05:41.570548", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:05:41.573520", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:05:41.592159", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:07:14.058600", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:07:14.063986", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:07:14.085568", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:00.820982", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:00.822520", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:00.828214", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:05.712981", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:05.717297", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:05.736935", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:24.647910", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:24.653667", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:08:24.677483", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:11:24.518512", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:11:24.521025", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:11:24.529898", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.860309", "level": "INFO", "message": "Starting property creation for hlhj", "module": "admin", "function": "create_property", "line": 240, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.861121", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 241, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.861793", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 242, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.862595", "level": "INFO", "message": "Validated status: PropertyStatus.FOR_SALE", "module": "admin", "function": "create_property", "line": 250, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.863716", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 267, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.881702", "level": "INFO", "message": "Base property created with ID: 13", "module": "admin", "function": "create_property", "line": 270, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.882469", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 274, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.884297", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 286, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.884967", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 307, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.887367", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732738354.886292_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 319, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.888032", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 325, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.920204", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 327, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:12:34.934341", "level": "INFO", "message": "Retrieved created property with tax_id: TAX795246", "module": "admin", "function": "create_property", "line": 331, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.844261", "level": "INFO", "message": "Starting property creation for hlhj", "module": "admin", "function": "create_property", "line": 240, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.844858", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 241, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.845333", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 242, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.845849", "level": "INFO", "message": "Validated status: PropertyStatus.FOR_SALE", "module": "admin", "function": "create_property", "line": 250, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.846429", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 267, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.852092", "level": "INFO", "message": "Base property created with ID: 14", "module": "admin", "function": "create_property", "line": 270, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.852787", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 274, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.853532", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 286, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.853902", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 307, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.854952", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732738419.854204_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 319, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.855329", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 325, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.881594", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 327, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:13:39.888272", "level": "INFO", "message": "Retrieved created property with tax_id: TAX568322", "module": "admin", "function": "create_property", "line": 331, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.122472", "level": "INFO", "message": "Starting property creation for hlhj", "module": "admin", "function": "create_property", "line": 240, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.123244", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 241, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.123929", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 242, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.124608", "level": "INFO", "message": "Validated status: PropertyStatus.FOR_SALE", "module": "admin", "function": "create_property", "line": 250, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.125654", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 267, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.132488", "level": "INFO", "message": "Base property created with ID: 15", "module": "admin", "function": "create_property", "line": 270, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.133137", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 274, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.134166", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 286, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.134863", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 307, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.136282", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732738473.13532_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 319, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.137609", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 325, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.159655", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 327, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:14:33.166275", "level": "INFO", "message": "Retrieved created property with tax_id: TAX513705", "module": "admin", "function": "create_property", "line": 331, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.049222", "level": "INFO", "message": "Starting property creation for hlhj", "module": "admin", "function": "create_property", "line": 240, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.049789", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 241, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.050268", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 242, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.050711", "level": "INFO", "message": "Validated status: PropertyStatus.FOR_SALE", "module": "admin", "function": "create_property", "line": 250, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.051317", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 267, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.057110", "level": "INFO", "message": "Base property created with ID: 16", "module": "admin", "function": "create_property", "line": 270, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.057573", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 274, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.058323", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 286, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.058723", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 307, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.059771", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732738630.059025_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 319, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.060167", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 325, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.081615", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 327, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:10.089143", "level": "INFO", "message": "Retrieved created property with tax_id: TAX563335", "module": "admin", "function": "create_property", "line": 331, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.638310", "level": "INFO", "message": "Starting property creation for hlhj", "module": "admin", "function": "create_property", "line": 240, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.639521", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 241, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.640267", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 242, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.641021", "level": "INFO", "message": "Validated status: PropertyStatus.FOR_SALE", "module": "admin", "function": "create_property", "line": 250, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.642000", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 267, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.651160", "level": "INFO", "message": "Base property created with ID: 17", "module": "admin", "function": "create_property", "line": 270, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.651963", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 274, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.653743", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 286, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.654194", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 307, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.655175", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732738636.65453_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 319, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.655605", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 325, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.675139", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 327, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:16.680362", "level": "INFO", "message": "Retrieved created property with tax_id: TAX951065", "module": "admin", "function": "create_property", "line": 331, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.409343", "level": "INFO", "message": "Starting property creation for hlhj", "module": "admin", "function": "create_property", "line": 240, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.409712", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 241, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.410024", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 242, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.410324", "level": "INFO", "message": "Validated status: PropertyStatus.FOR_SALE", "module": "admin", "function": "create_property", "line": 250, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.410778", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 267, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.414108", "level": "INFO", "message": "Base property created with ID: 18", "module": "admin", "function": "create_property", "line": 270, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.414453", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 274, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.414971", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 286, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.415233", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 307, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.415874", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732738637.415419_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 319, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.416077", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 325, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.438206", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 327, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:17:17.441378", "level": "INFO", "message": "Retrieved created property with tax_id: TAX749274", "module": "admin", "function": "create_property", "line": 331, "thread_id": 125598628583232}
+{"timestamp": "2024-11-27T20:18:41.830867", "level": "INFO", "message": "Found 9 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:41.836833", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:41.850928", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:49.916417", "level": "INFO", "message": "Attempting to delete property 7", "module": "admin", "function": "delete_property", "line": 550, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:49.991064", "level": "INFO", "message": "Successfully deleted property 7", "module": "admin", "function": "delete_property", "line": 586, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:52.330234", "level": "INFO", "message": "Attempting to delete property 10", "module": "admin", "function": "delete_property", "line": 550, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:52.392898", "level": "INFO", "message": "Successfully deleted property 10", "module": "admin", "function": "delete_property", "line": 586, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:54.716094", "level": "INFO", "message": "Attempting to delete property 12", "module": "admin", "function": "delete_property", "line": 550, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:54.768289", "level": "INFO", "message": "Successfully deleted property 12", "module": "admin", "function": "delete_property", "line": 586, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:56.782291", "level": "INFO", "message": "Attempting to delete property 13", "module": "admin", "function": "delete_property", "line": 550, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:56.893484", "level": "INFO", "message": "Successfully deleted property 13", "module": "admin", "function": "delete_property", "line": 586, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:58.760557", "level": "INFO", "message": "Attempting to delete property 14", "module": "admin", "function": "delete_property", "line": 550, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:18:58.852425", "level": "INFO", "message": "Successfully deleted property 14", "module": "admin", "function": "delete_property", "line": 586, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:02.217176", "level": "INFO", "message": "Attempting to delete property 15", "module": "admin", "function": "delete_property", "line": 550, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:02.267491", "level": "INFO", "message": "Successfully deleted property 15", "module": "admin", "function": "delete_property", "line": 586, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:06.672040", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:06.676346", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:06.692913", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:56.354856", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:56.357123", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:19:56.364683", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:20:36.343989", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 100, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:20:36.346257", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 104, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:20:36.353394", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 134, "thread_id": 137361529096000}
+{"timestamp": "2024-11-27T20:21:31.479297", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 109, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:21:31.483617", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 113, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:21:31.501696", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 143, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:23:20.455028", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 109, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:23:20.461153", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 113, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:23:20.486471", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 143, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:24:52.210828", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 109, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:24:52.213247", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 113, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:24:52.221965", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 143, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:00.514836", "level": "INFO", "message": "Found 3 properties", "module": "admin", "function": "admin_dashboard", "line": 109, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:00.518566", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 113, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:00.530605", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 143, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.776590", "level": "INFO", "message": "Starting property creation for 324", "module": "admin", "function": "create_property", "line": 251, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.777183", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 252, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.777955", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 253, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.779165", "level": "INFO", "message": "Incoming data: price=34234.0, year_built=2000, lot_size=324.0", "module": "admin", "function": "create_property", "line": 259, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.780171", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 275, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.793590", "level": "INFO", "message": "Base property created with ID: 19", "module": "admin", "function": "create_property", "line": 278, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.794155", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 282, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.795803", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 294, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.796485", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 312, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.798275", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732739194.797082_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 326, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.799004", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 331, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.835432", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 333, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:26:34.844909", "level": "INFO", "message": "Retrieved created property with tax_id: TAX331027", "module": "admin", "function": "create_property", "line": 337, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:28:51.383537", "level": "INFO", "message": "Found 4 properties", "module": "admin", "function": "admin_dashboard", "line": 109, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:28:51.385892", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 113, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:28:51.397327", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 143, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.855857", "level": "INFO", "message": "Starting property creation for 23123", "module": "admin", "function": "create_property", "line": 251, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.856196", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 252, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.856470", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 253, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.856748", "level": "INFO", "message": "Incoming data: price=123.0, year_built=2000, lot_size=2313.0", "module": "admin", "function": "create_property", "line": 259, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.856981", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 275, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.859468", "level": "INFO", "message": "Base property created with ID: 20", "module": "admin", "function": "create_property", "line": 278, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.859640", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 282, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.859896", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 294, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.860031", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 312, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.860472", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732739364.860159_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 326, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.860621", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 331, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.877116", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 333, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:29:24.879744", "level": "INFO", "message": "Retrieved created property with tax_id: TAX774062", "module": "admin", "function": "create_property", "line": 337, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:31:56.263210", "level": "INFO", "message": "Found 5 properties", "module": "admin", "function": "admin_dashboard", "line": 109, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:31:56.265162", "level": "INFO", "message": "Found 1 agents", "module": "admin", "function": "admin_dashboard", "line": 113, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:31:56.273714", "level": "INFO", "message": "Dashboard data retrieved successfully", "module": "admin", "function": "admin_dashboard", "line": 143, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.682528", "level": "INFO", "message": "Starting property creation for 342", "module": "admin", "function": "create_property", "line": 251, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.683156", "level": "INFO", "message": "Property type: RESIDENTIAL", "module": "admin", "function": "create_property", "line": 252, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.683698", "level": "INFO", "message": "Status: For Sale", "module": "admin", "function": "create_property", "line": 253, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.684239", "level": "INFO", "message": "Incoming data: price=34343.0, year_built=2000, lot_size=23122.99", "module": "admin", "function": "create_property", "line": 259, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.684989", "level": "INFO", "message": "Adding base property to session", "module": "admin", "function": "create_property", "line": 275, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.693474", "level": "INFO", "message": "Base property created with ID: 21", "module": "admin", "function": "create_property", "line": 278, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.694124", "level": "INFO", "message": "Creating residential property details", "module": "admin", "function": "create_property", "line": 282, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.695028", "level": "INFO", "message": "Residential details added", "module": "admin", "function": "create_property", "line": 294, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.695694", "level": "INFO", "message": "Processing image upload", "module": "admin", "function": "create_property", "line": 312, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.696866", "level": "INFO", "message": "Image saved at: /static/property_images/2024/11/1732739548.69608_23cherk.jpeg", "module": "admin", "function": "create_property", "line": 326, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.697287", "level": "INFO", "message": "Committing transaction", "module": "admin", "function": "create_property", "line": 331, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.727855", "level": "INFO", "message": "Transaction committed successfully", "module": "admin", "function": "create_property", "line": 333, "thread_id": 140019256620864}
+{"timestamp": "2024-11-27T20:32:28.736304", "level": "INFO", "message": "Retrieved created property with tax_id: TAX281309", "module": "admin", "function": "create_property", "line": 337, "thread_id": 140019256620864}
