@@ -1,0 +1,24 @@
+
+{% extends "agent_base.html" %}
+
+{% block content %}
+<h1>Edit Property</h1>
+
+<form action="/agent/listings/{{ property.property_id }}/edit" method="post" class="form-container">
+    <label for="address" class="form-label">Address</label>
+    <input type="text" id="address" name="address" value="{{ property.address }}" class="form-input" required>
+
+    <label for="price" class="form-label">Price</label>
+    <input type="number" id="price" name="price" value="{{ property.price }}" class="form-input" required>
+
+    <label for="status" class="form-label">Status</label>
+    <select id="status" name="status" class="form-input" required>
+        <option value="For Sale" {% if property.status == "For Sale" %}selected{% endif %}>For Sale</option>
+        <option value="Sold" {% if property.status == "Sold" %}selected{% endif %}>Sold</option>
+        <option value="For Lease" {% if property.status == "For Lease" %}selected{% endif %}>For Lease</option>
+        <option value="Leased" {% if property.status == "Leased" %}selected{% endif %}>Leased</option>
+    </select>
+
+    <button type="submit" class="btn-primary">Update Property</button>
+</form>
+{% endblock %}

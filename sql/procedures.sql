@@ -64,7 +64,7 @@ DELIMITER / /
 CREATE PROCEDURE create_property (
   IN p_tax_id VARCHAR(50),
   IN p_property_address VARCHAR(255),
-  IN p_status ENUM ('For Sale', 'For Lease', 'Sold', 'Leased'),
+  IN p_status ENUM ('FOR_SALE', 'FOR_LEASE', 'SOLD', 'LEASED'),
   IN p_price DECIMAL(15, 2),
   IN p_lot_size DECIMAL(10, 2),
   IN p_year_built INT,

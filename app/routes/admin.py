@@ -27,6 +27,8 @@ from fastapi import File, UploadFile
 import os
 from datetime import datetime
 import shutil
+import logging
+logging.basicConfig(level=logging.INFO)
 
 # Add at the top with other imports
 UPLOAD_DIR = "app/static/property_images"
@@ -214,22 +216,19 @@ async def create_property(
     property_type: str = Form(...),
     price: float = Form(...),
     status: str = Form(...),
-    year_built: int = Form(...),
+    year_built: int = Form(None),
     lot_size: float = Form(None),
     zoning: str = Form(None),
     property_tax: float = Form(None),
-    # Add image field
-    image: UploadFile = File(None),
-    # Residential specific fields
-    bedrooms: int = Form(None),
+    image: UploadFile = File(None),  # Image field
+    bedrooms: int = Form(None),  # Residential-specific fields
     bathrooms: float = Form(None),
     r_type: str = Form(None),
     square_feet: float = Form(None),
     garage_spaces: int = Form(None),
     has_basement: bool = Form(False),
     has_pool: bool = Form(False),
-    # Commercial specific fields
-    commercial_sqft: float = Form(None),  # Changed from sqft to commercial_sqft
+    commercial_sqft: float = Form(None),  # Commercial-specific fields
     industry: str = Form(None),
     c_type: str = Form(None),
     num_units: int = Form(None),
@@ -240,93 +239,123 @@ async def create_property(
     try:
         logger.info(f"Creating new property: {property_address}")
 
-        # Generate a unique tax_id
+        # Map status to ENUM-compatible value
+        status_map = {
+            "For Sale": "FOR_SALE",
+            "Sold": "SOLD",
+            "For Lease": "FOR_LEASE",
+            "Leased": "LEASED",
+        }
+        status_db = status_map.get(status, "FOR_SALE")  # Default to "FOR_SALE" if invalid
+
+        # Validate status
+        if status not in status_map:
+            return templates.TemplateResponse(
+                "shared/toast.html",
+                {"request": request, "message": "Invalid status value. Please select a valid option."},
+            )
+
+        # Assign default values for missing optional parameters
+        year_built = year_built or 2000
+        lot_size = lot_size or 0.0
+        zoning = zoning or "Unknown"
+        property_tax = property_tax or 0.0
+        bedrooms = bedrooms or 0
+        bathrooms = bathrooms or 0.0
+        r_type = r_type or "Single Family"
+        square_feet = square_feet or 0.0
+        garage_spaces = garage_spaces or 0
+        commercial_sqft = commercial_sqft or 0.0
+        industry = industry or "General"
+        c_type = c_type or "Office"
+        num_units = num_units or 0
+        parking_spaces = parking_spaces or 0
+        zoning_type = zoning_type or "General"
+
+        # Generate a unique tax ID
         tax_id = f"TAX{random.randint(100000, 999999)}"
 
-        # Create base property first
-        property = Property(
-            tax_id=tax_id,
-            property_address=property_address,
-            status=PropertyStatus(status),
-            price=price,
-            lot_size=lot_size if lot_size else None,
-            year_built=year_built,
-            zoning=zoning if zoning else None,
-            property_tax=property_tax if property_tax else None,
+        # Call the `create_property` stored procedure
+        property_id = db.execute(
+            text("""
+                CALL create_property(
+                    :tax_id, :property_address, :status, :price, :lot_size, :year_built, :zoning, :property_tax,
+                    :property_type, :bedrooms, :bathrooms, :r_type, :square_feet, :garage_spaces, :has_basement,
+                    :has_pool, :commercial_sqft, :industry, :c_type, :num_units, :parking_spaces, :zoning_type,
+                    @property_id
+                )
+            """),
+            {
+                "tax_id": tax_id,
+                "property_address": property_address,
+                "status": status_db,
+                "price": price,
+                "lot_size": lot_size,
+                "year_built": year_built,
+                "zoning": zoning,
+                "property_tax": property_tax,
+                "property_type": property_type.upper(),
+                "bedrooms": bedrooms,
+                "bathrooms": bathrooms,
+                "r_type": r_type,
+                "square_feet": square_feet,
+                "garage_spaces": garage_spaces,
+                "has_basement": has_basement,
+                "has_pool": has_pool,
+                "commercial_sqft": commercial_sqft,
+                "industry": industry,
+                "c_type": c_type,
+                "num_units": num_units,
+                "parking_spaces": parking_spaces,
+                "zoning_type": zoning_type,
+            },
         )
 
-        db.add(property)
-        db.flush()  # Get the property_id
 
         # Handle image upload if provided
         if image:
             try:
-                # Create directory structure: property_images/year/month/property_id/
-                date_path = datetime.now().strftime("%Y/%m")
-                property_path = f"{property.property_id}"
-                full_path = os.path.join(UPLOAD_DIR, date_path, property_path)
-                os.makedirs(full_path, exist_ok=True)
-
-                # Generate unique filename
+                os.makedirs(UPLOAD_DIR, exist_ok=True)
                 file_name = f"{datetime.now().timestamp()}_{image.filename}"
-                file_path = os.path.join(full_path, file_name)
+                file_path = os.path.join(UPLOAD_DIR, file_name)
 
-                # Save the file
                 with open(file_path, "wb") as buffer:
                     shutil.copyfileobj(image.file, buffer)
 
-                # Store the relative path in the database
-                property.image_url = f"/static/property_images/{date_path}/{property_path}/{file_name}"
-                logger.info(f"Saved property image: {property.image_url}")
+                # Call `add_property_image` procedure
+                db.execute(
+                    text("""
+                        CALL add_property_image(:property_id, :file_path, :is_primary)
+                    """),
+                    {
+                        "property_id": property_id,
+                        "file_path": f"/static/uploads/{file_name}",
+                        "is_primary": True,
+                    },
+                )
 
             except Exception as img_error:
                 logger.error(f"Failed to save image: {str(img_error)}", exc_info=True)
-                # Continue with property creation even if image upload fails
-                property.image_url = None
 
-        # Rest of your existing property creation code...
-        if property_type.upper() == "RESIDENTIAL":
-            logger.info("Adding residential details")
-            residential = ResidentialProperty(
-                property_id=property.property_id,
-                bedrooms=bedrooms if bedrooms else None,
-                bathrooms=bathrooms if bathrooms else None,
-                r_type=r_type if r_type else None,
-                square_feet=square_feet if square_feet else None,
-                garage_spaces=garage_spaces if garage_spaces else None,
-                has_basement=True if has_basement == "true" else False,
-                has_pool=True if has_pool == "true" else False,
-            )
-            db.add(residential)
-
-        elif property_type.upper() == "COMMERCIAL":
-            logger.info("Adding commercial details")
-            commercial = CommercialProperty(
-                property_id=property.property_id,
-                sqft=commercial_sqft if commercial_sqft else None,  # Updated to use commercial_sqft
-                industry=industry if industry else None,
-                c_type=c_type if c_type else None,
-                num_units=num_units if num_units else None,
-                parking_spaces=parking_spaces if parking_spaces else None,
-                zoning_type=zoning_type if zoning_type else None,
-            )
-            db.add(commercial)
-            logger.info("Commercial details added")
-
+        # Commit changes
         db.commit()
-        logger.info(f"Property committed to database with ID: {property.property_id}")
+        logger.info(f"Property created successfully with ID: {property_id}")
 
-        created_property = db.query(Property).filter(Property.tax_id == tax_id).first()
-        
+        # Render success response
+        created_property = db.query(Property).filter(Property.property_id == property_id).first()
         return templates.TemplateResponse(
             "admin/properties/table_row.html",
             {"request": request, "property": created_property},
             headers={"HX-Trigger": "propertyCreated"},
         )
-
     except Exception as e:
-        logger.error(f"Failed to create property", exc_info=True)
-        raise
+        logger.error(f"Error creating property: {str(e)}", exc_info=True)
+        db.rollback()
+        # Render error message using toast template
+        return templates.TemplateResponse(
+            "components/toast.html",
+            {"request": request, "message": "Failed to create property. Please try again."},
+        )
 
 
 # Agent Routes

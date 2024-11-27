@@ -1,0 +1,16 @@
+{% extends "agent_base.html" %}
+
+{% block content %}
+<h1>My Listings</h1>
+
+<div class="listings-container">
+    {% for property in listings %}
+    <div class="property-card">
+        <h2>{{ property.address }}</h2>
+        <p>Price: ${{ property.price }}</p>
+        <p>Status: {{ property.status }}</p>
+        <a href="/agent/listings/{{ property.property_id }}/edit" class="btn-primary">Edit</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

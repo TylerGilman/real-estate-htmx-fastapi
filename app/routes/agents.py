@@ -27,11 +27,10 @@ async def agent_dashboard(
     current_user: dict = Depends(get_current_agent),
     db: Session = Depends(get_db)
 ):
-    print("agent")
     """Agent's personal dashboard"""
     try:
         agent = current_user["agent"]
-        
+        print("Agent - " + str(agent.agent_name))
         # Get agent's listings
         listings = (
             db.query(Property)
@@ -85,64 +84,73 @@ async def agent_dashboard(
         logger.error(f"Error loading agent dashboard: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail="Error loading dashboard")
 
-@router.get("/listings", response_class=HTMLResponse)
-async def agent_listings(
-    request: Request,
-    current_user: dict = Depends(get_current_agent),
-    db: Session = Depends(get_db)
+
+
+@router.get("/listings/{property_id}/edit", response_class=HTMLResponse)
+async def edit_property_form(
+    request: Request, property_id: int, current_user: dict = Depends(get_current_agent), db: Session = Depends(get_db)
 ):
-    """View agent's listings"""
+    """Get the form for editing a property."""
     try:
         agent = current_user["agent"]
-        listings = (
+        # Ensure the agent is the listing agent for this property
+        listing = (
             db.query(Property)
             .join(AgentListing)
-            .filter(AgentListing.agent_id == agent.agent_id)
-            .all()
+            .filter(AgentListing.agent_id == agent.agent_id, Property.property_id == property_id)
+            .first()
         )
-        
+
+        if not listing:
+            raise HTTPException(status_code=403, detail="Not authorized to edit this property.")
+
         return templates.TemplateResponse(
-            "agents/listings.html",
-            {
-                "request": request,
-                "agent": agent,
-                "listings": listings
-            }
+            "agents/edit_property.html",
+            {"request": request, "property": listing},
         )
     except Exception as e:
-        logger.error(f"Error fetching agent listings: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Error fetching listings")
+        logger.error(f"Error fetching edit form for property {property_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error fetching edit form")
 
-@router.get("/showings", response_class=HTMLResponse)
-async def agent_showings(
+
+@router.post("/listings/{property_id}/edit", response_class=HTMLResponse)
+async def update_property(
     request: Request,
+    property_id: int,
+    address: str = Form(...),
+    price: float = Form(...),
+    status: str = Form(...),
     current_user: dict = Depends(get_current_agent),
     db: Session = Depends(get_db)
 ):
-    """View and manage showings"""
+    """Update an existing property listing."""
     try:
         agent = current_user["agent"]
-        showings = (
-            db.query(AgentShowing)
-            .filter(AgentShowing.agent_id == agent.agent_id)
-            .order_by(AgentShowing.showing_date.desc())
-            .all()
-        )
-        
-        return templates.TemplateResponse(
-            "agents/showings.html",
-            {
-                "request": request,
-                "agent": agent,
-                "showings": showings
-            }
-        )
-    except Exception as e:
-        logger.error(f"Error fetching agent showings: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Error fetching showings")
 
-@router.post("/showings", response_class=HTMLResponse)
-async def create_showing(
+        # Ensure the agent is the listing agent for this property
+        listing = (
+            db.query(Property)
+            .join(AgentListing)
+            .filter(AgentListing.agent_id == agent.agent_id, Property.property_id == property_id)
+            .first()
+        )
+
+        if not listing:
+            raise HTTPException(status_code=403, detail="Not authorized to edit this property.")
+
+        # Update property details
+        listing.address = address
+        listing.price = price
+        listing.status = status
+        db.commit()
+
+        return RedirectResponse(url="/agent/listings", status_code=303)
+    except Exception as e:
+        logger.error(f"Failed to update property {property_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error updating property")
+
+@router.post("/showings/book", response_class=HTMLResponse)
+async def book_showing(
     request: Request,
     property_id: int = Form(...),
     showing_date: str = Form(...),
@@ -151,32 +159,57 @@ async def create_showing(
     current_user: dict = Depends(get_current_agent),
     db: Session = Depends(get_db)
 ):
-    """Schedule a new showing"""
+    """Agent schedules a showing"""
     try:
         agent = current_user["agent"]
-        showing_datetime = datetime.strptime(showing_date, "%Y-%m-%d").date()
-        
+        showing_datetime = datetime.strptime(showing_date, "%Y-%m-%d %H:%M:%S")
+
         showing = AgentShowing(
             property_id=property_id,
             agent_id=agent.agent_id,
             client_id=client_id,
             showing_date=showing_datetime,
-            notes=notes
+            notes=notes,
         )
-        
+
         db.add(showing)
         db.commit()
-        
+
         return templates.TemplateResponse(
             "agents/components/showing_card.html",
-            {
-                "request": request,
-                "showing": showing
-            }
+            {"request": request, "showing": showing},
         )
     except Exception as e:
-        logger.error(f"Error creating showing: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Error creating showing")
+        logger.error(f"Error booking showing: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to book showing")
+
+@router.get("/listings", response_class=HTMLResponse)
+async def agent_listings(
+    request: Request,
+    current_user: dict = Depends(get_current_agent),
+    db: Session = Depends(get_db)
+):
+    """View all properties the agent is listing."""
+    try:
+        agent = current_user["agent"]
+        listings = (
+            db.query(Property)
+            .join(AgentListing)
+            .filter(AgentListing.agent_id == agent.agent_id)
+            .all()
+        )
+
+        return templates.TemplateResponse(
+            "agents/listings.html",
+            {
+                "request": request,
+                "agent": agent,
+                "listings": listings,
+            },
+        )
+    except Exception as e:
+        logger.error(f"Error fetching agent listings: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error fetching listings")
 
 @router.get("/transactions", response_class=HTMLResponse)
 async def agent_transactions(

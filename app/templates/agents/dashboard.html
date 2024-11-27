@@ -1,91 +1,49 @@
-{# templates/agents/dashboard.html #}
-{% extends "base.html" %}
+{% extends "agents/agent_base.html" %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Stats Cards -->
-        <div class="bg-swedish-white rounded-lg shadow p-6">
-            <h3 class="text-swedish-text text-sm font-medium">Active Listings</h3>
-            <p class="text-swedish-navy text-2xl font-bold">{{ active_listings }}</p>
+<div class="dashboard-container">
+    <h1 class="page-title">Welcome, {{ agent.agent_name }}</h1>
+
+    <!-- Stats Section -->
+    <section class="stats-container">
+        <div class="stat-card">
+            <h3>Active Listings</h3>
+            <p class="stat-value">{{ active_listings }}</p>
         </div>
-        
-        <div class="bg-swedish-white rounded-lg shadow p-6">
-            <h3 class="text-swedish-text text-sm font-medium">Total Sales</h3>
-            <p class="text-swedish-navy text-2xl font-bold">${{ "{:,.2f}".format(total_sales) }}</p>
+        <div class="stat-card">
+            <h3>Total Sales</h3>
+            <p class="stat-value">${{ total_sales }}</p>
         </div>
-        
-        <div class="bg-swedish-white rounded-lg shadow p-6">
-            <h3 class="text-swedish-text text-sm font-medium">Total Commissions</h3>
-            <p class="text-swedish-navy text-2xl font-bold">${{ "{:,.2f}".format(total_commissions) }}</p>
+        <div class="stat-card">
+            <h3>Total Commissions</h3>
+            <p class="stat-value">${{ total_commissions }}</p>
         </div>
-        
-        <div class="bg-swedish-white rounded-lg shadow p-6">
-            <h3 class="text-swedish-text text-sm font-medium">Upcoming Showings</h3>
-            <p class="text-swedish-navy text-2xl font-bold">{{ upcoming_showings|length }}</p>
-        </div>
-    </div>
+    </section>
 
     <!-- Listings Section -->
-    <div class="mt-8">
-        <h2 class="text-xl font-bold text-swedish-navy mb-4">Your Listings</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for listing in listings %}
-            <div class="bg-swedish-white rounded-lg shadow overflow-hidden">
-                <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ listing.image_url or url_for('static', path='img/default-property.jpg') }}" 
-                         alt="{{ listing.property_address }}"
-                         class="object-cover w-full h-full">
-                </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold text-swedish-navy">{{ listing.property_address }}</h3>
-                    <p class="text-swedish-text">${{ "{:,.2f}".format(listing.price) }}</p>
-                    <div class="mt-2">
-                        <span class="status-badge {{ listing.status.value|lower|replace(' ', '-') }}">
-                            {{ listing.status.value }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+    <section class="listings-container">
+        <h2>My Listings</h2>
+        {% for property in listings %}
+        <div class="property-card">
+            <h3>{{ property.address }}</h3>
+            <p>Price: ${{ property.price }}</p>
+            <p>Status: {{ property.status }}</p>
+            <a href="/agent/listings/{{ property.property_id }}/edit" class="btn-primary">Edit</a>
         </div>
-    </div>
+        {% endfor %}
+    </section>
 
-    <!-- Upcoming Showings -->
-    <div class="mt-8">
-        <h2 class="text-xl font-bold text-swedish-navy mb-4">Upcoming Showings</h2>
-        <div class="bg-swedish-white rounded-lg shadow overflow-hidden">
-            <table class="min-w-full">
-                <thead class="bg-swedish-gray">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-swedish-text uppercase tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-swedish-text uppercase tracking-wider">Property</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-swedish-text uppercase tracking-wider">Client</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-swedish-text uppercase tracking-wider">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-swedish-gray">
-                    {% for showing in upcoming_showings %}
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-swedish-text">
-                            {{ showing.showing_date.strftime('%Y-%m-%d') }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-swedish-text">
-                            {{ showing.property.property_address }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-swedish-text">
-                            {{ showing.client.client_name }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 py-1 text-xs rounded-full bg-swedish-accent text-swedish-navy">
-                                Scheduled
-                            </span>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <!-- Upcoming Showings Section -->
+    <section class="showings-container">
+        <h2>Upcoming Showings</h2>
+        {% for showing in upcoming_showings %}
+        <div class="showing-card">
+            <p>Property: {{ showing.property.address }}</p>
+            <p>Client: {{ showing.client.name }}</p>
+            <p>Date: {{ showing.showing_date }}</p>
+            <p>Notes: {{ showing.notes }}</p>
         </div>
-    </div>
+        {% endfor %}
+    </section>
 </div>
 {% endblock %}

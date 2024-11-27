@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Agent Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/styles.css">
+{% endblock %}
+
+{% block navigation %}
+<li><a href="/agent" class="nav-link">Dashboard</a></li>
+<li><a href="/agent/showings" class="nav-link">Showings</a></li>
+<li><a href="/logout" class="nav-link">Logout</a></li>
+{% endblock %}

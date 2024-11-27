@@ -1,92 +1,36 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Real Estate Website{% endblock %}</title>
+    <title>{% block title %}Real Estate Management{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/shared.css">
     <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}" preload>
-    <script src="https://unpkg.com/htmx-ext-preload@2.0.1/preload.js"></script>
+    {% block extra_css %}{% endblock %}
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="nav-container">
-                <a href="/" class="logo-link">
-                    <img src="{{ url_for('static', path='/logo.png') }}"  alt="Our Real Estate Logo" class="logo" preload>
+<body class="shared-layout">
+    <header class="main-header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <a href="/">
+                    <img src="/static/logo.png" alt="Company Logo" class="logo">
+                    <span class="logo-text">Cherokee Street Real Estate</span>
                 </a>
-    <div class="auth-section">
-      {% if request.session.get('username') %}
-        Hello, {{ request.session.get('username') }}!
-        <a href="/logout" class="dropdown-item text-swedish-error">Sign Out</a>
-      {% endif %}
-    </div>
+            </div>
+            <ul class="nav-menu">
+                {% block navigation %}
+                <li><a href="/" class="nav-link">Home</a></li>
+                {% endblock %}
+            </ul>
         </nav>
     </header>
-
-    <main class="property-container">
+    <main class="content-area">
         {% block content %}{% endblock %}
     </main>
-
-    {% block extra_scripts %}{% endblock %}
+    <footer class="main-footer">
+        <p>&copy; Cherokee Street Real Estate </p>
+    </footer>
+    <script src="/static/js/shared.js"></script>
+    {% block extra_js %}{% endblock %}
 </body>
-  <script>
-    (function() {
-        let isInitialized = false;
-
-        function initializeSearchControls() {
-            if (isInitialized) return;
-
-            const wrapper = document.getElementById('search-controls-wrapper');
-            const toggleButton = document.getElementById('toggle-search');
-            
-            if (!wrapper || !toggleButton) {
-                console.log('Search controls not found, waiting for content to load...');
-                return;
-            }
-
-            isInitialized = true;
-
-            function updateMaxHeight() {
-                if (!wrapper.classList.contains('minimized')) {
-                    wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
-                }
-            }
-
-            function toggleSearchControls() {
-                wrapper.classList.toggle('minimized');
-                if (wrapper.classList.contains('minimized')) {
-                    wrapper.style.maxHeight = '0px';
-                    toggleButton.textContent = 'Open Search Controls';
-                } else {
-                    updateMaxHeight();
-                    toggleButton.textContent = 'Close Search Controls';
-                }
-            }
-
-            toggleButton.addEventListener('click', toggleSearchControls);
-
-            // Initial setup
-            updateMaxHeight();
-
-            // Update maxHeight when window is resized
-            window.addEventListener('resize', updateMaxHeight);
-
-            console.log('Search controls initialized successfully');
-        }
-
-        // Try to initialize immediately
-        initializeSearchControls();
-
-        // Initialize after DOM content loaded
-        document.addEventListener('DOMContentLoaded', initializeSearchControls);
-
-        // Initialize after HTMX content swaps
-        document.body.addEventListener('htmx:afterSwap', initializeSearchControls);
-
-        // Make the initialize function globally available
-        window.initializeSearchControls = initializeSearchControls;
-    })();
-  </script>
 </html>

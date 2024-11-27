@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/admin/css/admin.css">
+
+<script src="/static/admin/js/admin.js"></script>
+<script src="/static/admin/js/form-helpers.js"></script>
+{% endblock %}
+
+{% block navigation %}
+<li><a href="/admin" class="nav-link">Dashboard</a></li>
+<li><a href="/admin/properties" class="nav-link">Properties</a></li>
+<li><a href="/admin/agents" class="nav-link">Agents</a></li>
+<li><a href="/logout" class="nav-link">Logout</a></li>
+{% endblock %}
