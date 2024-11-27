@@ -1,0 +1,87 @@
+<!-- templates/components/user_dropdown.html -->
+<div class="user-dropdown" hx-target="this">
+  <button class="user-button" onclick="toggleDropdown()">
+    {{ request.session.get('username') }}
+    <svg class="dropdown-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 9l6 6 6-6"/>
+    </svg>
+  </button>
+  <div id="dropdown-menu" class="dropdown-menu hidden">
+    <div class="dropdown-header">
+      Signed in as <span class="font-bold">{{ request.session.get('role') }}</span>
+    </div>
+    {% if request.session.get('role') == 'agent' %}
+      <a href="/agent/dashboard" class="dropdown-item">Agent Dashboard</a>
+    {% endif %}
+    {% if request.session.get('role') == 'admin' %}
+      <a href="/admin" class="dropdown-item">Admin Dashboard</a>  
+    {% endif %}
+    <a href="/logout" class="dropdown-item text-swedish-error">Sign Out</a>
+  </div>
+</div>
+
+<style>
+.user-dropdown {
+  position: relative;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--swedish-accent);
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--swedish-navy);
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  background: var(--swedish-white);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 50;
+}
+
+.dropdown-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--swedish-gray);
+  color: var(--swedish-text);
+  font-size: 0.875rem;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--swedish-text);
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background: var(--swedish-accent);
+}
+
+.hidden {
+  display: none;
+}
+</style>
+
+<script>
+function toggleDropdown() {
+  const menu = document.getElementById('dropdown-menu');
+  menu.classList.toggle('hidden');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.user-dropdown')) {
+    document.getElementById('dropdown-menu').classList.add('hidden');
+  }
+});
+</script>

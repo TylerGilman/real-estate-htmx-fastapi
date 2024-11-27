@@ -10,6 +10,7 @@ from app.routes.admin import router as admin_router
 from app.routes.properties import router as properties_router
 from app.routes.main import router as main_router
 from app.routes.auth import router as auth_router
+from app.routes.agents import router as agents_router
 
 app = FastAPI(title="Real Estate Management System")
 
@@ -33,6 +34,7 @@ templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "app", "templates")
 app.include_router(auth_router, tags=["auth"])
 app.include_router(admin_router, prefix="/admin")
 app.include_router(properties_router, prefix="/properties")
+app.include_router(agents_router, prefix="/agent")
 app.include_router(main_router)  # No prefix for main routes
 
 # Error handlers

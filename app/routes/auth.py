@@ -14,6 +14,13 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
 
+@router.get("/logout")
+async def logout(request: Request):
+    """Log out the current user"""
+    request.session.clear()
+    return RedirectResponse(url="/", status_code=303)
+
+
 @router.post("/login")
 async def login(
     request: Request,

@@ -18,7 +18,7 @@ from ..models import (
 from typing import Optional
 from datetime import date, datetime
 
-router = APIRouter(prefix="/agent", tags=["agents"])
+router = APIRouter(tags=["agents"])
 templates = Jinja2Templates(directory="app/templates")
 
 @router.get("", response_class=HTMLResponse)
@@ -27,6 +27,7 @@ async def agent_dashboard(
     current_user: dict = Depends(get_current_agent),
     db: Session = Depends(get_db)
 ):
+    print("agent")
     """Agent's personal dashboard"""
     try:
         agent = current_user["agent"]

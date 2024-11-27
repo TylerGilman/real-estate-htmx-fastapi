@@ -16,13 +16,12 @@
                 <a href="/" class="logo-link">
                     <img src="{{ url_for('static', path='/logo.png') }}"  alt="Our Real Estate Logo" class="logo" preload>
                 </a>
-                <ul>
-                    <li><a href="/" {% if request.url.path == '/' %}class="active"{% endif %}>Home</a></li>
-                    <li><a href="/listings" {% if request.url.path == '/listings' %}class="active"{% endif %}>Listings</a></li>
-                    <li><a href="/about" {% if request.url.path == '/about' %}class="active"{% endif %}>About</a></li>
-                    <li><a href="/contact" {% if request.url.path == '/contact' %}class="active"{% endif %}>Contact</a></li>
-                </ul>
-            </div>
+    <div class="auth-section">
+      {% if request.session.get('username') %}
+        Hello, {{ request.session.get('username') }}!
+        <a href="/logout" class="dropdown-item text-swedish-error">Sign Out</a>
+      {% endif %}
+    </div>
         </nav>
     </header>
 
