@@ -4,6 +4,27 @@
 <div class="error-message">{{ error }}</div>
 {% endif %}
 
+<div class="admin-section" id="clients-section">
+<div class="admin-header">
+    <div class="header-left">
+        <h1 class="section-title">Client Management</h1>
+        <button class="toggle-button" data-target="clients-content" aria-label="Toggle clients section">
+            <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path class="minimize-path" d="M20 12H4" />
+                <path class="maximize-path" d="M12 4v16m-8-8h16" />
+            </svg>
+        </button>
+    </div>
+    <button class="action-button" onclick="toggleForm('add-client-form')">Add New Client</button>
+</div>
+<div id="clients-content" class="section-content">
+    <div id="add-client-form" class="form-container hidden">
+        {% include "admin/clients/form.html" %}
+    </div>
+    {% include "admin/clients/table.html" %}
+</div>
+</div>
+
 {# Properties Section #}
 <div class="admin-section" id="properties-section">
     <div class="admin-header">

@@ -4,8 +4,6 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 from sqlalchemy.orm import Session
 import os
-from app.core.database import get_db
-from app.models import Property, ResidentialProperty, CommercialProperty
 from app.routes.admin import router as admin_router
 from app.routes.properties import router as properties_router
 from app.routes.main import router as main_router
@@ -21,11 +19,15 @@ app.add_middleware(
     SessionMiddleware,
     secret_key=os.getenv("SECRET_KEY", "your-secret-key"),
     same_site="lax",
-    https_only=False  # Set to True in production
+    https_only=False,  # Set to True in production
 )
 
 # Mount static files
-app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "app", "static")), name="static")
+app.mount(
+    "/static",
+    StaticFiles(directory=os.path.join(BASE_DIR, "app", "static")),
+    name="static",
+)
 
 # Setup templates
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "app", "templates"))
@@ -37,23 +39,19 @@ app.include_router(properties_router, prefix="/properties")
 app.include_router(agents_router, prefix="/agent")
 app.include_router(main_router)  # No prefix for main routes
 
+
 # Error handlers
 @app.exception_handler(404)
 async def not_found_handler(request: Request, exc):
-    return templates.TemplateResponse(
-        "404.html",
-        {"request": request},
-        status_code=404
-    )
+    return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+
 
 @app.exception_handler(500)
 async def server_error_handler(request: Request, exc):
-    return templates.TemplateResponse(
-        "500.html",
-        {"request": request},
-        status_code=500
-    )
+    return templates.TemplateResponse("500.html", {"request": request}, status_code=500)
+
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

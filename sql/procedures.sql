@@ -1,5 +1,351 @@
 DELIMITER //
 
+-- Log user access
+CREATE PROCEDURE log_user_access(
+    IN p_user_id INT,
+    IN p_ip_address VARCHAR(45)
+)
+BEGIN
+    INSERT INTO UserAccessLog (
+        user_id,
+        ip_address,
+        access_time
+    ) VALUES (
+        p_user_id,
+        p_ip_address,
+        NOW()
+    );
+END //
+
+-- Log admin access
+CREATE PROCEDURE log_admin_access(
+    IN p_user_id INT,
+    IN p_ip_address VARCHAR(45)
+)
+BEGIN
+    INSERT INTO AdminAccessLog (
+        user_id,
+        ip_address,
+        access_time
+    ) VALUES (
+        p_user_id,
+        p_ip_address,
+        NOW()
+    );
+END //
+
+-- Validate session
+CREATE PROCEDURE validate_session(
+    IN p_session_id VARCHAR(100),
+    IN p_ip_address VARCHAR(45)
+)
+BEGIN
+    SELECT 
+        CASE 
+            WHEN s.expires > NOW() 
+            AND s.ip_address = p_ip_address 
+            THEN TRUE 
+            ELSE FALSE 
+        END as is_valid
+    FROM Sessions s
+    WHERE s.session_id = p_session_id;
+END //
+
+-- Check user permission
+CREATE PROCEDURE check_user_permission(
+    IN p_user_id INT,
+    IN p_permission VARCHAR(50)
+)
+BEGIN
+    SELECT 
+        COUNT(*) > 0 as has_permission
+    FROM UserPermissions up
+    JOIN Permissions p ON up.permission_id = p.permission_id
+    WHERE up.user_id = p_user_id
+    AND p.permission_name = p_permission;
+END //
+
+-- Log security event
+CREATE PROCEDURE log_security_event(
+    IN p_event_type VARCHAR(50),
+    IN p_user_id INT,
+    IN p_details TEXT
+)
+BEGIN
+    INSERT INTO SecurityEventLog (
+        event_type,
+        user_id,
+        details,
+        event_time
+    ) VALUES (
+        p_event_type,
+        p_user_id,
+        p_details,
+        NOW()
+    );
+END //
+
+-- Get agent details with license check
+CREATE PROCEDURE get_agent_details(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT 
+        a.*,
+        CASE 
+            WHEN a.license_expiration < CURDATE() THEN TRUE
+            ELSE FALSE
+        END as is_license_expired
+    FROM Agent a
+    JOIN User u ON a.agent_id = u.agent_id
+    WHERE u.user_id = p_user_id;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
+-- Get or create admin role
+CREATE PROCEDURE get_or_create_admin_role()
+BEGIN
+    DECLARE admin_role_id INT;
+    
+    -- Check if admin role exists
+    SELECT role_id INTO admin_role_id
+    FROM UserRole
+    WHERE role_name = 'admin'
+    LIMIT 1;
+    
+    -- Create if it doesn't exist
+    IF admin_role_id IS NULL THEN
+        INSERT INTO UserRole (role_name)
+        VALUES ('admin');
+        
+        SET admin_role_id = LAST_INSERT_ID();
+    END IF;
+    
+    SELECT role_id, role_name
+    FROM UserRole
+    WHERE role_id = admin_role_id;
+END //
+
+-- Get user by username with role
+CREATE PROCEDURE get_user_by_username(
+    IN p_username VARCHAR(100)
+)
+BEGIN
+    SELECT 
+        u.user_id,
+        u.username,
+        u.password_hash,
+        u.role_id,
+        u.agent_id,
+        ur.role_name
+    FROM User u
+    JOIN UserRole ur ON u.role_id = ur.role_id
+    WHERE u.username = p_username;
+END //
+
+-- Check user role
+CREATE PROCEDURE check_user_role(
+    IN p_username VARCHAR(100),
+    IN p_role_name VARCHAR(50)
+)
+BEGIN
+    SELECT 
+        COUNT(*) > 0 as is_role
+    FROM User u
+    JOIN UserRole ur ON u.role_id = ur.role_id
+    WHERE u.username = p_username
+    AND ur.role_name = p_role_name;
+END //
+
+-- Get agent by user ID
+CREATE PROCEDURE get_agent_by_user_id(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT 
+        a.*,
+        u.username,
+        u.role_id
+    FROM Agent a
+    JOIN User u ON a.agent_id = u.agent_id
+    WHERE u.user_id = p_user_id;
+END //
+
+-- Create admin user
+CREATE PROCEDURE create_admin_user(
+    IN p_username VARCHAR(100),
+    IN p_password_hash VARCHAR(255)
+)
+BEGIN
+    DECLARE admin_role_id INT;
+    DECLARE exit handler for sqlexception
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+    
+    START TRANSACTION;
+    
+    -- Get or create admin role
+    SELECT role_id INTO admin_role_id
+    FROM UserRole
+    WHERE role_name = 'admin'
+    LIMIT 1;
+    
+    IF admin_role_id IS NULL THEN
+        INSERT INTO UserRole (role_name)
+        VALUES ('admin');
+        
+        SET admin_role_id = LAST_INSERT_ID();
+    END IF;
+    
+    -- Create admin user if doesn't exist
+    IF NOT EXISTS (SELECT 1 FROM User WHERE username = p_username) THEN
+        INSERT INTO User (username, password_hash, role_id)
+        VALUES (p_username, p_password_hash, admin_role_id);
+    END IF;
+    
+    COMMIT;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+-- Get admin dashboard stats
+CREATE PROCEDURE get_admin_dashboard_stats()
+BEGIN
+    SELECT 
+        (SELECT COUNT(*) FROM Agent) as total_agents,
+        (SELECT COUNT(*) FROM AgentListing) as total_listings,
+        (SELECT COUNT(*) FROM Property) as total_properties,
+        (SELECT COALESCE(SUM(amount), 0) FROM Transaction WHERE transaction_type = 'Sale') as total_sales,
+        (SELECT COALESCE(SUM(commission_amount), 0) FROM Transaction) as total_commissions;
+END //
+
+-- Get all agents with their stats
+CREATE PROCEDURE get_all_agents()
+BEGIN
+    SELECT 
+        a.*,
+        COUNT(DISTINCT al.listing_id) as active_listings,
+        COUNT(DISTINCT t.transaction_id) as total_transactions,
+        COALESCE(SUM(t.amount), 0) as total_sales_volume,
+        COALESCE(SUM(t.commission_amount), 0) as total_commission
+    FROM Agent a
+    LEFT JOIN AgentListing al ON a.agent_id = al.agent_id
+    LEFT JOIN Transaction t ON a.agent_id = t.agent_id
+    GROUP BY a.agent_id;
+END //
+
+-- Create new agent
+CREATE PROCEDURE create_agent(
+    IN p_agent_name VARCHAR(255),
+    IN p_NRDS VARCHAR(50),
+    IN p_agent_phone VARCHAR(15),
+    IN p_agent_email VARCHAR(255),
+    IN p_SSN VARCHAR(15),
+    IN p_license_number VARCHAR(50),
+    IN p_license_expiration DATE,
+    IN p_broker_id INT
+)
+BEGIN
+    INSERT INTO Agent (
+        agent_name, NRDS, agent_phone, agent_email,
+        SSN, license_number, license_expiration, broker_id
+    ) VALUES (
+        p_agent_name, p_NRDS, p_agent_phone, p_agent_email,
+        p_SSN, p_license_number, p_license_expiration, p_broker_id
+    );
+    SELECT LAST_INSERT_ID() as agent_id;
+END //
+
+-- Update existing agent
+CREATE PROCEDURE update_agent(
+    IN p_agent_id INT,
+    IN p_agent_name VARCHAR(255),
+    IN p_NRDS VARCHAR(50),
+    IN p_agent_phone VARCHAR(15),
+    IN p_agent_email VARCHAR(255),
+    IN p_license_number VARCHAR(50),
+    IN p_license_expiration DATE
+)
+BEGIN
+    UPDATE Agent
+    SET 
+        agent_name = p_agent_name,
+        NRDS = p_NRDS,
+        agent_phone = p_agent_phone,
+        agent_email = p_agent_email,
+        license_number = p_license_number,
+        license_expiration = p_license_expiration
+    WHERE agent_id = p_agent_id;
+END //
+
+-- Create user account
+CREATE PROCEDURE create_user(
+    IN p_username VARCHAR(100),
+    IN p_password_hash VARCHAR(255),
+    IN p_agent_id INT,
+    IN p_role_name VARCHAR(50)
+)
+BEGIN
+    DECLARE v_role_id INT;
+    
+    -- Get role ID
+    SELECT role_id INTO v_role_id
+    FROM UserRole
+    WHERE role_name = p_role_name;
+    
+    -- Create user
+    INSERT INTO User (username, password_hash, role_id, agent_id)
+    VALUES (p_username, p_password_hash, v_role_id, p_agent_id);
+    
+    SELECT LAST_INSERT_ID() as user_id;
+END //
+
+-- Delete agent (with safety checks)
+CREATE PROCEDURE delete_agent(
+    IN p_agent_id INT
+)
+BEGIN
+    DECLARE has_active_listings INT;
+    DECLARE has_transactions INT;
+    
+    -- Check for active listings
+    SELECT COUNT(*) INTO has_active_listings
+    FROM AgentListing
+    WHERE agent_id = p_agent_id
+    AND expiration_date > CURRENT_DATE();
+    
+    -- Check for transactions
+    SELECT COUNT(*) INTO has_transactions
+    FROM Transaction
+    WHERE agent_id = p_agent_id;
+    
+    IF has_active_listings > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot delete agent with active listings';
+    END IF;
+    
+    IF has_transactions > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot delete agent with transaction history';
+    END IF;
+    
+    -- Safe to delete
+    DELETE FROM User WHERE agent_id = p_agent_id;
+    DELETE FROM Agent WHERE agent_id = p_agent_id;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
 CREATE PROCEDURE add_property_image(
     IN p_property_id INT,
     IN p_file_path VARCHAR(255),

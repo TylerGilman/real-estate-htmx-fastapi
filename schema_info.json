@@ -1,0 +1,869 @@
+{
+  "tables": {
+    "Agent": {
+      "columns": [
+        {
+          "name": "agent_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "NRDS",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_name",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_phone",
+          "type": "VARCHAR(15)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "agent_email",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "SSN",
+          "type": "VARCHAR(15)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "broker_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "license_number",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "license_expiration",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "Brokerage": {
+      "columns": [
+        {
+          "name": "broker_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "broker_name",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "broker_address",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "broker_phone",
+          "type": "VARCHAR(15)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "broker_email",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "broker_license",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "AgentListing": {
+      "columns": [
+        {
+          "name": "listing_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_role",
+          "type": "ENUM",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "listing_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "expiration_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "exclusive",
+          "type": "TINYINT",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "asking_price",
+          "type": "DECIMAL(15, 2)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "Property": {
+      "columns": [
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "tax_id",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "property_address",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "price",
+          "type": "DECIMAL(15, 2)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "lot_size",
+          "type": "DECIMAL(10, 2)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "year_built",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "zoning",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "property_tax",
+          "type": "DECIMAL(10, 2)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "image_url",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "Client": {
+      "columns": [
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "client_name",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "SSN",
+          "type": "VARCHAR(15)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "mailing_address",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "client_phone",
+          "type": "VARCHAR(15)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "client_email",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "AgentShowing": {
+      "columns": [
+        {
+          "name": "showing_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_role",
+          "type": "ENUM",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "showing_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "feedback",
+          "type": "TEXT",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "ClientRoles": {
+      "columns": [
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "role",
+          "type": "ENUM",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "CommercialProperty": {
+      "columns": [
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "sqft",
+          "type": "DECIMAL(10, 2)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "industry",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "c_type",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "num_units",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "parking_spaces",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "zoning_type",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "Contract": {
+      "columns": [
+        {
+          "name": "contract_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "contract_type",
+          "type": "ENUM",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "start_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "end_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "terms",
+          "type": "TEXT",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "ResidentialProperty": {
+      "columns": [
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "bedrooms",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "bathrooms",
+          "type": "DECIMAL(3, 1)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "r_type",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "square_feet",
+          "type": "DECIMAL(10, 2)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "garage_spaces",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "has_basement",
+          "type": "TINYINT",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "has_pool",
+          "type": "TINYINT",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "Transaction": {
+      "columns": [
+        {
+          "name": "transaction_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "property_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "seller_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "buyer_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "transaction_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "amount",
+          "type": "DECIMAL(15, 2)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "transaction_type",
+          "type": "ENUM",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "commission_amount",
+          "type": "DECIMAL(15, 2)",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "closing_date",
+          "type": "DATE",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "User": {
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "username",
+          "type": "VARCHAR(100)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "password_hash",
+          "type": "VARCHAR(255)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    },
+    "UserRole": {
+      "columns": [
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "nullable": false
+        },
+        {
+          "name": "role_name",
+          "type": "VARCHAR(50)",
+          "primary_key": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "primary_key": false,
+          "nullable": true
+        }
+      ],
+      "foreign_keys": []
+    }
+  },
+  "relationships": [
+    {
+      "from_table": "Agent",
+      "to_table": "Brokerage",
+      "from_column": "broker_id",
+      "to_column": "broker_id"
+    },
+    {
+      "from_table": "AgentListing",
+      "to_table": "Property",
+      "from_column": "property_id",
+      "to_column": "property_id"
+    },
+    {
+      "from_table": "AgentListing",
+      "to_table": "Agent",
+      "from_column": "agent_id",
+      "to_column": "agent_id"
+    },
+    {
+      "from_table": "AgentListing",
+      "to_table": "Client",
+      "from_column": "client_id",
+      "to_column": "client_id"
+    },
+    {
+      "from_table": "AgentShowing",
+      "to_table": "Property",
+      "from_column": "property_id",
+      "to_column": "property_id"
+    },
+    {
+      "from_table": "AgentShowing",
+      "to_table": "Agent",
+      "from_column": "agent_id",
+      "to_column": "agent_id"
+    },
+    {
+      "from_table": "AgentShowing",
+      "to_table": "Client",
+      "from_column": "client_id",
+      "to_column": "client_id"
+    },
+    {
+      "from_table": "ClientRoles",
+      "to_table": "Client",
+      "from_column": "client_id",
+      "to_column": "client_id"
+    },
+    {
+      "from_table": "CommercialProperty",
+      "to_table": "Property",
+      "from_column": "property_id",
+      "to_column": "property_id"
+    },
+    {
+      "from_table": "Contract",
+      "to_table": "Property",
+      "from_column": "property_id",
+      "to_column": "property_id"
+    },
+    {
+      "from_table": "Contract",
+      "to_table": "Client",
+      "from_column": "client_id",
+      "to_column": "client_id"
+    },
+    {
+      "from_table": "Contract",
+      "to_table": "Agent",
+      "from_column": "agent_id",
+      "to_column": "agent_id"
+    },
+    {
+      "from_table": "ResidentialProperty",
+      "to_table": "Property",
+      "from_column": "property_id",
+      "to_column": "property_id"
+    },
+    {
+      "from_table": "Transaction",
+      "to_table": "Property",
+      "from_column": "property_id",
+      "to_column": "property_id"
+    },
+    {
+      "from_table": "Transaction",
+      "to_table": "Client",
+      "from_column": "seller_id",
+      "to_column": "client_id"
+    },
+    {
+      "from_table": "Transaction",
+      "to_table": "Client",
+      "from_column": "buyer_id",
+      "to_column": "client_id"
+    },
+    {
+      "from_table": "Transaction",
+      "to_table": "Agent",
+      "from_column": "agent_id",
+      "to_column": "agent_id"
+    },
+    {
+      "from_table": "User",
+      "to_table": "UserRole",
+      "from_column": "role_id",
+      "to_column": "role_id"
+    },
+    {
+      "from_table": "User",
+      "to_table": "Agent",
+      "from_column": "agent_id",
+      "to_column": "agent_id"
+    }
+  ]
+}
