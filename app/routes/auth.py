@@ -5,52 +5,58 @@ from fastapi.templating import Jinja2Templates
 from ..core.security import verify_password, get_password_hash
 from ..core.logging_config import logger
 from ..core.database import get_db_connection, execute_procedure
+from datetime import datetime
 import os
 from dotenv import load_dotenv
+from mysql.connector import Error
 
 load_dotenv()
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
 class AuthError(Exception):
-    """Custom exception for authentication errors"""
     def __init__(self, message: str, status_code: int = 400):
         self.message = message
         self.status_code = status_code
         super().__init__(message)
 
-async def authenticate_user(username: str, password: str, conn = Depends(get_db_connection)) -> dict:
+async def authenticate_user(conn, username: str, password: str) -> dict:
     """Authenticate user and return user details"""
-    # Check env admin first
-    if username == os.getenv("ADMIN_USERNAME"):
-        if password == os.getenv("ADMIN_PASSWORD"):
-            return {
-                "username": username,
-                "role_name": "admin",
-                "is_env_admin": True
-            }
-        raise AuthError("Invalid credentials", 400)
+    try:
+        # Check env admin first
+        if username == os.getenv("ADMIN_USERNAME"):
+            if password == os.getenv("ADMIN_PASSWORD"):
+                # Get admin role
+                admin_role = execute_procedure(conn, 'get_or_create_admin_role')
+                if admin_role:
+                    return {
+                        "username": username,
+                        "role_name": "admin",
+                        "role_id": admin_role[0]['role_id'],
+                        "is_env_admin": True
+                    }
+            raise AuthError("Invalid credentials", 400)
 
-    # Get user from database
-    user_result = execute_procedure(conn, 'get_user_by_username', (username,))
-    if not user_result or not verify_password(password, user_result[0]['password_hash']):
-        raise AuthError("Invalid credentials", 400)
+        # Get user details
+        user_result = execute_procedure(conn, 'get_user_by_username', (username,))
+        if not user_result or not verify_password(password, user_result[0]['password_hash']):
+            raise AuthError("Invalid credentials", 400)
 
-    # Get complete user details
-    user = user_result[0]
-    user_info = execute_procedure(conn, 'get_user_role_and_details', (user['user_id'],))
-    
-    if not user_info:
-        raise AuthError("User role not found", 500)
-    
-    # Log successful login
-    execute_procedure(
-        conn, 
-        'log_user_login',
-        (user['user_id'], user_info[0]['role_name'])
-    )
-    
-    return user_info[0]
+        user = user_result[0]
+        
+        # Get user role details
+        user_info = execute_procedure(conn, 'get_user_role_and_details', (user['user_id'],))
+        if not user_info:
+            raise AuthError("User role not found", 500)
+        
+        # Log successful login
+        execute_procedure(conn, 'log_user_login', (user['user_id'], user_info[0]['role_name']))
+        
+        return user_info[0]
+
+    except Error as e:
+        logger.error(f"Database error during authentication: {str(e)}")
+        raise AuthError("System error occurred", 500)
 
 @router.get("/logout")
 async def logout(request: Request):
@@ -74,24 +80,31 @@ async def login(
 ):
     """Handle user login"""
     try:
+        # Clear any existing session
+        request.session.clear()
+        
         # Authenticate user
-        user_details = await authenticate_user(conn, username, password)
+        user = await authenticate_user(conn, username, password)
         
         # Set session data
-        request.session["username"] = username
-        request.session["role"] = user_details["role_name"]
+        request.session.update({
+            "username": username,
+            "role": user["role_name"],
+            "authenticated": True,
+            "user_id": user.get("user_id"),
+            "last_activity": str(datetime.now())
+        })
         
-        # Add additional session security
-        request.session["authenticated"] = True
-        request.session["last_activity"] = str(datetime.now())
+        # Log additional login details if not env admin
+        if not user.get("is_env_admin"):
+            execute_procedure(conn, 'log_successful_login', (user["user_id"],))
         
-        # Log successful login
         logger.info(f"Successful login for user: {username}")
         
         # Redirect based on role
-        if user_details["role_name"] == "admin":
+        if user["role_name"] == "admin":
             return RedirectResponse(url="/admin", status_code=303)
-        elif user_details["role_name"] == "agent":
+        elif user["role_name"] == "agent":
             return RedirectResponse(url="/agent", status_code=303)
         else:
             raise AuthError("Invalid role", 500)
@@ -128,7 +141,7 @@ async def login_page(request: Request):
                 return RedirectResponse(url="/admin", status_code=303)
             elif role == "agent":
                 return RedirectResponse(url="/agent", status_code=303)
-                
+
         return templates.TemplateResponse("auth/login.html", {"request": request})
     except Exception as e:
         logger.error(f"Error rendering login page: {str(e)}")

@@ -30,3 +30,306 @@
 2024-11-28 17:35:06,555 - app - INFO - Database connection pool created successfully.
 2024-11-28 17:35:40,418 - app - INFO - Database connection pool created successfully.
 2024-11-28 17:35:40,640 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:46:46,059 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:46:46,255 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:46:55,270 - app - ERROR - Error fetching properties: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:47:08,233 - app - ERROR - Authentication error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:47:09,082 - app - ERROR - Authentication error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:47:29,430 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:47:41,286 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:48:33,461 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:48:33,658 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:48:40,250 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:48:52,674 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:54:55,574 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:54:55,793 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:55:05,062 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:55:49,287 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:55:49,601 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:55:56,777 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:55:56,977 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:56:44,849 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:56:45,062 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:56:54,300 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:57:07,967 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:58:21,515 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:58:21,754 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:58:35,291 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:58:46,106 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:58:46,323 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:58:47,239 - app - ERROR - Error fetching properties: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:58:48,739 - app - ERROR - Error fetching properties: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:59:06,351 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 17:59:25,376 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:59:25,651 - app - INFO - Database connection pool created successfully.
+2024-11-28 17:59:27,209 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:00:44,468 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:01:17,396 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:01:17,605 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:01:26,181 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:01:34,322 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:01:52,623 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:03:31,308 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:03:31,486 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:03:34,851 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:03:43,975 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:03:48,160 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:03:50,764 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:04:33,495 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:04:33,700 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:05:35,188 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:05:35,508 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:05:43,679 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 18:08:05,799 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:08:05,965 - app - INFO - Database connection pool created successfully.
+2024-11-28 18:08:16,681 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 19:30:37,919 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:30:37,984 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:30:42,878 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 19:30:50,816 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 19:31:08,027 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 19:33:14,679 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:33:14,728 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:33:19,154 - app - INFO - Successful login for user: admin
+2024-11-28 19:33:19,157 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:33:21,572 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:33:21,862 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:33:24,205 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:33:24,571 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:34:31,376 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:34:31,420 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:34:51,425 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:34:51,473 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:35:15,833 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:35:15,879 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:35:19,332 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:35:21,995 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:35:22,703 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:35:30,231 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:35:30,273 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:37:22,190 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:37:22,236 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:37:23,699 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:37:24,966 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:37:25,621 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:38:22,063 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:38:22,108 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:38:24,986 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:38:26,267 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:38:26,988 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:40:18,796 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:40:18,841 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:40:22,611 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:40:24,369 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:40:25,094 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:40:27,105 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:40:33,492 - app - ERROR - Error fetching properties: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 19:40:49,951 - app - ERROR - Login error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:41:53,163 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:41:53,226 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:42:02,539 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:42:03,666 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:42:05,958 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:42:06,708 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:42:10,101 - app - INFO - Successful login for user: admin
+2024-11-28 19:42:10,105 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:42:12,241 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:42:12,988 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:43:17,064 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:43:17,107 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:43:20,344 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:43:20,383 - app - INFO - Database connection pool created successfully.
+2024-11-28 19:43:22,000 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:43:23,515 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:43:24,231 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 19:43:28,272 - app - ERROR - Error fetching properties: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 19:43:45,605 - app - ERROR - Login error: cannot access local variable 'cursor' where it is not associated with a value
+2024-11-28 21:21:03,667 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 21:21:04,453 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 21:21:58,408 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:21:58,475 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:22:12,541 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:22:12,607 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:26:44,961 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:29:31,505 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:29:39,248 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:29:53,551 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 21:29:55,512 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 21:29:56,252 - app - ERROR - Authentication error: '_GeneratorContextManager' object has no attribute 'cursor'
+2024-11-28 21:33:56,694 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:34:45,403 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:35:30,168 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:35:34,172 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 43, in admin_dashboard
+    context["properties"] = execute_procedure(conn, 'get_all_properties')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties does not exist
+2024-11-28 21:35:35,070 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 43, in admin_dashboard
+    context["properties"] = execute_procedure(conn, 'get_all_properties')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties does not exist
+2024-11-28 21:38:07,384 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:38:10,054 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-28 21:38:13,074 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-28 21:38:13,769 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-28 21:39:25,796 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:39:32,638 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-28 21:39:38,314 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 38, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+2024-11-28 21:39:38,562 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 38, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+2024-11-28 21:40:38,153 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:40:45,404 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_agents does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_agents does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 44, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_agents does not exist
+2024-11-28 21:40:47,287 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_agents does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_agents does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 44, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_agents does not exist
+2024-11-28 21:40:48,645 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_agents does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_agents does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 44, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_agents does not exist
+2024-11-28 21:41:30,129 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:41:43,101 - app - INFO - User logged out: admin
+2024-11-28 21:41:43,111 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-28 21:41:47,025 - app - ERROR - Authentication error: 
+2024-11-28 21:41:47,792 - app - ERROR - Authentication error: 
+2024-11-28 21:42:01,915 - app - INFO - Successful login for user: admin

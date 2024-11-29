@@ -1,5 +1,103 @@
 DELIMITER //
 
+CREATE PROCEDURE get_all_agents()
+BEGIN
+    SELECT 
+        a.*,
+        COUNT(DISTINCT al.listing_id) AS active_listings,
+        COUNT(DISTINCT t.transaction_id) AS total_transactions,
+        COALESCE(SUM(t.amount), 0) AS total_sales_volume,
+        COALESCE(SUM(t.commission_amount), 0) AS total_commission
+    FROM Agent a
+    LEFT JOIN AgentListing al ON a.agent_id = al.agent_id
+    LEFT JOIN Transaction t ON a.agent_id = t.agent_id
+    GROUP BY a.agent_id;
+END //
+
+CREATE PROCEDURE get_admin_dashboard_stats()
+BEGIN
+    SELECT 
+        (SELECT COUNT(*) FROM Agent) AS total_agents,
+        (SELECT COUNT(*) FROM AgentListing) AS total_listings,
+        (SELECT COUNT(*) FROM Property) AS total_properties,
+        (SELECT COALESCE(SUM(amount), 0) FROM Transaction WHERE transaction_type = 'Sale') AS total_sales,
+        (SELECT COALESCE(SUM(commission_amount), 0) FROM Transaction) AS total_commissions;
+END //
+
+CREATE PROCEDURE get_or_create_admin_role()
+BEGIN
+    DECLARE admin_role_id INT;
+    
+    -- Check if admin role exists
+    SELECT role_id INTO admin_role_id
+    FROM UserRole
+    WHERE role_name = 'admin'
+    LIMIT 1;
+    
+    -- Create if it doesn't exist
+    IF admin_role_id IS NULL THEN
+        INSERT INTO UserRole (role_name)
+        VALUES ('admin');
+        
+        SET admin_role_id = LAST_INSERT_ID();
+    END IF;
+    
+    SELECT role_id, role_name
+    FROM UserRole
+    WHERE role_id = admin_role_id;
+END //
+
+
+CREATE PROCEDURE get_all_properties()
+BEGIN
+    SELECT 
+        p.*,
+        CASE 
+            WHEN r.property_id IS NOT NULL THEN 'RESIDENTIAL'
+            WHEN c.property_id IS NOT NULL THEN 'COMMERCIAL'
+        END as property_type,
+        r.bedrooms,
+        r.bathrooms,
+        r.r_type as residential_type,
+        r.square_feet as residential_sqft,
+        r.garage_spaces,
+        r.has_basement,
+        r.has_pool,
+        c.sqft as commercial_sqft,
+        c.industry,
+        c.c_type as commercial_type,
+        c.num_units,
+        c.parking_spaces,
+        c.zoning_type,
+        a.agent_name,
+        a.agent_phone,
+        a.agent_email,
+        al.listing_date,
+        al.expiration_date
+    FROM Property p
+    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
+    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
+    LEFT JOIN AgentListing al ON p.property_id = al.property_id
+    LEFT JOIN Agent a ON al.agent_id = a.agent_id
+    ORDER BY p.created_at DESC;
+END //
+
+CREATE PROCEDURE get_property_stats()
+BEGIN
+    SELECT 
+        COUNT(*) as total_properties,
+        COUNT(CASE WHEN status IN ('FOR_SALE', 'FOR_LEASE') THEN 1 END) as active_listings,
+        COALESCE(SUM(price), 0) as total_value,
+        COALESCE(AVG(price), 0) as avg_price
+    FROM Property;
+END //
+
+DELIMITER ;
+CREATE PROCEDURE authenticate_user(IN username VARCHAR(255), IN password VARCHAR(255))
+BEGIN
+    SELECT * FROM users WHERE username = username AND password = password;
+END //
+
 -- Log user access
 CREATE PROCEDURE log_user_access(
     IN p_user_id INT,
@@ -30,7 +128,53 @@ BEGIN
     ) VALUES (
         p_user_id,
         p_ip_address,
-        NOW()
+        NOW()DELIMITER //
+
+CREATE PROCEDURE get_all_properties()
+BEGIN
+    SELECT 
+        p.*,
+        CASE 
+            WHEN r.property_id IS NOT NULL THEN 'RESIDENTIAL'
+            WHEN c.property_id IS NOT NULL THEN 'COMMERCIAL'
+        END as property_type,
+        r.bedrooms,
+        r.bathrooms,
+        r.r_type as residential_type,
+        r.square_feet as residential_sqft,
+        r.garage_spaces,
+        r.has_basement,
+        r.has_pool,
+        c.sqft as commercial_sqft,
+        c.industry,
+        c.c_type as commercial_type,
+        c.num_units,
+        c.parking_spaces,
+        c.zoning_type,
+        a.agent_name,
+        a.agent_phone,
+        a.agent_email,
+        al.listing_date,
+        al.expiration_date
+    FROM Property p
+    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
+    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
+    LEFT JOIN AgentListing al ON p.property_id = al.property_id
+    LEFT JOIN Agent a ON al.agent_id = a.agent_id
+    ORDER BY p.created_at DESC;
+END //
+
+CREATE PROCEDURE get_property_stats()
+BEGIN
+    SELECT 
+        COUNT(*) as total_properties,
+        COUNT(CASE WHEN status IN ('FOR_SALE', 'FOR_LEASE') THEN 1 END) as active_listings,
+        COALESCE(SUM(price), 0) as total_value,
+        COALESCE(AVG(price), 0) as avg_price
+    FROM Property;
+END //
+
+DELIMITER ;
     );
 END //
 
@@ -101,10 +245,6 @@ BEGIN
     WHERE u.user_id = p_user_id;
 END //
 
-DELIMITER ;
-
-
-DELIMITER //
 
 -- Get or create admin role
 CREATE PROCEDURE get_or_create_admin_role()
@@ -211,10 +351,6 @@ BEGIN
     
     COMMIT;
 END //
-
-DELIMITER ;
-
-DELIMITER //
 
 -- Get admin dashboard stats
 CREATE PROCEDURE get_admin_dashboard_stats()
@@ -342,10 +478,6 @@ BEGIN
     DELETE FROM Agent WHERE agent_id = p_agent_id;
 END //
 
-DELIMITER ;
-
-DELIMITER //
-
 CREATE PROCEDURE add_property_image(
     IN p_property_id INT,
     IN p_file_path VARCHAR(255),
@@ -369,11 +501,6 @@ BEGIN
     WHERE property_id = p_property_id
     ORDER BY is_primary DESC, uploaded_at DESC;
 END //
-
-DELIMITER ;
-
-
-DELIMITER / /
 
 CREATE PROCEDURE delete_property(
     IN p_property_id INT
@@ -402,10 +529,6 @@ BEGIN
     
     COMMIT;
 END //
-
-DELIMITER ;
-
-DELIMITER / / 
 
 CREATE PROCEDURE create_property (
   IN p_tax_id VARCHAR(50),
@@ -519,9 +642,8 @@ END IF;
 
 COMMIT;
 
-END / / DELIMITER;
+END //
 
-DELIMITER / /
 -- Get property details with all related information
 CREATE PROCEDURE get_property_details (IN p_id INT) BEGIN
 SELECT
@@ -560,7 +682,7 @@ FROM
 WHERE
   p.property_id = p_id;
 
-END / /
+END //
 -- Search properties with filters
 CREATE PROCEDURE search_properties (
   IN min_price DECIMAL(15, 2),
@@ -622,7 +744,7 @@ WHERE
 ORDER BY
   p.created_at DESC;
 
-END / /
+END //
 -- Get agent performance metrics
 CREATE PROCEDURE get_agent_performance (
   IN agent_id INT,
@@ -699,55 +821,38 @@ GROUP BY
   a.agent_id,
   a.agent_name;
 
-END / /
+END //
 -- Get client portfolio summary
-CREATE PROCEDURE get_client_portfolio (IN client_id INT) BEGIN
-SELECT
-  c.client_id,
-  c.client_name,
-  c.client_phone,
-  c.client_email,
-  GROUP_CONCAT (DISTINCT cr.role) as roles,
-  COUNT(
-    DISTINCT CASE
-      WHEN t.seller_id = c.client_id THEN t.transaction_id
-    END
-  ) as properties_sold,
-  COUNT(
-    DISTINCT CASE
-      WHEN t.buyer_id = c.client_id THEN t.transaction_id
-    END
-  ) as properties_bought,
-  SUM(
-    CASE
-      WHEN t.seller_id = c.client_id THEN t.amount
-      ELSE 0
-    END
-  ) as total_sales,
-  SUM(
-    CASE
-      WHEN t.buyer_id = c.client_id THEN t.amount
-      ELSE 0
-    END
-  ) as total_purchases,
-  COUNT(DISTINCT al.listing_id) as active_listings,
-  COUNT(DISTINCT ash.showing_id) as property_viewings
-FROM
-  Client c
-  LEFT JOIN ClientRoles cr ON c.client_id = cr.client_id
-  LEFT JOIN Transaction t ON c.client_id = t.seller_id
-  OR c.client_id = t.buyer_id
-  LEFT JOIN AgentListing al ON c.client_id = al.client_id
-  LEFT JOIN AgentShowing ash ON c.client_id = ash.client_id
-WHERE
-  c.client_id = client_id
-GROUP BY
-  c.client_id,
-  c.client_name,
-  c.client_phone,
-  c.client_email;
 
-END / /
+CREATE PROCEDURE get_client_portfolio (IN client_id INT)
+BEGIN
+    SELECT
+        c.client_id,
+        c.client_name,
+        c.client_phone,
+        c.client_email,
+        GROUP_CONCAT(DISTINCT cr.role) AS roles,
+        COUNT(CASE WHEN t.seller_id = c.client_id THEN 1 END) AS properties_sold,
+        COUNT(CASE WHEN t.buyer_id = c.client_id THEN 1 END) AS properties_bought,
+        SUM(CASE WHEN t.seller_id = c.client_id THEN t.amount ELSE 0 END) AS total_sales,
+        SUM(CASE WHEN t.buyer_id = c.client_id THEN t.amount ELSE 0 END) AS total_purchases,
+        COUNT(DISTINCT al.listing_id) AS active_listings,
+        COUNT(DISTINCT ash.showing_id) AS property_viewings
+    FROM
+        Client c
+    LEFT JOIN ClientRoles cr ON c.client_id = cr.client_id
+    LEFT JOIN Transaction t ON c.client_id = t.seller_id OR c.client_id = t.buyer_id
+    LEFT JOIN AgentListing al ON c.client_id = al.client_id
+    LEFT JOIN AgentShowing ash ON c.client_id = ash.client_id
+    WHERE
+        c.client_id = client_id
+    GROUP BY
+        c.client_id,
+        c.client_name,
+        c.client_phone,
+        c.client_email;
+END //
+
 -- Create new listing with checks
 CREATE PROCEDURE create_listing (
   IN p_property_id INT,
@@ -802,8 +907,8 @@ VALUES
 
 SET
   p_listing_id = LAST_INSERT_ID ();
+END //
 
-END / /
 -- Record property showing
 CREATE PROCEDURE record_showing (
   IN p_property_id INT,
@@ -835,8 +940,8 @@ VALUES
 
 SET
   p_showing_id = LAST_INSERT_ID ();
+END //
 
-END / /
 -- Record transaction
 CREATE PROCEDURE record_transaction (
   IN p_property_id INT,
@@ -894,8 +999,8 @@ WHERE
   AND expiration_date > CURRENT_DATE();
 
 COMMIT;
+END //
 
-END / /
 -- Get market analysis
 CREATE PROCEDURE get_market_analysis (
   IN start_date DATE,
@@ -966,4 +1071,5 @@ WHERE
     )
   );
 
-END / / DELIMITER;
+END //
+DELIMITER ;

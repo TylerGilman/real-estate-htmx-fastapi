@@ -1,40 +1,19 @@
-# app/routes/main.py
 from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.templating import Jinja2Templates
 from typing import Optional
 from ..core.logging_config import logger
-from app.core.database import get_db_connection
-from mysql.connector import Error
+from app.core.database import get_db_connection, execute_procedure
 
 router = APIRouter(tags=["main"])
 templates = Jinja2Templates(directory="app/templates")
 
 
-async def call_procedure(conn, procedure_name: str, params: tuple = ()):
-    """Helper function to call stored procedures"""
-    try:
-        cursor = conn.cursor(dictionary=True)
-        cursor.callproc(procedure_name, params)
-
-        results = None
-        for result in cursor.stored_results():
-            results = result.fetchall()
-
-        return results
-    except Error as e:
-        logger.error(f"Database error in {procedure_name}: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        if cursor:
-            cursor.close()
-
-
 async def is_db_empty(conn) -> bool:
     """Check if the database is empty using stored procedure"""
     try:
-        result = await call_procedure(conn, "get_property_count")
+        result = execute_procedure(conn, "get_property_count")
         return result[0]["count"] == 0 if result else True
-    except Error as e:
+    except Exception as e:
         logger.error(f"Error checking if database is empty: {str(e)}")
         return True
 
@@ -43,8 +22,8 @@ async def is_db_empty(conn) -> bool:
 async def index(request: Request, conn=Depends(get_db_connection)):
     """Homepage route"""
     try:
-        # Get all properties with their details
-        properties = await call_procedure(conn, "get_all_properties_with_details")
+        # Fetch all properties with their details
+        properties = execute_procedure(conn, "get_all_properties_with_details")
 
         return templates.TemplateResponse(
             "index.html",
@@ -89,7 +68,7 @@ async def search(
     """Search properties route"""
     try:
         # Search properties using stored procedure
-        properties = await call_procedure(
+        properties = execute_procedure(
             conn,
             "search_properties_with_filters",
             (query, property_type, min_price, max_price),

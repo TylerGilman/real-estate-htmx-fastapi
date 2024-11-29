@@ -3,5 +3,5 @@ CREATE DATABASE real_estate;
 USE real_estate;
 
 -- Import schema and procedures
-SOURCE schema.sql;
-SOURCE procedures.sql;
+SOURCE sql/schema.sql;
+SOURCE sql/procedures.sql;
