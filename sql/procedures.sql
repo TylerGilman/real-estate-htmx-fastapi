@@ -1,5 +1,42 @@
 DELIMITER //
 
+CREATE PROCEDURE create_agent(
+    IN p_agent_name VARCHAR(255),
+    IN p_NRDS VARCHAR(50),
+    IN p_agent_phone VARCHAR(15),
+    IN p_agent_email VARCHAR(255),
+    IN p_SSN VARCHAR(15),
+    IN p_license_number VARCHAR(50),
+    IN p_license_expiration DATE,
+    IN p_broker_id INT
+)
+BEGIN
+    INSERT INTO Agent (
+        agent_name, 
+        NRDS, 
+        agent_phone, 
+        agent_email,
+        SSN, 
+        license_number, 
+        license_expiration, 
+        broker_id
+    ) 
+    VALUES (
+        p_agent_name, 
+        p_NRDS, 
+        p_agent_phone, 
+        p_agent_email,
+        p_SSN, 
+        p_license_number, 
+        p_license_expiration, 
+        p_broker_id
+    );
+    
+    SELECT LAST_INSERT_ID() AS agent_id;
+END //
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE get_all_agents()
 BEGIN
     SELECT 
@@ -14,6 +51,9 @@ BEGIN
     GROUP BY a.agent_id;
 END //
 
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE get_admin_dashboard_stats()
 BEGIN
     SELECT 
@@ -24,6 +64,9 @@ BEGIN
         (SELECT COALESCE(SUM(commission_amount), 0) FROM Transaction) AS total_commissions;
 END //
 
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE get_or_create_admin_role()
 BEGIN
     DECLARE admin_role_id INT;
@@ -47,57 +90,18 @@ BEGIN
     WHERE role_id = admin_role_id;
 END //
 
-
-CREATE PROCEDURE get_all_properties()
-BEGIN
-    SELECT 
-        p.*,
-        CASE 
-            WHEN r.property_id IS NOT NULL THEN 'RESIDENTIAL'
-            WHEN c.property_id IS NOT NULL THEN 'COMMERCIAL'
-        END as property_type,
-        r.bedrooms,
-        r.bathrooms,
-        r.r_type as residential_type,
-        r.square_feet as residential_sqft,
-        r.garage_spaces,
-        r.has_basement,
-        r.has_pool,
-        c.sqft as commercial_sqft,
-        c.industry,
-        c.c_type as commercial_type,
-        c.num_units,
-        c.parking_spaces,
-        c.zoning_type,
-        a.agent_name,
-        a.agent_phone,
-        a.agent_email,
-        al.listing_date,
-        al.expiration_date
-    FROM Property p
-    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
-    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
-    LEFT JOIN AgentListing al ON p.property_id = al.property_id
-    LEFT JOIN Agent a ON al.agent_id = a.agent_id
-    ORDER BY p.created_at DESC;
-END //
-
-CREATE PROCEDURE get_property_stats()
-BEGIN
-    SELECT 
-        COUNT(*) as total_properties,
-        COUNT(CASE WHEN status IN ('FOR_SALE', 'FOR_LEASE') THEN 1 END) as active_listings,
-        COALESCE(SUM(price), 0) as total_value,
-        COALESCE(AVG(price), 0) as avg_price
-    FROM Property;
-END //
-
 DELIMITER ;
+
+
+DELIMITER //
 CREATE PROCEDURE authenticate_user(IN username VARCHAR(255), IN password VARCHAR(255))
 BEGIN
     SELECT * FROM users WHERE username = username AND password = password;
 END //
 
+DELIMITER ;
+
+DELIMITER //
 -- Log user access
 CREATE PROCEDURE log_user_access(
     IN p_user_id INT,
@@ -115,7 +119,10 @@ BEGIN
     );
 END //
 
+DELIMITER ;
+
 -- Log admin access
+DELIMITER //
 CREATE PROCEDURE log_admin_access(
     IN p_user_id INT,
     IN p_ip_address VARCHAR(45)
@@ -128,8 +135,12 @@ BEGIN
     ) VALUES (
         p_user_id,
         p_ip_address,
-        NOW()DELIMITER //
+        NOW()
+    );
+END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE get_all_properties()
 BEGIN
     SELECT 
@@ -163,7 +174,9 @@ BEGIN
     LEFT JOIN Agent a ON al.agent_id = a.agent_id
     ORDER BY p.created_at DESC;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE get_property_stats()
 BEGIN
     SELECT 
@@ -175,9 +188,8 @@ BEGIN
 END //
 
 DELIMITER ;
-    );
-END //
 
+DELIMITER //
 -- Validate session
 CREATE PROCEDURE validate_session(
     IN p_session_id VARCHAR(100),
@@ -194,7 +206,9 @@ BEGIN
     FROM Sessions s
     WHERE s.session_id = p_session_id;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Check user permission
 CREATE PROCEDURE check_user_permission(
     IN p_user_id INT,
@@ -208,7 +222,9 @@ BEGIN
     WHERE up.user_id = p_user_id
     AND p.permission_name = p_permission;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Log security event
 CREATE PROCEDURE log_security_event(
     IN p_event_type VARCHAR(50),
@@ -228,7 +244,9 @@ BEGIN
         NOW()
     );
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Get agent details with license check
 CREATE PROCEDURE get_agent_details(
     IN p_user_id INT
@@ -244,32 +262,10 @@ BEGIN
     JOIN User u ON a.agent_id = u.agent_id
     WHERE u.user_id = p_user_id;
 END //
+DELIMITER ;
 
 
--- Get or create admin role
-CREATE PROCEDURE get_or_create_admin_role()
-BEGIN
-    DECLARE admin_role_id INT;
-    
-    -- Check if admin role exists
-    SELECT role_id INTO admin_role_id
-    FROM UserRole
-    WHERE role_name = 'admin'
-    LIMIT 1;
-    
-    -- Create if it doesn't exist
-    IF admin_role_id IS NULL THEN
-        INSERT INTO UserRole (role_name)
-        VALUES ('admin');
-        
-        SET admin_role_id = LAST_INSERT_ID();
-    END IF;
-    
-    SELECT role_id, role_name
-    FROM UserRole
-    WHERE role_id = admin_role_id;
-END //
-
+DELIMITER //
 -- Get user by username with role
 CREATE PROCEDURE get_user_by_username(
     IN p_username VARCHAR(100)
@@ -286,7 +282,9 @@ BEGIN
     JOIN UserRole ur ON u.role_id = ur.role_id
     WHERE u.username = p_username;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Check user role
 CREATE PROCEDURE check_user_role(
     IN p_username VARCHAR(100),
@@ -300,7 +298,9 @@ BEGIN
     WHERE u.username = p_username
     AND ur.role_name = p_role_name;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Get agent by user ID
 CREATE PROCEDURE get_agent_by_user_id(
     IN p_user_id INT
@@ -314,7 +314,9 @@ BEGIN
     JOIN User u ON a.agent_id = u.agent_id
     WHERE u.user_id = p_user_id;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Create admin user
 CREATE PROCEDURE create_admin_user(
     IN p_username VARCHAR(100),
@@ -351,55 +353,9 @@ BEGIN
     
     COMMIT;
 END //
+DELIMITER ;
 
--- Get admin dashboard stats
-CREATE PROCEDURE get_admin_dashboard_stats()
-BEGIN
-    SELECT 
-        (SELECT COUNT(*) FROM Agent) as total_agents,
-        (SELECT COUNT(*) FROM AgentListing) as total_listings,
-        (SELECT COUNT(*) FROM Property) as total_properties,
-        (SELECT COALESCE(SUM(amount), 0) FROM Transaction WHERE transaction_type = 'Sale') as total_sales,
-        (SELECT COALESCE(SUM(commission_amount), 0) FROM Transaction) as total_commissions;
-END //
-
--- Get all agents with their stats
-CREATE PROCEDURE get_all_agents()
-BEGIN
-    SELECT 
-        a.*,
-        COUNT(DISTINCT al.listing_id) as active_listings,
-        COUNT(DISTINCT t.transaction_id) as total_transactions,
-        COALESCE(SUM(t.amount), 0) as total_sales_volume,
-        COALESCE(SUM(t.commission_amount), 0) as total_commission
-    FROM Agent a
-    LEFT JOIN AgentListing al ON a.agent_id = al.agent_id
-    LEFT JOIN Transaction t ON a.agent_id = t.agent_id
-    GROUP BY a.agent_id;
-END //
-
--- Create new agent
-CREATE PROCEDURE create_agent(
-    IN p_agent_name VARCHAR(255),
-    IN p_NRDS VARCHAR(50),
-    IN p_agent_phone VARCHAR(15),
-    IN p_agent_email VARCHAR(255),
-    IN p_SSN VARCHAR(15),
-    IN p_license_number VARCHAR(50),
-    IN p_license_expiration DATE,
-    IN p_broker_id INT
-)
-BEGIN
-    INSERT INTO Agent (
-        agent_name, NRDS, agent_phone, agent_email,
-        SSN, license_number, license_expiration, broker_id
-    ) VALUES (
-        p_agent_name, p_NRDS, p_agent_phone, p_agent_email,
-        p_SSN, p_license_number, p_license_expiration, p_broker_id
-    );
-    SELECT LAST_INSERT_ID() as agent_id;
-END //
-
+DELIMITER //
 -- Update existing agent
 CREATE PROCEDURE update_agent(
     IN p_agent_id INT,
@@ -421,7 +377,9 @@ BEGIN
         license_expiration = p_license_expiration
     WHERE agent_id = p_agent_id;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Create user account
 CREATE PROCEDURE create_user(
     IN p_username VARCHAR(100),
@@ -443,7 +401,9 @@ BEGIN
     
     SELECT LAST_INSERT_ID() as user_id;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Delete agent (with safety checks)
 CREATE PROCEDURE delete_agent(
     IN p_agent_id INT
@@ -477,7 +437,9 @@ BEGIN
     DELETE FROM User WHERE agent_id = p_agent_id;
     DELETE FROM Agent WHERE agent_id = p_agent_id;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE add_property_image(
     IN p_property_id INT,
     IN p_file_path VARCHAR(255),
@@ -494,14 +456,18 @@ BEGIN
     INSERT INTO PropertyImages (property_id, file_path, is_primary)
     VALUES (p_property_id, p_file_path, p_is_primary);
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE get_property_images(IN p_property_id INT)
 BEGIN
     SELECT * FROM PropertyImages
     WHERE property_id = p_property_id
     ORDER BY is_primary DESC, uploaded_at DESC;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE delete_property(
     IN p_property_id INT
 )
@@ -529,7 +495,9 @@ BEGIN
     
     COMMIT;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE create_property (
   IN p_tax_id VARCHAR(50),
   IN p_property_address VARCHAR(255),
@@ -540,7 +508,6 @@ CREATE PROCEDURE create_property (
   IN p_zoning VARCHAR(50),
   IN p_property_tax DECIMAL(10, 2),
   IN p_property_type VARCHAR(20),
-  -- Residential specific parameters
   IN p_bedrooms INT,
   IN p_bathrooms DECIMAL(3, 1),
   IN p_r_type VARCHAR(50),
@@ -548,7 +515,6 @@ CREATE PROCEDURE create_property (
   IN p_garage_spaces INT,
   IN p_has_basement BOOLEAN,
   IN p_has_pool BOOLEAN,
-  -- Commercial specific parameters
   IN p_sqft DECIMAL(10, 2),
   IN p_industry VARCHAR(255),
   IN p_c_type VARCHAR(50),
@@ -556,94 +522,43 @@ CREATE PROCEDURE create_property (
   IN p_parking_spaces INT,
   IN p_zoning_type VARCHAR(50),
   OUT p_property_id INT
-) BEGIN DECLARE EXIT HANDLER FOR SQLEXCEPTION BEGIN ROLLBACK;
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
-RESIGNAL;
+    START TRANSACTION;
 
-END;
+    INSERT INTO Property (
+        tax_id, property_address, status, price, lot_size, year_built, zoning, property_tax
+    ) VALUES (
+        p_tax_id, p_property_address, p_status, p_price, p_lot_size, p_year_built, p_zoning, p_property_tax
+    );
 
-START TRANSACTION;
+    SET p_property_id = LAST_INSERT_ID();
 
--- Insert base property
-INSERT INTO
-  Property (
-    tax_id,
-    property_address,
-    status,
-    price,
-    lot_size,
-    year_built,
-    zoning,
-    property_tax
-  )
-VALUES
-  (
-    p_tax_id,
-    p_property_address,
-    p_status,
-    p_price,
-    p_lot_size,
-    p_year_built,
-    p_zoning,
-    p_property_tax
-  );
+    IF p_property_type = 'RESIDENTIAL' THEN
+        INSERT INTO ResidentialProperty (
+            property_id, bedrooms, bathrooms, r_type, square_feet, garage_spaces, has_basement, has_pool
+        ) VALUES (
+            p_property_id, p_bedrooms, p_bathrooms, p_r_type, p_square_feet, p_garage_spaces, p_has_basement, p_has_pool
+        );
+    ELSEIF p_property_type = 'COMMERCIAL' THEN
+        INSERT INTO CommercialProperty (
+            property_id, sqft, industry, c_type, num_units, parking_spaces, zoning_type
+        ) VALUES (
+            p_property_id, p_sqft, p_industry, p_c_type, p_num_units, p_parking_spaces, p_zoning_type
+        );
+    END IF;
 
-SET
-  p_property_id = LAST_INSERT_ID ();
-
--- Insert type-specific details
-IF p_property_type = 'RESIDENTIAL' THEN
-INSERT INTO
-  ResidentialProperty (
-    property_id,
-    bedrooms,
-    bathrooms,
-    r_type,
-    square_feet,
-    garage_spaces,
-    has_basement,
-    has_pool
-  )
-VALUES
-  (
-    p_property_id,
-    p_bedrooms,
-    p_bathrooms,
-    p_r_type,
-    p_square_feet,
-    p_garage_spaces,
-    p_has_basement,
-    p_has_pool
-  );
-
-ELSEIF p_property_type = 'COMMERCIAL' THEN
-INSERT INTO
-  CommercialProperty (
-    property_id,
-    sqft,
-    industry,
-    c_type,
-    num_units,
-    parking_spaces,
-    zoning_type
-  )
-VALUES
-  (
-    p_property_id,
-    p_sqft,
-    p_industry,
-    p_c_type,
-    p_num_units,
-    p_parking_spaces,
-    p_zoning_type
-  );
-
-END IF;
-
-COMMIT;
-
+    COMMIT;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Get property details with all related information
 CREATE PROCEDURE get_property_details (IN p_id INT) BEGIN
 SELECT
@@ -683,6 +598,9 @@ WHERE
   p.property_id = p_id;
 
 END //
+DELIMITER ;
+
+DELIMITER //
 -- Search properties with filters
 CREATE PROCEDURE search_properties (
   IN min_price DECIMAL(15, 2),
@@ -745,6 +663,9 @@ ORDER BY
   p.created_at DESC;
 
 END //
+DELIMITER ;
+
+DELIMITER //
 -- Get agent performance metrics
 CREATE PROCEDURE get_agent_performance (
   IN agent_id INT,
@@ -822,6 +743,9 @@ GROUP BY
   a.agent_name;
 
 END //
+DELIMITER ;
+DELIMITER //
+
 -- Get client portfolio summary
 
 CREATE PROCEDURE get_client_portfolio (IN client_id INT)
@@ -852,7 +776,9 @@ BEGIN
         c.client_phone,
         c.client_email;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Create new listing with checks
 CREATE PROCEDURE create_listing (
   IN p_property_id INT,
@@ -908,6 +834,8 @@ VALUES
 SET
   p_listing_id = LAST_INSERT_ID ();
 END //
+DELIMITER ;
+DELIMITER //
 
 -- Record property showing
 CREATE PROCEDURE record_showing (
@@ -942,6 +870,8 @@ SET
   p_showing_id = LAST_INSERT_ID ();
 END //
 
+DELIMITER ;
+DELIMITER //
 -- Record transaction
 CREATE PROCEDURE record_transaction (
   IN p_property_id INT,
@@ -1000,7 +930,9 @@ WHERE
 
 COMMIT;
 END //
+DELIMITER ;
 
+DELIMITER //
 -- Get market analysis
 CREATE PROCEDURE get_market_analysis (
   IN start_date DATE,

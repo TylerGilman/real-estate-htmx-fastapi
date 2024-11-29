@@ -333,3 +333,28 @@ mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get
 2024-11-28 21:41:47,025 - app - ERROR - Authentication error: 
 2024-11-28 21:41:47,792 - app - ERROR - Authentication error: 
 2024-11-28 21:42:01,915 - app - INFO - Successful login for user: admin
+2024-11-28 21:46:54,443 - app - INFO - Database connection pool created successfully.
+2024-11-28 21:46:56,992 - app - ERROR - Failed to create agent: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.create_agent does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 129, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+2024-11-28 22:47:57,575 - app - INFO - Database connection pool created successfully.
+2024-11-28 22:58:25,071 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
