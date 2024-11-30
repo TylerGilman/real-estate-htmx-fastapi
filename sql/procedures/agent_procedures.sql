@@ -78,6 +78,7 @@ BEGIN
 END //
 
 -- Get all agents with summary info
+
 CREATE PROCEDURE get_all_agents(
     IN p_page INT,
     IN p_page_size INT,
@@ -87,8 +88,11 @@ CREATE PROCEDURE get_all_agents(
 BEGIN
     DECLARE v_offset INT;
     DECLARE v_sort_clause VARCHAR(100);
-    
+
+    -- Calculate the offset for pagination
     SET v_offset = (p_page - 1) * p_page_size;
+
+    -- Build the sort clause dynamically
     SET v_sort_clause = CASE 
         WHEN p_sort_field IS NULL THEN 'a.created_at DESC'
         ELSE CONCAT(p_sort_field, ' ', COALESCE(p_sort_direction, 'ASC'))
@@ -97,7 +101,11 @@ BEGIN
     -- Get total count for pagination
     SELECT COUNT(*) as total_count FROM Agent;
 
-    -- Get agents with summary metrics
+    -- Assign user-defined variables for dynamic SQL execution
+    SET @page_size = p_page_size;
+    SET @offset = v_offset;
+
+    -- Build the dynamic SQL query
     SET @sql = CONCAT('
     SELECT 
         a.*,
@@ -116,8 +124,9 @@ BEGIN
     ORDER BY ', v_sort_clause, '
     LIMIT ? OFFSET ?');
 
+    -- Prepare and execute the statement
     PREPARE stmt FROM @sql;
-    EXECUTE stmt USING p_page_size, v_offset;
+    EXECUTE stmt USING @page_size, @offset;
     DEALLOCATE PREPARE stmt;
 END //
 

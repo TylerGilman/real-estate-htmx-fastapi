@@ -718,3 +718,45 @@ mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.cre
 2024-11-30 16:54:14,490 - app - INFO - Database connection pool created successfully.
 2024-11-30 16:54:16,557 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
 2024-11-30 16:54:17,827 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:55:20,418 - app - INFO - Database connection pool created successfully.
+2024-11-30 17:55:24,962 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 17:55:30,182 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:55:31,047 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:55:32,286 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:55:32,795 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:57:02,412 - app - INFO - Database connection pool created successfully.
+2024-11-30 17:57:06,191 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:57:06,632 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 17:59:40,697 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:04:59,846 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:05:05,530 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 18:05:07,456 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 18:05:08,458 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 18:05:14,846 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 18:05:26,332 - app - ERROR - Database error during authentication: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 18:05:26,333 - app - WARNING - Authentication failed for user admin: System error occurred
+2024-11-30 18:08:32,049 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:18:05,494 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:18:10,339 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
