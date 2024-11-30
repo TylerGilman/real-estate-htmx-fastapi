@@ -358,3 +358,5 @@ Traceback (most recent call last):
 mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
 2024-11-28 22:47:57,575 - app - INFO - Database connection pool created successfully.
 2024-11-28 22:58:25,071 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 16:06:26,841 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 16:06:37,992 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
