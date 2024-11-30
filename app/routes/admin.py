@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends, Form, HTTPException, File, UploadFile
+from fastapi import APIRouter, Request, Depends, HTTPException, Form, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 from typing import Optional
@@ -12,7 +12,6 @@ UPLOAD_DIR = "app/static/property_images"
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
-
 @router.get("", response_class=HTMLResponse)
 async def admin_dashboard(
     request: Request,
@@ -21,6 +20,9 @@ async def admin_dashboard(
 ):
     """Main admin dashboard view"""
     try:
+        # Get all clients
+        clients = execute_procedure(conn, 'get_all_clients')
+
         context = {
             "request": request,
             "current_user": current_user,
@@ -32,6 +34,7 @@ async def admin_dashboard(
             "total_sales": 0,
             "total_commissions": 0,
             "today": date.today(),
+            "clients": clients  # Add clients to context
         }
 
         # Fetch dashboard stats
@@ -47,6 +50,147 @@ async def admin_dashboard(
     except Exception as e:
         logger.error(f"Dashboard error: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail="Failed to load dashboard data")
+
+@router.get("/clients")
+async def list_clients(
+    request: Request,
+    current_user: dict = Depends(get_current_admin),
+    conn=Depends(get_db_connection)
+):
+    """List all clients"""
+    try:
+        clients = execute_procedure(conn, 'get_all_clients')
+        return templates.TemplateResponse(
+            "admin/clients/list.html",
+            {
+                "request": request,
+                "clients": clients,
+                "current_user": current_user
+            }
+        )
+    except Exception as e:
+        logger.error(f"Error fetching clients: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to fetch clients")
+
+@router.post("/clients")
+async def create_client(
+    request: Request,
+    client_name: str = Form(...),
+    client_phone: str = Form(...),
+    client_email: str = Form(...),
+    mailing_address: str = Form(...),
+    SSN: str = Form(...),
+    conn=Depends(get_db_connection)
+):
+    """Create a new client"""
+    try:
+        # Format phone number and SSN
+        phone = client_phone.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
+        ssn = SSN.replace("-", "")
+
+        # Create client using stored procedure
+        execute_procedure(
+            conn,
+            'create_client',
+            (client_name, phone, client_email, mailing_address, ssn)
+        )
+        
+        # Get the newly created client
+        client = execute_procedure(conn, 'get_all_clients')[-1]  # Get most recently added client
+
+        # Return the new row HTML
+        return templates.TemplateResponse(
+            "admin/clients/table_row.html",
+            {
+                "request": request,
+                "client": client
+            }
+        )
+    except Exception as e:
+        logger.error(f"Failed to create client: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error creating client: {str(e)}")
+
+@router.get("/clients/{client_id}/edit")
+async def edit_client_form(
+    request: Request,
+    client_id: int,
+    conn=Depends(get_db_connection)
+):
+    """Get the edit form for a client"""
+    try:
+        client = execute_procedure(conn, 'get_client_details', (client_id,))
+        if not client:
+            raise HTTPException(status_code=404, detail="Client not found")
+
+        return templates.TemplateResponse(
+            "admin/clients/edit_form.html",
+            {"request": request, "client": client[0]}
+        )
+    except Exception as e:
+        logger.error(f"Error fetching client edit form: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/clients/{client_id}")
+async def update_client(
+    request: Request,
+    client_id: int,
+    client_name: str = Form(...),
+    client_phone: str = Form(...),
+    client_email: str = Form(...),
+    mailing_address: str = Form(...),
+    conn=Depends(get_db_connection)
+):
+    """Update an existing client"""
+    try:
+        phone = client_phone.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
+
+        execute_procedure(
+            conn,
+            'update_client',
+            (client_id, client_name, phone, client_email, mailing_address)
+        )
+
+        return templates.TemplateResponse(
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": "Client updated successfully",
+                "type": "success"
+            }
+        )
+    except Exception as e:
+        logger.error(f"Failed to update client: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error updating client: {str(e)}")
+
+@router.delete("/clients/{client_id}")
+async def delete_client(client_id: int, conn=Depends(get_db_connection)):
+    """Delete a client"""
+    try:
+        execute_procedure(conn, 'delete_client', (client_id,))
+        return JSONResponse(content={"success": True, "message": "Client deleted successfully"})
+    except Exception as e:
+        logger.error(f"Failed to delete client: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/properties/{property_id}")
+async def delete_property(property_id: int, conn=Depends(get_db_connection)):
+    """Delete a property using stored procedure"""
+    try:
+        execute_procedure(conn, 'delete_property', (property_id,))
+        return Response("")
+    except Exception as e:
+        logger.error(f"Failed to delete property {property_id}: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to delete property: {str(e)}")
+
+@router.delete("/agents/{agent_id}")
+async def delete_agent(agent_id: int, conn=Depends(get_db_connection)):
+    """Delete an agent using stored procedure"""
+    try:
+        execute_procedure(conn, 'delete_agent', (agent_id,))
+        return JSONResponse(content={"success": True, "message": "Agent deleted successfully"})
+    except Exception as e:
+        logger.error(f"Failed to delete agent: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/properties/table", response_class=HTMLResponse)
@@ -207,3 +351,4 @@ async def delete_agent(agent_id: int, conn=Depends(get_db_connection)):
     except Exception as e:
         logger.error(f"Failed to delete agent: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+

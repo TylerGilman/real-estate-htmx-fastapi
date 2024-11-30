@@ -360,3 +360,361 @@ mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.cre
 2024-11-28 22:58:25,071 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
 2024-11-30 16:06:26,841 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
 2024-11-30 16:06:37,992 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 16:27:06,342 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:27:13,146 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:27:37,733 - app - ERROR - Failed to create client: 1146 (42S02): Table 'real_estate.Clients' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Clients' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 88, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Clients' doesn't exist
+2024-11-30 16:31:03,667 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:33:33,975 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:35:48,360 - app - ERROR - Failed to create client: 'None' has no attribute 'split'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 98, in create_client
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/clients/table_row.html", line 22, in top-level template code
+    {% for role in client.roles.split(',') if client.roles %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/utils.py", line 83, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'None' has no attribute 'split'
+2024-11-30 16:35:51,212 - app - ERROR - Failed to create client: 'None' has no attribute 'split'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 98, in create_client
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/clients/table_row.html", line 22, in top-level template code
+    {% for role in client.roles.split(',') if client.roles %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/utils.py", line 83, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'None' has no attribute 'split'
+2024-11-30 16:38:03,659 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:38:06,095 - app - ERROR - Dashboard error: No test named 'contains'.
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 49, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 23, in block 'content'
+    </div>{% include "admin/clients/table.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/clients/table.html", line 10, in top-level template code
+    {{ clients|selectattr('roles', 'contains', 'SELLER')|list|length }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/async_utils.py", line 45, in wrapper
+    return normal_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1324, in sync_do_list
+    return list(value)
+           ^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1765, in select_or_reject
+    if func(item):
+       ^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1750, in <lambda>
+    return lambda item: modfunc(func(transfunc(item)))
+                                ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1745, in func
+    return context.environment.call_test(name, item, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 589, in call_test
+    return self._filter_test_common(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 521, in _filter_test_common
+    raise TemplateRuntimeError(msg)
+jinja2.exceptions.TemplateRuntimeError: No test named 'contains'.
+2024-11-30 16:38:06,922 - app - ERROR - Dashboard error: No test named 'contains'.
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 49, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 23, in block 'content'
+    </div>{% include "admin/clients/table.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/clients/table.html", line 10, in top-level template code
+    {{ clients|selectattr('roles', 'contains', 'SELLER')|list|length }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/async_utils.py", line 45, in wrapper
+    return normal_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1324, in sync_do_list
+    return list(value)
+           ^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1765, in select_or_reject
+    if func(item):
+       ^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1750, in <lambda>
+    return lambda item: modfunc(func(transfunc(item)))
+                                ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1745, in func
+    return context.environment.call_test(name, item, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 589, in call_test
+    return self._filter_test_common(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 521, in _filter_test_common
+    raise TemplateRuntimeError(msg)
+jinja2.exceptions.TemplateRuntimeError: No test named 'contains'.
+2024-11-30 16:38:08,227 - app - ERROR - Dashboard error: No test named 'contains'.
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 49, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 23, in block 'content'
+    </div>{% include "admin/clients/table.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/clients/table.html", line 10, in top-level template code
+    {{ clients|selectattr('roles', 'contains', 'SELLER')|list|length }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/async_utils.py", line 45, in wrapper
+    return normal_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1324, in sync_do_list
+    return list(value)
+           ^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1765, in select_or_reject
+    if func(item):
+       ^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1750, in <lambda>
+    return lambda item: modfunc(func(transfunc(item)))
+                                ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/filters.py", line 1745, in func
+    return context.environment.call_test(name, item, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 589, in call_test
+    return self._filter_test_common(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 521, in _filter_test_common
+    raise TemplateRuntimeError(msg)
+jinja2.exceptions.TemplateRuntimeError: No test named 'contains'.
+2024-11-30 16:40:05,120 - app - ERROR - Failed to create agent: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.create_agent does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+2024-11-30 16:40:05,766 - app - ERROR - Failed to create agent: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.create_agent does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+2024-11-30 16:40:08,206 - app - ERROR - Failed to create agent: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.create_agent does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+2024-11-30 16:40:08,438 - app - ERROR - Failed to create agent: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.create_agent does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+2024-11-30 16:40:09,307 - app - ERROR - Failed to create agent: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.create_agent does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.create_agent does not exist
+2024-11-30 16:41:36,438 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:41:39,331 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:41:40,278 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:41:42,759 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:41:43,479 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:42:10,534 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:42:11,986 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:42:14,590 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:42:15,507 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:43:38,564 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:43:40,144 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:47:24,028 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:47:29,282 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:47:31,606 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:49:32,275 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:49:38,983 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:50:49,630 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:50:52,522 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:50:55,458 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 16:51:11,246 - app - WARNING - Authentication failed for user admin: Invalid credentials
+2024-11-30 16:51:18,993 - app - ERROR - Database error during authentication: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:51:18,993 - app - WARNING - Authentication failed for user admin: System error occurred
+2024-11-30 16:51:39,933 - app - ERROR - Database error during authentication: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:51:39,933 - app - WARNING - Authentication failed for user admin: System error occurred
+2024-11-30 16:54:14,490 - app - INFO - Database connection pool created successfully.
+2024-11-30 16:54:16,557 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist
+2024-11-30 16:54:17,827 - app - ERROR - Authentication error: 1305 (42000): PROCEDURE real_estate.get_or_create_admin_role does not exist

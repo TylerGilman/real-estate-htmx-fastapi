@@ -1,0 +1,47 @@
+{# templates/admin/clients/table_row.html #}
+<div class="table-row" id="client-{{ client.client_id }}">
+    <div class="table-cell">
+        <div class="client-name">{{ client.client_name }}</div>
+        <div class="client-id text-muted">Client ID: {{ client.client_id }}</div>
+    </div>
+    <div class="table-cell">
+        <div class="contact-info">
+            <div>
+                {% if client.client_phone|length == 10 %}
+                    ({{ client.client_phone[:3] }}) {{ client.client_phone[3:6] }}-{{ client.client_phone[6:] }}
+                {% else %}
+                    {{ client.client_phone }}
+                {% endif %}
+            </div>
+            <div>{{ client.client_email }}</div>
+            <div class="text-muted">{{ client.mailing_address }}</div>
+        </div>
+    </div>
+    <div class="table-cell">
+        <div class="client-roles">
+            {% if client.roles %}
+                {% for role in client.roles.split(',') %}
+                    <span class="role-badge">{{ role }}</span>
+                {% endfor %}
+            {% else %}
+                <span class="role-badge">No roles assigned</span>
+            {% endif %}
+        </div>
+        <div class="property-count">
+            Properties: {{ client.total_properties|default(0) }}
+        </div>
+    </div>
+    <div class="table-cell actions">
+        <button class="action-button edit"
+                hx-get="/admin/clients/{{ client.client_id }}/edit"
+                hx-target="#client-form-container">
+            Edit
+        </button>
+        <button class="action-button delete"
+                hx-delete="/admin/clients/{{ client.client_id }}"
+                hx-confirm="Are you sure you want to delete this client?"
+                hx-target="#client-{{ client.client_id }}">
+            Delete
+        </button>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 DELIMITER //
 
+-- Create agent procedure
 CREATE PROCEDURE create_agent(
     IN p_agent_name VARCHAR(255),
     IN p_NRDS VARCHAR(50),
@@ -12,48 +13,189 @@ CREATE PROCEDURE create_agent(
 )
 BEGIN
     INSERT INTO Agent (
-        agent_name, 
-        NRDS, 
-        agent_phone, 
+        agent_name,
+        NRDS,
+        agent_phone,
         agent_email,
-        SSN, 
-        license_number, 
-        license_expiration, 
-        broker_id
-    ) 
-    VALUES (
-        p_agent_name, 
-        p_NRDS, 
-        p_agent_phone, 
+        SSN,
+        broker_id,
+        license_number,
+        license_expiration
+    ) VALUES (
+        p_agent_name,
+        p_NRDS,
+        p_agent_phone,
         p_agent_email,
-        p_SSN, 
-        p_license_number, 
-        p_license_expiration, 
-        p_broker_id
+        p_SSN,
+        p_broker_id,
+        p_license_number,
+        p_license_expiration
     );
-    
-    SELECT LAST_INSERT_ID() AS agent_id;
 END //
-DELIMITER ;
 
-DELIMITER //
+-- Get agent details procedure
+CREATE PROCEDURE get_agent_details(IN p_agent_id INT)
+BEGIN
+    SELECT 
+        a.*,
+        COUNT(DISTINCT al.property_id) as total_listings,
+        SUM(t.amount) as total_sales
+    FROM Agent a
+    LEFT JOIN AgentListing al ON a.agent_id = al.agent_id
+    LEFT JOIN Transaction t ON a.agent_id = t.agent_id
+    WHERE a.agent_id = p_agent_id
+    GROUP BY 
+        a.agent_id, 
+        a.agent_name,
+        a.NRDS,
+        a.agent_phone,
+        a.agent_email,
+        a.SSN,
+        a.broker_id,
+        a.license_number,
+        a.license_expiration,
+        a.created_at;
+END //
+
+-- Update agent procedure
+CREATE PROCEDURE update_agent(
+    IN p_agent_id INT,
+    IN p_agent_name VARCHAR(255),
+    IN p_NRDS VARCHAR(50),
+    IN p_agent_phone VARCHAR(15),
+    IN p_agent_email VARCHAR(255),
+    IN p_license_number VARCHAR(50),
+    IN p_license_expiration DATE
+)
+BEGIN
+    UPDATE Agent 
+    SET 
+        agent_name = p_agent_name,
+        NRDS = p_NRDS,
+        agent_phone = p_agent_phone,
+        agent_email = p_agent_email,
+        license_number = p_license_number,
+        license_expiration = p_license_expiration
+    WHERE agent_id = p_agent_id;
+END //
+
+-- Delete agent procedure
+CREATE PROCEDURE delete_agent(IN p_agent_id INT)
+BEGIN
+    DELETE FROM User WHERE agent_id = p_agent_id;
+    DELETE FROM AgentListing WHERE agent_id = p_agent_id;
+    DELETE FROM AgentShowing WHERE agent_id = p_agent_id;
+    DELETE FROM Contract WHERE agent_id = p_agent_id;
+    DELETE FROM Transaction WHERE agent_id = p_agent_id;
+    DELETE FROM Agent WHERE agent_id = p_agent_id;
+END //
+
+-- Get all agents procedure
 CREATE PROCEDURE get_all_agents()
 BEGIN
     SELECT 
         a.*,
-        COUNT(DISTINCT al.listing_id) AS active_listings,
-        COUNT(DISTINCT t.transaction_id) AS total_transactions,
-        COALESCE(SUM(t.amount), 0) AS total_sales_volume,
-        COALESCE(SUM(t.commission_amount), 0) AS total_commission
+        COUNT(DISTINCT al.property_id) as total_listings,
+        COALESCE(SUM(t.amount), 0) as total_sales,
+        COALESCE(SUM(t.commission_amount), 0) as total_commissions
     FROM Agent a
     LEFT JOIN AgentListing al ON a.agent_id = al.agent_id
     LEFT JOIN Transaction t ON a.agent_id = t.agent_id
-    GROUP BY a.agent_id;
+    GROUP BY 
+        a.agent_id,
+        a.agent_name,
+        a.NRDS,
+        a.agent_phone,
+        a.agent_email,
+        a.SSN,
+        a.broker_id,
+        a.license_number,
+        a.license_expiration,
+        a.created_at;
 END //
 
-DELIMITER ;
+-- Get all clients with their details
+CREATE PROCEDURE get_all_clients()
+BEGIN
+    SELECT 
+        c.*,
+        COUNT(p.property_id) as total_properties,
+        GROUP_CONCAT(DISTINCT cr.role) as roles
+    FROM Client c
+    LEFT JOIN AgentListing al ON c.client_id = al.client_id
+    LEFT JOIN Property p ON al.property_id = p.property_id
+    LEFT JOIN ClientRoles cr ON c.client_id = cr.client_id
+    GROUP BY c.client_id;
+END //
 
-DELIMITER //
+-- Get specific client details
+CREATE PROCEDURE get_client_details(IN p_client_id INT)
+BEGIN
+    SELECT 
+        c.*,
+        GROUP_CONCAT(DISTINCT cr.role) as roles,
+        COUNT(DISTINCT p.property_id) as total_properties
+    FROM Client c
+    LEFT JOIN ClientRoles cr ON c.client_id = cr.client_id
+    LEFT JOIN AgentListing al ON c.client_id = al.client_id
+    LEFT JOIN Property p ON al.property_id = p.property_id
+    WHERE c.client_id = p_client_id
+    GROUP BY c.client_id;
+END //
+
+-- Create new client
+CREATE PROCEDURE create_client(
+    IN p_client_name VARCHAR(255),
+    IN p_client_phone VARCHAR(15),
+    IN p_client_email VARCHAR(255),
+    IN p_mailing_address VARCHAR(255),
+    IN p_ssn VARCHAR(15)
+)
+BEGIN
+    INSERT INTO Client (
+        client_name,
+        client_phone,
+        client_email,
+        mailing_address,
+        SSN
+    ) VALUES (
+        p_client_name,
+        p_client_phone,
+        p_client_email,
+        p_mailing_address,
+        p_ssn
+    );
+END //
+
+-- Update existing client
+CREATE PROCEDURE update_client(
+    IN p_client_id INT,
+    IN p_client_name VARCHAR(255),
+    IN p_client_phone VARCHAR(15),
+    IN p_client_email VARCHAR(255),
+    IN p_mailing_address VARCHAR(255)
+)
+BEGIN
+    UPDATE Client
+    SET 
+        client_name = p_client_name,
+        client_phone = p_client_phone,
+        client_email = p_client_email,
+        mailing_address = p_mailing_address
+    WHERE client_id = p_client_id;
+END //
+
+-- Delete client
+CREATE PROCEDURE delete_client(IN p_client_id INT)
+BEGIN
+    DELETE FROM ClientRoles WHERE client_id = p_client_id;
+    DELETE FROM AgentListing WHERE client_id = p_client_id;
+    DELETE FROM Contract WHERE client_id = p_client_id;
+    DELETE FROM Transaction WHERE seller_id = p_client_id OR buyer_id = p_client_id;
+    DELETE FROM AgentShowing WHERE client_id = p_client_id;
+    DELETE FROM Client WHERE client_id = p_client_id;
+END //
+
 CREATE PROCEDURE get_admin_dashboard_stats()
 BEGIN
     SELECT 
@@ -64,9 +206,8 @@ BEGIN
         (SELECT COALESCE(SUM(commission_amount), 0) FROM Transaction) AS total_commissions;
 END //
 
-DELIMITER ;
+DROP PROCEDURE IF EXISTS get_or_create_admin_role //
 
-DELIMITER //
 CREATE PROCEDURE get_or_create_admin_role()
 BEGIN
     DECLARE admin_role_id INT;
@@ -85,44 +226,72 @@ BEGIN
         SET admin_role_id = LAST_INSERT_ID();
     END IF;
     
+    -- Return the role info
     SELECT role_id, role_name
     FROM UserRole
     WHERE role_id = admin_role_id;
 END //
 
-DELIMITER ;
+DROP PROCEDURE IF EXISTS get_user_by_username //
 
-
-DELIMITER //
-CREATE PROCEDURE authenticate_user(IN username VARCHAR(255), IN password VARCHAR(255))
+CREATE PROCEDURE get_user_by_username(IN p_username VARCHAR(100))
 BEGIN
-    SELECT * FROM users WHERE username = username AND password = password;
+    SELECT 
+        u.*,
+        ur.role_name
+    FROM User u
+    JOIN UserRole ur ON u.role_id = ur.role_id
+    WHERE u.username = p_username;
 END //
 
-DELIMITER ;
 
-DELIMITER //
--- Log user access
-CREATE PROCEDURE log_user_access(
-    IN p_user_id INT,
-    IN p_ip_address VARCHAR(45)
+CREATE PROCEDURE get_user_role_and_details(IN p_user_id INT)
+BEGIN
+    SELECT 
+        u.*,
+        ur.role_name,
+        a.agent_id,
+        a.agent_name,
+        a.agent_phone,
+        a.agent_email
+    FROM User u
+    JOIN UserRole ur ON u.role_id = ur.role_id
+    LEFT JOIN Agent a ON u.agent_id = a.agent_id
+    WHERE u.user_id = p_user_id;
+END //
+
+DROP PROCEDURE IF EXISTS check_user_role //
+
+CREATE PROCEDURE check_user_role(
+    IN p_username VARCHAR(100),
+    IN p_role_name VARCHAR(50)
 )
 BEGIN
-    INSERT INTO UserAccessLog (
-        user_id,
-        ip_address,
-        access_time
-    ) VALUES (
-        p_user_id,
-        p_ip_address,
-        NOW()
-    );
+    SELECT 
+        EXISTS(
+            SELECT 1 
+            FROM User u
+            JOIN UserRole ur ON u.role_id = ur.role_id
+            WHERE u.username = p_username 
+            AND ur.role_name = p_role_name
+        ) as is_role;
 END //
 
-DELIMITER ;
+DROP PROCEDURE IF EXISTS log_user_login //
+
+CREATE PROCEDURE log_user_login(
+    IN p_user_id INT,
+    IN p_role_name VARCHAR(50)
+)
+BEGIN
+    -- You could add a UserLoginLog table and insert records here
+    -- For now, we'll just update the User table's last login
+    UPDATE User 
+    SET last_login = CURRENT_TIMESTAMP 
+    WHERE user_id = p_user_id;
+END //
 
 -- Log admin access
-DELIMITER //
 CREATE PROCEDURE log_admin_access(
     IN p_user_id INT,
     IN p_ip_address VARCHAR(45)
@@ -138,9 +307,7 @@ BEGIN
         NOW()
     );
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE PROCEDURE get_all_properties()
 BEGIN
     SELECT 
@@ -174,9 +341,7 @@ BEGIN
     LEFT JOIN Agent a ON al.agent_id = a.agent_id
     ORDER BY p.created_at DESC;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE PROCEDURE get_property_stats()
 BEGIN
     SELECT 
@@ -187,9 +352,6 @@ BEGIN
     FROM Property;
 END //
 
-DELIMITER ;
-
-DELIMITER //
 -- Validate session
 CREATE PROCEDURE validate_session(
     IN p_session_id VARCHAR(100),
@@ -206,9 +368,7 @@ BEGIN
     FROM Sessions s
     WHERE s.session_id = p_session_id;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Check user permission
 CREATE PROCEDURE check_user_permission(
     IN p_user_id INT,
@@ -222,9 +382,7 @@ BEGIN
     WHERE up.user_id = p_user_id
     AND p.permission_name = p_permission;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Log security event
 CREATE PROCEDURE log_security_event(
     IN p_event_type VARCHAR(50),
@@ -244,9 +402,7 @@ BEGIN
         NOW()
     );
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Get agent details with license check
 CREATE PROCEDURE get_agent_details(
     IN p_user_id INT
@@ -262,29 +418,7 @@ BEGIN
     JOIN User u ON a.agent_id = u.agent_id
     WHERE u.user_id = p_user_id;
 END //
-DELIMITER ;
 
-
-DELIMITER //
--- Get user by username with role
-CREATE PROCEDURE get_user_by_username(
-    IN p_username VARCHAR(100)
-)
-BEGIN
-    SELECT 
-        u.user_id,
-        u.username,
-        u.password_hash,
-        u.role_id,
-        u.agent_id,
-        ur.role_name
-    FROM User u
-    JOIN UserRole ur ON u.role_id = ur.role_id
-    WHERE u.username = p_username;
-END //
-DELIMITER ;
-
-DELIMITER //
 -- Check user role
 CREATE PROCEDURE check_user_role(
     IN p_username VARCHAR(100),
@@ -298,9 +432,7 @@ BEGIN
     WHERE u.username = p_username
     AND ur.role_name = p_role_name;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Get agent by user ID
 CREATE PROCEDURE get_agent_by_user_id(
     IN p_user_id INT
@@ -314,9 +446,7 @@ BEGIN
     JOIN User u ON a.agent_id = u.agent_id
     WHERE u.user_id = p_user_id;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Create admin user
 CREATE PROCEDURE create_admin_user(
     IN p_username VARCHAR(100),
@@ -353,9 +483,7 @@ BEGIN
     
     COMMIT;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Update existing agent
 CREATE PROCEDURE update_agent(
     IN p_agent_id INT,
@@ -377,9 +505,7 @@ BEGIN
         license_expiration = p_license_expiration
     WHERE agent_id = p_agent_id;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Create user account
 CREATE PROCEDURE create_user(
     IN p_username VARCHAR(100),
@@ -401,9 +527,7 @@ BEGIN
     
     SELECT LAST_INSERT_ID() as user_id;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Delete agent (with safety checks)
 CREATE PROCEDURE delete_agent(
     IN p_agent_id INT
@@ -437,9 +561,7 @@ BEGIN
     DELETE FROM User WHERE agent_id = p_agent_id;
     DELETE FROM Agent WHERE agent_id = p_agent_id;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE PROCEDURE add_property_image(
     IN p_property_id INT,
     IN p_file_path VARCHAR(255),
@@ -456,18 +578,14 @@ BEGIN
     INSERT INTO PropertyImages (property_id, file_path, is_primary)
     VALUES (p_property_id, p_file_path, p_is_primary);
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE PROCEDURE get_property_images(IN p_property_id INT)
 BEGIN
     SELECT * FROM PropertyImages
     WHERE property_id = p_property_id
     ORDER BY is_primary DESC, uploaded_at DESC;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE PROCEDURE delete_property(
     IN p_property_id INT
 )
@@ -495,9 +613,7 @@ BEGIN
     
     COMMIT;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE PROCEDURE create_property (
   IN p_tax_id VARCHAR(50),
   IN p_property_address VARCHAR(255),
@@ -527,7 +643,12 @@ BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        RESIGNAL;
+        GET DIAGNOSTICS CONDITION 1
+            @sqlstate = RETURNED_SQLSTATE,
+            @errno = MYSQL_ERRNO,
+            @text = MESSAGE_TEXT;
+        SET @full_error = CONCAT('ERROR ', @errno, ' (', @sqlstate, '): ', @text);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @full_error;
     END;
 
     START TRANSACTION;
@@ -556,9 +677,7 @@ BEGIN
 
     COMMIT;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Get property details with all related information
 CREATE PROCEDURE get_property_details (IN p_id INT) BEGIN
 SELECT
@@ -598,9 +717,7 @@ WHERE
   p.property_id = p_id;
 
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Search properties with filters
 CREATE PROCEDURE search_properties (
   IN min_price DECIMAL(15, 2),
@@ -663,9 +780,7 @@ ORDER BY
   p.created_at DESC;
 
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Get agent performance metrics
 CREATE PROCEDURE get_agent_performance (
   IN agent_id INT,
@@ -743,8 +858,6 @@ GROUP BY
   a.agent_name;
 
 END //
-DELIMITER ;
-DELIMITER //
 
 -- Get client portfolio summary
 
@@ -776,9 +889,7 @@ BEGIN
         c.client_phone,
         c.client_email;
 END //
-DELIMITER ;
 
-DELIMITER //
 -- Create new listing with checks
 CREATE PROCEDURE create_listing (
   IN p_property_id INT,
@@ -792,6 +903,7 @@ CREATE PROCEDURE create_listing (
   OUT p_listing_id INT
 ) BEGIN DECLARE existing_listing INT;
 
+
 -- Check if property already has an active listing
 SELECT
   listing_id INTO existing_listing
@@ -804,7 +916,15 @@ WHERE
 IF existing_listing IS NOT NULL THEN SIGNAL SQLSTATE '45000'
 SET
   MESSAGE_TEXT = 'Property already has an active listing';
-
+END IF;
+IF p_listing_date >= p_expiration_date THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'Listing date must be before expiration date';
+END IF;
+    
+IF p_asking_price <= 0 THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'Asking price must be greater than zero';
 END IF;
 
 -- Create the listing
@@ -834,8 +954,6 @@ VALUES
 SET
   p_listing_id = LAST_INSERT_ID ();
 END //
-DELIMITER ;
-DELIMITER //
 
 -- Record property showing
 CREATE PROCEDURE record_showing (
@@ -869,9 +987,6 @@ VALUES
 SET
   p_showing_id = LAST_INSERT_ID ();
 END //
-
-DELIMITER ;
-DELIMITER //
 -- Record transaction
 CREATE PROCEDURE record_transaction (
   IN p_property_id INT,
@@ -930,9 +1045,29 @@ WHERE
 
 COMMIT;
 END //
-DELIMITER ;
-
-DELIMITER //
+CREATE PROCEDURE get_or_create_admin_role()
+BEGIN
+    DECLARE admin_role_id INT;
+    
+    -- Check if admin role exists
+    SELECT role_id INTO admin_role_id
+    FROM UserRole
+    WHERE role_name = 'admin'
+    LIMIT 1;
+    
+    -- Create if it doesn't exist
+    IF admin_role_id IS NULL THEN
+        INSERT INTO UserRole (role_name)
+        VALUES ('admin');
+        
+        SET admin_role_id = LAST_INSERT_ID();
+    END IF;
+    
+    -- Return the role info
+    SELECT role_id, role_name
+    FROM UserRole
+    WHERE role_id = admin_role_id;
+END //
 -- Get market analysis
 CREATE PROCEDURE get_market_analysis (
   IN start_date DATE,

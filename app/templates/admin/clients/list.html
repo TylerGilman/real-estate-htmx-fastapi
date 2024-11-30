@@ -1,0 +1,158 @@
+{# templates/admin/clients/list.html #}
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<div class="admin-section" id="clients-section">
+    <div class="admin-header">
+        <div class="header-left">
+            <h2 class="section-title">Client Management</h2>
+            <button class="toggle-button" 
+                    data-target="clients-content" 
+                    aria-expanded="true"
+                    aria-label="Toggle clients section">
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="minimize-path" d="M20 12H4"/>
+                    <path class="maximize-path" d="M12 4v16m-8-8h16"/>
+                </svg>
+            </button>
+        </div>
+        <button class="action-button" onclick="toggleForm('add-client-form')">
+            Add New Client
+        </button>
+    </div>
+
+    <div id="clients-content" class="section-content">
+        <!-- Add Client Form -->
+        <div id="add-client-form" class="form-container hidden">
+            {% include "admin/clients/form.html" %}
+        </div>
+
+        <!-- Client Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Clients</h3>
+                <p class="stat-value">{{ clients|length }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Buyers</h3>
+                <p class="stat-value">
+                    {{ clients|selectattr('roles', 'contains', 'BUYER')|list|length }}
+                </p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Sellers</h3>
+                <p class="stat-value">
+                    {{ clients|selectattr('roles', 'contains', 'SELLER')|list|length }}
+                </p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Properties</h3>
+                <p class="stat-value">
+                    {{ clients|sum(attribute='total_properties') }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Clients Table -->
+        <div class="admin-table">
+            <div class="table-responsive">
+                <div class="table-row table-header">
+                    <div class="table-cell">Client Name</div>
+                    <div class="table-cell">Contact Information</div>
+                    <div class="table-cell">Client Details</div>
+                    <div class="table-cell">Actions</div>
+                </div>
+
+                {% for client in clients %}
+                <div class="table-row" id="client-{{ client.client_id }}">
+                    <div class="table-cell">
+                        <div class="client-name">{{ client.client_name }}</div>
+                        <div class="client-id text-muted">Client ID: {{ client.client_id }}</div>
+                    </div>
+                    <div class="table-cell">
+                        <div class="contact-info">
+                            <div>
+                                {% if client.client_phone|length == 10 %}
+                                    ({{ client.client_phone[:3] }}) {{ client.client_phone[3:6] }}-{{ client.client_phone[6:] }}
+                                {% else %}
+                                    {{ client.client_phone }}
+                                {% endif %}
+                            </div>
+                            <div>{{ client.client_email }}</div>
+                            <div class="text-muted">{{ client.mailing_address }}</div>
+                        </div>
+                    </div>
+                    <div class="table-cell">
+                        <div class="client-roles">
+                            {% for role in client.roles.split(',') %}
+                                <span class="role-badge">{{ role }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="property-count">
+                            Properties: {{ client.total_properties }}
+                        </div>
+                    </div>
+                    <div class="table-cell actions">
+                        <button class="action-button edit"
+                                hx-get="/admin/clients/{{ client.client_id }}/edit"
+                                hx-target="#client-form-container">
+                            Edit
+                        </button>
+                        <button class="action-button delete"
+                                hx-delete="/admin/clients/{{ client.client_id }}"
+                                hx-confirm="Are you sure you want to delete this client?"
+                                hx-target="#client-{{ client.client_id }}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <div class="table-row">
+                    <div class="table-cell empty-state" colspan="4">
+                        <p>No clients found. Add your first client using the button above.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Form container for edit forms -->
+        <div id="client-form-container"></div>
+    </div>
+</div>
+
+<!-- Toast container for notifications -->
+<div id="toast-container" class="toast-container"></div>
+{% endblock %}
+
+{% block extra_css %}
+{{ super() }}
+<style>
+    .role-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        background-color: var(--swedish-accent);
+        color: var(--swedish-blue);
+        margin-right: 0.5rem;
+    }
+
+    .property-count {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--swedish-text);
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .client-roles {
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}

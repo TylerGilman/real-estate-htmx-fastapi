@@ -7,87 +7,101 @@
     <div class="stat-card">
         <h3>Active Sellers</h3>
         <p class="stat-value">
-            {{ clients|selectattr('roles', 'contains', 'SELLER')|list|length }}
+            {% set seller_count = 0 %}
+            {% for client in clients %}
+                {% if client.roles and 'Seller' in client.roles %}
+                    {% set seller_count = seller_count + 1 %}
+                {% endif %}
+            {% endfor %}
+            {{ seller_count }}
         </p>
     </div>
     <div class="stat-card">
         <h3>Active Buyers</h3>
         <p class="stat-value">
-            {{ clients|selectattr('roles', 'contains', 'BUYER')|list|length }}
+            {% set buyer_count = 0 %}
+            {% for client in clients %}
+                {% if client.roles and 'Buyer' in client.roles %}
+                    {% set buyer_count = buyer_count + 1 %}
+                {% endif %}
+            {% endfor %}
+            {{ buyer_count }}
+        </p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Properties</h3>
+        <p class="stat-value">
+            {% set total_properties = 0 %}
+            {% for client in clients %}
+                {% set total_properties = total_properties + (client.total_properties|default(0)) %}
+            {% endfor %}
+            {{ total_properties }}
         </p>
     </div>
 </div>
 
-<div class="admin-table-container">
-    <div class="table-header">
-        <h3 class="table-title">Client List</h3>
-    </div>
+<div class="admin-table">
     <div class="table-responsive">
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Client Name</th>
-                    <th>Contact Information</th>
-                    <th>Properties</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for client in clients %}
-                <tr id="client-{{ client.client_id }}">
-                    <td>
-                        <div class="client-name">{{ client.client_name }}</div>
-                        <div class="client-id text-muted">ID: {{ client.client_id }}</div>
-                    </td>
-                    <td>
-                        <div class="contact-info">
-                            <div>
-                                {% if client.client_phone|length == 10 %}
-                                    ({{ client.client_phone[:3] }}) {{ client.client_phone[3:6] }}-{{ client.client_phone[6:] }}
-                                {% else %}
-                                    {{ client.client_phone }}
-                                {% endif %}
-                            </div>
-                            <div>{{ client.client_email }}</div>
-                            <div class="text-muted">{{ client.mailing_address }}</div>
-                        </div>
-                    </td>
-                    <td>
-                        {% set listings = client.listings|default([]) %}
-                        <div class="property-count">
-                            {% if listings|length > 0 %}
-                                {{ listings|length }} Active Listing{{ 's' if listings|length != 1 }}
-                            {% else %}
-                                No Active Listings
-                            {% endif %}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="actions">
-                            <button class="action-button edit"
-                                    hx-get="/admin/clients/{{ client.client_id }}/edit"
-                                    hx-target="#client-form-container">
-                                Edit
-                            </button>
-                            <button class="action-button delete"
-                                    hx-delete="/admin/clients/{{ client.client_id }}"
-                                    hx-confirm="Are you sure you want to delete this client?"
-                                    hx-target="#client-{{ client.client_id }}">
-                                Delete
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="4" class="empty-state">
-                        <p>No clients found. Add your first client using the button above.</p>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-row table-header">
+            <div class="table-cell">Client Name</div>
+            <div class="table-cell">Contact Information</div>
+            <div class="table-cell">Client Details</div>
+            <div class="table-cell">Actions</div>
+        </div>
+
+        {% for client in clients %}
+        <div class="table-row" id="client-{{ client.client_id }}">
+            <div class="table-cell">
+                <div class="client-name">{{ client.client_name }}</div>
+                <div class="client-id text-muted">Client ID: {{ client.client_id }}</div>
+            </div>
+            <div class="table-cell">
+                <div class="contact-info">
+                    <div>
+                        {% if client.client_phone|length == 10 %}
+                            ({{ client.client_phone[:3] }}) {{ client.client_phone[3:6] }}-{{ client.client_phone[6:] }}
+                        {% else %}
+                            {{ client.client_phone }}
+                        {% endif %}
+                    </div>
+                    <div>{{ client.client_email }}</div>
+                    <div class="text-muted">{{ client.mailing_address }}</div>
+                </div>
+            </div>
+            <div class="table-cell">
+                <div class="client-roles">
+                    {% if client.roles %}
+                        {% for role in client.roles.split(',') %}
+                            <span class="role-badge">{{ role }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="role-badge">No roles assigned</span>
+                    {% endif %}
+                </div>
+                <div class="property-count">
+                    Properties: {{ client.total_properties|default(0) }}
+                </div>
+            </div>
+            <div class="table-cell actions">
+                <button class="action-button edit"
+                        hx-get="/admin/clients/{{ client.client_id }}/edit"
+                        hx-target="#client-form-container">
+                    Edit
+                </button>
+                <button class="action-button delete"
+                        hx-delete="/admin/clients/{{ client.client_id }}"
+                        hx-confirm="Are you sure you want to delete this client?"
+                        hx-target="#client-{{ client.client_id }}">
+                    Delete
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <div class="table-row">
+            <div class="table-cell empty-state" colspan="4">
+                <p>No clients found. Add your first client using the button above.</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
-
-<div id="client-form-container"></div>
