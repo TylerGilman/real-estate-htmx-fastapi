@@ -1,5 +1,40 @@
 DELIMITER //
 
+DELIMITER //
+
+CREATE PROCEDURE get_all_properties_with_details()
+BEGIN
+    SELECT 
+        p.*,
+        -- Residential details
+        rp.bedrooms,
+        rp.bathrooms,
+        rp.r_type,
+        rp.square_feet,
+        rp.garage_spaces,
+        rp.has_basement,
+        rp.has_pool,
+        -- Commercial details
+        cp.sqft,
+        cp.industry,
+        cp.c_type,
+        cp.num_units,
+        cp.parking_spaces,
+        cp.zoning_type,
+        -- Agent details
+        a.agent_id,
+        a.agent_name,
+        a.agent_phone,
+        al.l_agent_role,
+        al.exclusive
+    FROM Property p
+    LEFT JOIN ResidentialProperty rp ON p.tax_id = rp.tax_id
+    LEFT JOIN CommercialProperty cp ON p.tax_id = cp.tax_id
+    LEFT JOIN AgentListing al ON p.tax_id = al.tax_id
+    LEFT JOIN Agent a ON al.agent_id = a.agent_id
+    WHERE p.status IN ('For Sale', 'For Lease')
+    ORDER BY p.tax_id DESC;
+END //
 
 DROP PROCEDURE IF EXISTS get_all_properties;
 CREATE PROCEDURE get_all_properties()
@@ -25,7 +60,7 @@ DROP PROCEDURE IF EXISTS create_property;
 CREATE PROCEDURE create_property(
     IN p_tax_id VARCHAR(50),
     IN p_property_address VARCHAR(255),
-    IN p_status ENUM('FOR_SALE', 'FOR_LEASE', 'SOLD', 'LEASED'),
+    IN p_status ENUM('For Sale', 'For Lease', 'Sold', 'Leased'),
     IN p_price DECIMAL(15, 2),
     IN p_lot_size DECIMAL(10, 2),
     IN p_year_built INT,
@@ -159,93 +194,35 @@ END //
 
 -- Get property details
 DROP PROCEDURE IF EXISTS get_property_details;
-CREATE PROCEDURE get_property_details(
-    IN p_property_id INT
-)
+CREATE PROCEDURE get_property_details(IN p_property_id INT)
 BEGIN
-    -- Get main property details
     SELECT 
         p.*,
-        CASE 
-            WHEN r.property_id IS NOT NULL THEN 'RESIDENTIAL'
-            WHEN c.property_id IS NOT NULL THEN 'COMMERCIAL'
-        END as property_type,
-        -- Residential details
-        r.bedrooms,
-        r.bathrooms,
-        r.r_type as residential_type,
-        r.square_feet as residential_sqft,
-        r.garage_spaces,
-        r.has_basement,
-        r.has_pool,
-        -- Commercial details
-        c.sqft as commercial_sqft,
-        c.industry,
-        c.c_type as commercial_type,
-        c.num_units,
-        c.parking_spaces,
-        c.zoning_type,
-        -- Current listing details
-        al.listing_id,
-        al.asking_price,
-        al.listing_date,
-        al.expiration_date,
         -- Agent details
         a.agent_id,
         a.agent_name,
         a.agent_phone,
-        a.agent_email,
-        -- Brokerage details
-        b.broker_name,
-        b.broker_id,
-        -- Latest transaction
-        t.transaction_date as last_transaction_date,
-        t.amount as last_transaction_amount,
-        t.transaction_type as last_transaction_type
+        -- Residential details
+        rp.bedrooms,
+        rp.bathrooms,
+        rp.r_type,
+        rp.square_feet,
+        rp.garage_spaces,
+        rp.has_basement,
+        rp.has_pool,
+        -- Commercial details
+        c.sqft,
+        c.industry,
+        c.c_type,
+        c.num_units,
+        c.parking_spaces,
+        c.zoning_type
     FROM Property p
-    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
-    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
-    LEFT JOIN AgentListing al ON p.property_id = al.property_id 
-        AND al.expiration_date > CURDATE()
+    LEFT JOIN AgentListing al ON p.property_id = al.property_id
     LEFT JOIN Agent a ON al.agent_id = a.agent_id
-    LEFT JOIN Brokerage b ON a.broker_id = b.broker_id
-    LEFT JOIN Transaction t ON p.property_id = t.property_id
-        AND t.transaction_date = (
-            SELECT MAX(transaction_date)
-            FROM Transaction
-            WHERE property_id = p.property_id
-        )
+    LEFT JOIN ResidentialProperty rp ON p.property_id = rp.property_id
+    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
     WHERE p.property_id = p_property_id;
-
-    -- Get property images
-    SELECT *
-    FROM PropertyImages
-    WHERE property_id = p_property_id
-    ORDER BY is_primary DESC, uploaded_at DESC;
-
-    -- Get showing history
-    SELECT 
-        ash.*,
-        a.agent_name,
-        c.client_name
-    FROM AgentShowing ash
-    JOIN Agent a ON ash.agent_id = a.agent_id
-    JOIN Client c ON ash.client_id = c.client_id
-    WHERE ash.property_id = p_property_id
-    ORDER BY ash.showing_date DESC;
-
-    -- Get transaction history
-    SELECT 
-        t.*,
-        sa.agent_name as selling_agent,
-        b.client_name as buyer_name,
-        s.client_name as seller_name
-    FROM Transaction t
-    JOIN Agent sa ON t.agent_id = sa.agent_id
-    JOIN Client b ON t.buyer_id = b.client_id
-    JOIN Client s ON t.seller_id = s.client_id
-    WHERE t.property_id = p_property_id
-    ORDER BY t.transaction_date DESC;
 END //
 
 -- Search properties

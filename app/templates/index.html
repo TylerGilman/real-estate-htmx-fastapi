@@ -14,29 +14,45 @@
     <!-- Available Properties Section -->
 <div class="properties-section mt-10">
     <h2 class="text-2xl font-semibold text-swedish-blue">Available Properties</h2>
-    <div id="properties-container" class="gridContainer mt-5">
-        {% for property in properties %}
-        <div class="listing"
-             hx-get="/properties/{{ property.tax_id }}"
-             hx-target="body"
-             hx-push-url="true"
-             role="button"
-             tabindex="0">
-            <div class="listing-image">
-                <img src="{{ property.image_url or '/static/noimage.webp' }}" alt="Property Image">
-                <div class="status-badge {{ property.status.value|lower|replace(' ', '-') }}">
-                    {{ property.status }}
-                </div>
-            </div>
-            <div class="listing-info">
-                <h2>{{ property.property_address }}</h2>
-                <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
-                <p class="details">{{ property.property_type }}</p>
-                <p class="address">{{ property.city }}, {{ property.state }}</p>
+<div id="listings-container" class="gridContainer">
+    {% for property in listings %}
+    <a href="/properties/{{ property.property_id }}" 
+       class="listing"
+       hx-boost="true">
+        <div class="listing-image">
+            <img src="{{ property.image_url|default('/static/noimage.webp') }}" 
+                 alt="{{ property.property_address }}"
+                 loading="lazy">
+            <div class="status-badge {{ property.status.value|lower|replace(' ', '-') }}">
+                {{ property.status.value }}
             </div>
         </div>
-        {% endfor %}
-    </div>
+        <div class="listing-info">
+            <h2>{{ property.property_address }}</h2>
+            <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
+            {% if property.bedrooms is not none %}
+                <p class="details">
+                    {{ property.bedrooms }} bd | 
+                    {{ property.bathrooms }} ba | 
+                    {{ property.r_type }}
+                </p>
+            {% elif property.sqft is not none %}
+                <p class="details">
+                    {{ "{:,.0f}".format(property.sqft) }} sqft | 
+                    {{ property.industry }} | 
+                    {{ property.c_type }}
+                </p>
+            {% endif %}
+            
+            {% if property.agent_name %}
+            <div class="agent-info">
+                <p class="text-sm text-swedish-text">Listed by: {{ property.agent_name }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+</div>
 </div>
 </div>
 {% endblock %}

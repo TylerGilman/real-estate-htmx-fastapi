@@ -355,19 +355,19 @@ async def admin_add_property(
     property_address: str = Form(...),
     status: str = Form(...),
     price: float = Form(...),
+    property_type: str = Form(...),
     lot_size: Optional[float] = Form(None),
     year_built: Optional[int] = Form(None),
     zoning: Optional[str] = Form(None),
     property_tax: Optional[float] = Form(None),
-    property_type: str = Form(...),
     # Residential specific fields
     bedrooms: Optional[int] = Form(None),
     bathrooms: Optional[float] = Form(None),
     r_type: Optional[str] = Form(None),
     square_feet: Optional[float] = Form(None),
     garage_spaces: Optional[int] = Form(None),
-    has_basement: Optional[bool] = Form(None),
-    has_pool: Optional[bool] = Form(None),
+    has_basement: Optional[bool] = Form(False),
+    has_pool: Optional[bool] = Form(False),
     # Commercial specific fields
     sqft: Optional[float] = Form(None),
     industry: Optional[str] = Form(None),
@@ -375,28 +375,24 @@ async def admin_add_property(
     num_units: Optional[int] = Form(None),
     parking_spaces: Optional[int] = Form(None),
     zoning_type: Optional[str] = Form(None),
-    db=Depends(get_db_connection)
+    conn=Depends(get_db_connection)
 ):
-    """
-    Admin adds a property and optionally creates an agent listing.
-
-    Renders an HTML row for HTMX swapping on success.
-    """
+    """Create a new property with either residential or commercial details"""
     try:
-        status = status.capitalize()
-        logger.debug("Starting admin_add_property...")
+        logger.debug("Starting property creation...")
+        logger.debug(f"Property Type: {property_type}")
+        logger.debug(f"Form Data - Address: {property_address}, Price: {price}, Status: {status}")
         
-        # Call the procedure with all parameters
-        logger.debug("Calling stored procedure 'create_property'...")
-        property_id_result = execute_procedure(
-            db,
+        # Execute stored procedure to create property
+        property_result = execute_procedure(
+            conn,
             "create_property",
             (
                 tax_id,
                 property_address,
                 status,
                 price,
-                lot_size or 0.0,  # Use 0.0 for optional numeric fields if not provided
+                lot_size or 0.0,
                 year_built or 0,
                 zoning or "",
                 property_tax or 0.0,
@@ -418,37 +414,30 @@ async def admin_add_property(
                 zoning_type or ""
             )
         )
-        logger.debug("Result from 'create_property': %s", property_id_result)
-
-        if not property_id_result or len(property_id_result) == 0:
-            logger.error("Failed to create property: No result returned")
-            raise ValueError("Failed to create property")
-
-        property_id = property_id_result[0][0]
-        logger.debug("Created property with ID: %s", property_id)
-
-        # Fetch property details for rendering
-        logger.debug("Fetching property details using 'get_property_details'...")
-        property_data = execute_procedure(db, "get_property_details", (property_id,))
-        logger.debug("Result from 'get_property_details': %s", property_data)
-
-        if not property_data or len(property_data) == 0:
-            logger.error("Failed to retrieve property details: No data returned")
-            raise ValueError("Failed to retrieve property details")
-
-        # Render property row template
-        logger.debug("Rendering property row template...")
+        
+        if not property_result:
+            logger.error("No result returned from create_property procedure")
+            raise HTTPException(status_code=500, detail="Failed to create property")
+        
+        # Get the created property details for the response
+        property_id = property_result[0]["property_id"]
+        property_details = execute_procedure(conn, "get_property_details", (property_id,))
+        
+        if not property_details:
+            logger.error(f"Could not fetch details for created property {property_id}")
+            raise HTTPException(status_code=500, detail="Failed to fetch property details")
+        
+        logger.info(f"Successfully created property with ID: {property_id}")
+        
+        # Return the property row template with the new property data
         return templates.TemplateResponse(
             "admin/properties/table_row.html",
             {
                 "request": request,
-                "property": property_data[0]
+                "property": property_details[0]
             }
         )
 
     except Exception as e:
-        logger.exception("Error in admin_add_property: %s", str(e))
-        return templates.TemplateResponse(
-            "error.html",
-            {"request": request, "error": str(e)}
-        )
+        logger.error(f"Error creating property: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))

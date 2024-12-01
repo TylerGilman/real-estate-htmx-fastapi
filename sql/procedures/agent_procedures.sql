@@ -1,5 +1,61 @@
 DELIMITER //
 
+-- First, a procedure to check what's in each table
+CREATE PROCEDURE debug_tables_data()
+BEGIN
+    SELECT 'Property Table:' as Debug_Info;
+    SELECT COUNT(*) as property_count, status FROM Property GROUP BY status;
+    
+    SELECT 'Agent Listings:' as Debug_Info;
+    SELECT COUNT(*) as listing_count FROM AgentListing;
+    
+    SELECT 'Agents:' as Debug_Info;
+    SELECT COUNT(*) as agent_count FROM Agent;
+    
+    SELECT 'Residential Properties:' as Debug_Info;
+    SELECT COUNT(*) as residential_count FROM ResidentialProperty;
+    
+    SELECT 'Commercial Properties:' as Debug_Info;
+    SELECT COUNT(*) as commercial_count FROM CommercialProperty;
+    
+    -- Check a few sample properties with their status
+    SELECT 'Sample Properties:' as Debug_Info;
+    SELECT property_id, tax_id, status, price 
+    FROM Property 
+    LIMIT 5;
+END //
+
+-- Modified main procedure with less restrictive conditions
+CREATE PROCEDURE get_all_agent_listings_with_details()
+BEGIN
+    SELECT 
+        p.*,
+        al.agent_id,
+        a.agent_name,
+        a.agent_phone,
+        rp.bedrooms,
+        rp.bathrooms,
+        rp.r_type,
+        rp.square_feet,
+        rp.garage_spaces,
+        rp.has_basement,
+        rp.has_pool,
+        c.sqft,
+        c.industry,
+        c.c_type,
+        c.num_units,
+        c.parking_spaces,
+        c.zoning_type
+    FROM Property p
+    LEFT JOIN AgentListing al ON p.property_id = al.property_id
+    LEFT JOIN Agent a ON al.agent_id = a.agent_id
+    LEFT JOIN ResidentialProperty rp ON p.property_id = rp.property_id
+    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
+    -- Let's see all properties first to debug
+    -- WHERE p.status IN ('For Sale', 'For Lease')
+    ORDER BY p.price DESC;
+END //
+
 CREATE PROCEDURE create_agent_listing(
     IN p_property_id INT,
     IN p_agent_id INT,
