@@ -4,18 +4,18 @@ CREATE DATABASE real_estate;
 USE real_estate;
 
 -- Source schema (table definitions)
-SOURCE sql/schema.sql;
+SOURCE schema.sql;
 
 -- Source all procedure files
-SOURCE sql/procedures/auth_procedures.sql
-SOURCE sql/procedures/agent_procedures.sql
-SOURCE sql/procedures/property_procedures.sql
-SOURCE sql/procedures/client_procedures.sql
-SOURCE sql/procedures/listing_procedures.sql
-SOURCE sql/procedures/transaction_procedures.sql
-SOURCE sql/procedures/dashboard_procedures.sql
+SOURCE procedures/auth_procedures.sql
+SOURCE procedures/agent_procedures.sql
+SOURCE procedures/property_procedures.sql
+SOURCE procedures/client_procedures.sql
+SOURCE procedures/listing_procedures.sql
+SOURCE procedures/transaction_procedures.sql
+SOURCE procedures/dashboard_procedures.sql
 
 -- Insert initial data if needed
-SOURCE sql/seed_data/roles.sql
-SOURCE sql/seed_data/permissions.sql
-SOURCE sql/seed_data/admin_user.sql
+SOURCE seed_data/roles.sql
+SOURCE seed_data/permissions.sql
+SOURCE seed_data/admin_user.sql

@@ -5,9 +5,8 @@
     </div>
     <form hx-post="/admin/agents" 
           class="agent-form"
-          hx-target="#toast-container"
+          hx-target="#agents-list"
           hx-swap="beforeend">
-
 
         {% include "admin/agents/form_fields.html" %}
         

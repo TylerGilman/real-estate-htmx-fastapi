@@ -63,12 +63,6 @@
                         {% for property in properties %}
                             {% include "admin/properties/table_row.html" %}
                         <tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="4" class="empty-state">
-                                    No properties found. Add your first property using the button above.
-                                </td>
-                            </tr>
                         {% endfor %}
             </div>
         </div>

@@ -1,5 +1,57 @@
 DELIMITER //
 
+CREATE PROCEDURE create_agent_listing(
+    IN p_property_id INT,
+    IN p_agent_id INT,
+    IN p_asking_price DECIMAL(15, 2),
+    IN p_listing_date DATE,
+    IN p_expiration_date DATE
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+    
+    -- Validate inputs
+    IF p_asking_price <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Asking price must be greater than zero';
+    END IF;
+
+    IF p_listing_date > p_expiration_date THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Listing date cannot be after expiration date';
+    END IF;
+
+    -- Create the agent listing
+    INSERT INTO AgentListing (
+        property_id,
+        agent_id,
+        asking_price,
+        listing_date,
+        expiration_date,
+        created_at,
+        last_modified
+    ) VALUES (
+        p_property_id,
+        p_agent_id,
+        p_asking_price,
+        COALESCE(p_listing_date, CURDATE()),
+        p_expiration_date,
+        NOW(),
+        NOW()
+    );
+
+    COMMIT;
+    
+    -- Return the created listing
+    SELECT * FROM AgentListing WHERE property_id = p_property_id AND agent_id = p_agent_id;
+END //
+
 DROP PROCEDURE IF EXISTS create_agent;
 CREATE PROCEDURE create_agent(
     IN p_agent_name VARCHAR(255),
@@ -62,7 +114,9 @@ BEGIN
 
     -- Return the newly created agent
     SELECT 
-        a.*,
+        a.agent_id,
+        a.agent_name,
+        a.agent_email,
         b.broker_name
     FROM Agent a
     LEFT JOIN Brokerage b ON a.broker_id = b.broker_id
@@ -144,15 +198,14 @@ BEGIN
 
     -- Get performance metrics
     SELECT 
-        COUNT(DISTINCT CASE WHEN t.transaction_type = 'SALE' THEN t.transaction_id END) as total_sales,
-        COUNT(DISTINCT CASE WHEN t.transaction_type = 'LEASE' THEN t.transaction_id END) as total_leases,
+        COUNT(DISTINCT CASE WHEN t.transaction_type = 'Sale' THEN t.transaction_id END) as total_sales,
+        COUNT(DISTINCT CASE WHEN t.transaction_type = 'Lease' THEN t.transaction_id END) as total_leases,
         AVG(t.amount) as avg_transaction_value,
         AVG(t.commission_amount) as avg_commission,
         COUNT(DISTINCT c.client_id) as total_clients,
-        AVG(DATEDIFF(t.closing_date, al.listing_date)) as avg_days_to_close
+        AVG(DATEDIFF(t.closing_date, t.transaction_date)) as avg_days_to_close
     FROM Agent a
     LEFT JOIN Transaction t ON a.agent_id = t.agent_id
-    LEFT JOIN AgentListing al ON t.listing_id = al.listing_id
     LEFT JOIN Client c ON (t.buyer_id = c.client_id OR t.seller_id = c.client_id)
     WHERE a.agent_id = p_agent_id;
 END //

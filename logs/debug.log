@@ -1914,3 +1914,530 @@ mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a chil
 2024-11-30 21:40:32,539 - app - INFO - Database connection pool created successfully.
 2024-11-30 21:40:51,129 - app - INFO - Database connection pool created successfully.
 2024-11-30 21:41:08,319 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:50:16,082 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:55:03,538 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:55:06,047 - app - ERROR - Authentication error: 1146 (42S02): Table 'real_estate.UserRole' doesn't exist
+2024-11-30 21:55:09,336 - app - ERROR - Authentication error: 1146 (42S02): Table 'real_estate.UserRole' doesn't exist
+2024-11-30 21:55:10,115 - app - ERROR - Authentication error: 1146 (42S02): Table 'real_estate.UserRole' doesn't exist
+2024-11-30 21:59:28,206 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:01:07,720 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 22:01:10,162 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-11-30 22:01:29,596 - app - INFO - Successful login for user: admin
+2024-11-30 22:03:41,174 - app - ERROR - Failed to create client: 1406 (22001): Data too long for column 'p_client_phone' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data too long for column 'p_client_phone' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 92, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DataError: 1406 (22001): Data too long for column 'p_client_phone' at row 1
+2024-11-30 22:03:50,672 - app - ERROR - Failed to create client: 1406 (22001): Data too long for column 'p_client_phone' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data too long for column 'p_client_phone' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 92, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DataError: 1406 (22001): Data too long for column 'p_client_phone' at row 1
+2024-11-30 22:05:44,291 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 350, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 22:07:15,996 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 350, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 22:08:07,826 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:11:03,422 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:13:01,260 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:13:46,785 - app - ERROR - Failed to create agent: 0
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 285, in create_agent
+    agent_id = agent_id_result[0][0]  # Assuming the procedure returns the `agent_id`
+               ~~~~~~~~~~~~~~~~~~^^^
+KeyError: 0
+2024-11-30 22:14:59,758 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:15:04,181 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '2323432' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '2323432' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '2323432' for key 'Agent.NRDS'
+2024-11-30 22:15:41,650 - app - ERROR - Failed to create agent: Failed calling stored routine; Python type dict cannot be converted
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 290, in create_agent
+    agent_data = execute_procedure(conn, "get_agent_details", [agent_id])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 612, in callproc
+    raise InterfaceError(f"Failed calling stored routine; {err}") from None
+mysql.connector.errors.InterfaceError: Failed calling stored routine; Python type dict cannot be converted
+2024-11-30 22:17:56,336 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:18:00,839 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3242342' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+2024-11-30 22:18:08,583 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3242342' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+2024-11-30 22:18:21,216 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '321423423' for key 'Agent.SSN'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '321423423' for key 'Agent.SSN'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '321423423' for key 'Agent.SSN'
+2024-11-30 22:18:24,452 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3242342' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+2024-11-30 22:18:25,807 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3242342' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+2024-11-30 22:18:29,842 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '321423423' for key 'Agent.SSN'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '321423423' for key 'Agent.SSN'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '321423423' for key 'Agent.SSN'
+2024-11-30 22:18:56,542 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3242342' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+2024-11-30 22:18:57,260 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3242342' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3242342' for key 'Agent.NRDS'
+2024-11-30 22:19:38,270 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:20:06,761 - app - ERROR - Failed to create agent: Failed calling stored routine; Python type dict cannot be converted
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 290, in create_agent
+    agent_data = execute_procedure(conn, "get_agent_details", (agent_id,))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 612, in callproc
+    raise InterfaceError(f"Failed calling stored routine; {err}") from None
+mysql.connector.errors.InterfaceError: Failed calling stored routine; Python type dict cannot be converted
+2024-11-30 22:21:44,628 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:21:50,099 - app - DEBUG - Calling procedure: create_agent with params: ('pickle', '3249234', '2343424332', 'oickle@gmail.com', '324923423', '3294h234', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:21:50,112 - app - ERROR - Failed to execute procedure create_agent: 1062 (23000): Duplicate entry '3249234' for key 'Agent.NRDS'
+2024-11-30 22:21:50,112 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3249234' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3249234' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 55, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3249234' for key 'Agent.NRDS'
+2024-11-30 22:22:01,338 - app - DEBUG - Calling procedure: create_agent with params: ('pickle', '12323', '2343422433', 'oickle@gmail.com', '292342331', '3294h234', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:22:01,351 - app - ERROR - Failed to execute procedure create_agent: 1062 (23000): Duplicate entry '3294h234' for key 'Agent.license_number'
+2024-11-30 22:22:01,351 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry '3294h234' for key 'Agent.license_number'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '3294h234' for key 'Agent.license_number'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 55, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '3294h234' for key 'Agent.license_number'
+2024-11-30 22:22:06,129 - app - DEBUG - Calling procedure: create_agent with params: ('pickle', '12323', '2343422433', 'oickle@gmail.com', '292342331', '213u3123', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:22:06,134 - app - ERROR - Failed to execute procedure create_agent: 1062 (23000): Duplicate entry 'oickle@gmail.com' for key 'Agent.agent_email'
+2024-11-30 22:22:06,134 - app - ERROR - Failed to create agent: 1062 (23000): Duplicate entry 'oickle@gmail.com' for key 'Agent.agent_email'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry 'oickle@gmail.com' for key 'Agent.agent_email'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 55, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry 'oickle@gmail.com' for key 'Agent.agent_email'
+2024-11-30 22:22:11,247 - app - DEBUG - Calling procedure: create_agent with params: ('pickle', '12323', '2343422433', 'ueh@gmail.com', '292342331', '213u3123', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:22:11,272 - app - DEBUG - Calling procedure: get_agent_details with params: ([(19, '12323', 'pickle', '2343422433', 'ueh@gmail.com', '292342331', 1, '213u3123', datetime.date(2030, 2, 3), datetime.datetime(2024, 11, 30, 22, 22, 11), 'Cherokee Street Real Estate')],)
+2024-11-30 22:22:11,274 - app - ERROR - Failed to execute procedure get_agent_details: Failed calling stored routine; Python type list cannot be converted
+2024-11-30 22:22:11,274 - app - ERROR - Failed to create agent: Failed calling stored routine; Python type list cannot be converted
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 290, in create_agent
+    agent_data = execute_procedure(conn, "get_agent_details", (agent_id,))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 55, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 612, in callproc
+    raise InterfaceError(f"Failed calling stored routine; {err}") from None
+mysql.connector.errors.InterfaceError: Failed calling stored routine; Python type list cannot be converted
+2024-11-30 22:23:53,091 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:24:06,380 - app - DEBUG - Calling procedure: create_agent with params: ('pickle', '12323', '2343422433', 'ueh@gmail.com', '292342331', '213u3123', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:24:06,395 - app - ERROR - Failed to execute procedure create_agent: 1062 (23000): Duplicate entry '12323' for key 'Agent.NRDS'
+2024-11-30 22:24:41,333 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:24:47,591 - app - DEBUG - Calling procedure: create_agent with params: ('pickle', '12323', '2343422433', 'ueh@gmail.com', '292342331', '213u3123', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:24:47,605 - app - ERROR - Failed to execute procedure create_agent: 1062 (23000): Duplicate entry '12323' for key 'Agent.NRDS'
+2024-11-30 22:24:47,606 - app - ERROR - Integrity Error: 1062 (23000): Duplicate entry '12323' for key 'Agent.NRDS'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Duplicate entry '12323' for key 'Agent.NRDS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 276, in create_agent
+    agent_id_result = execute_procedure(
+                      ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 55, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '12323' for key 'Agent.NRDS'
+2024-11-30 22:25:01,633 - app - DEBUG - Calling procedure: create_agent with params: ('asf', '23', '2341243323', '2ueh@gmail.com', '123231231', '213u3121231233', datetime.date(2030, 2, 3), 1)
+2024-11-30 22:25:01,647 - app - DEBUG - Agent ID returned: (22, '23', 'asf', '2341243323', '2ueh@gmail.com', '123231231', 1, '213u3121231233', datetime.date(2030, 2, 3), datetime.datetime(2024, 11, 30, 22, 25, 1), 'Cherokee Street Real Estate')
+2024-11-30 22:25:01,648 - app - DEBUG - Calling procedure: get_agent_details with params: ((22, '23', 'asf', '2341243323', '2ueh@gmail.com', '123231231', 1, '213u3121231233', datetime.date(2030, 2, 3), datetime.datetime(2024, 11, 30, 22, 25, 1), 'Cherokee Street Real Estate'),)
+2024-11-30 22:25:01,653 - app - ERROR - Failed to execute procedure get_agent_details: Failed calling stored routine; Unknown column 't.listing_id' in 'on clause'
+2024-11-30 22:25:01,653 - app - ERROR - Failed to create agent: Failed calling stored routine; Unknown column 't.listing_id' in 'on clause'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 290, in create_agent
+    agent_data = execute_procedure(conn, "get_agent_details", (agent_id,))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 55, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 612, in callproc
+    raise InterfaceError(f"Failed calling stored routine; {err}") from None
+mysql.connector.errors.InterfaceError: Failed calling stored routine; Unknown column 't.listing_id' in 'on clause'
+2024-11-30 22:28:18,581 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:28:20,298 - app - DEBUG - Calling procedure: get_or_create_admin_role with params: ()
+2024-11-30 22:28:20,300 - app - ERROR - Authentication error: list indices must be integers or slices, not str
+2024-11-30 22:28:22,477 - app - DEBUG - Calling procedure: get_or_create_admin_role with params: ()
+2024-11-30 22:28:22,479 - app - ERROR - Authentication error: list indices must be integers or slices, not str
+2024-11-30 22:28:23,520 - app - DEBUG - Calling procedure: get_or_create_admin_role with params: ()
+2024-11-30 22:28:23,524 - app - ERROR - Authentication error: list indices must be integers or slices, not str
+2024-11-30 22:29:35,326 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:29:38,896 - app - DEBUG - Calling procedure: get_or_create_admin_role with params: ()
+2024-11-30 22:29:38,901 - app - ERROR - Authentication error: list indices must be integers or slices, not str
+2024-11-30 22:29:47,630 - app - DEBUG - Calling procedure: get_or_create_admin_role with params: ()
+2024-11-30 22:29:47,634 - app - ERROR - Authentication error: list indices must be integers or slices, not str
+2024-11-30 22:29:49,144 - app - DEBUG - Calling procedure: get_or_create_admin_role with params: ()
+2024-11-30 22:29:49,145 - app - ERROR - Authentication error: list indices must be integers or slices, not str
+2024-11-30 22:30:00,745 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:30:14,288 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:30:29,190 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:30:58,031 - app - ERROR - Failed to create agent: 0
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 285, in create_agent
+    agent_id = agent_id_result[0][0]  # First row, first column is the agent_id
+               ~~~~~~~~~~~~~~~~~~^^^
+KeyError: 0
+2024-11-30 22:34:28,571 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:36:04,557 - app - ERROR - Failed to create agent: 0
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 285, in create_agent
+    agent_id = agent_id_result[0][0]  # First row, first column is the agent_id
+               ~~~~~~~~~~~~~~~~~~^^^
+KeyError: 0
+2024-11-30 22:37:44,270 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:38:09,073 - app - DEBUG - Procedure result: [{'agent_id': 2, 'agent_name': 'gial3', 'agent_email': 'gi3@gmail.com', 'broker_name': 'Cherokee Street Real Estate'}]
+2024-11-30 22:38:09,073 - app - ERROR - Failed to create agent: admin/agents/agent_row.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 289, in create_agent
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 112, in TemplateResponse
+    template = self.get_template(name)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 94, in get_template
+    return self.env.get_template(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/agents/agent_row.html
+2024-11-30 22:39:47,848 - app - DEBUG - Procedure result: [{'agent_id': 3, 'agent_name': 'Gilly', 'agent_email': 'gia@gmail.com', 'broker_name': 'Cherokee Street Real Estate'}]
+2024-11-30 22:44:47,122 - app - DEBUG - Procedure result: [{'agent_id': 4, 'agent_name': 'gilman', 'agent_email': 'gil@gmail.com', 'broker_name': 'Cherokee Street Real Estate'}]
+2024-11-30 22:48:20,467 - app - INFO - Database connection pool created successfully.
+2024-11-30 22:48:41,389 - app - INFO - Database connection pool created successfully.
