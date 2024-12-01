@@ -44,6 +44,8 @@ async def admin_dashboard(
 
         # Fetch agents and properties
         context["properties"] = execute_procedure(conn, 'get_all_properties')
+        logger.debug("Fetched properties for dashboard: %s", context["properties"])
+
         context["agents"] = execute_procedure(conn, 'get_all_agents')
 
         return templates.TemplateResponse("admin/dashboard.html", context)
@@ -381,6 +383,7 @@ async def admin_add_property(
     Renders an HTML row for HTMX swapping on success.
     """
     try:
+        status = status.capitalize()
         logger.debug("Starting admin_add_property...")
         
         # Call the procedure with all parameters

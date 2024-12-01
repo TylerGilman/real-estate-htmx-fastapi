@@ -2533,3 +2533,212 @@ Traceback (most recent call last):
     raise get_mysql_exception(
 mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
 2024-11-30 23:34:19,439 - app - INFO - Database connection pool created successfully.
+2024-12-01 09:54:55,982 - app - INFO - Database connection pool created successfully.
+2024-12-01 09:54:58,422 - app - DEBUG - Procedure result: [{'agent_id': 1, 'agent_name': 'Nick Mascolo', 'agent_email': 'nick@gmail.com', 'broker_name': 'Cherokee Street Real Estate'}]
+2024-12-01 09:56:35,475 - app - DEBUG - Starting admin_add_property...
+2024-12-01 09:56:35,476 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 09:56:35,482 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 388, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'status' at row 1
+2024-12-01 10:00:10,133 - app - INFO - Database connection pool created successfully.
+2024-12-01 10:01:53,875 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:01:53,875 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:01:53,877 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 389, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'status' at row 1
+2024-12-01 10:03:01,991 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:03:01,991 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:03:01,993 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'p_status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'p_status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 389, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'p_status' at row 1
+2024-12-01 10:04:39,053 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:04:39,053 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:04:39,057 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'p_status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'p_status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 389, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'p_status' at row 1
+2024-12-01 10:07:10,848 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-12-01 10:07:12,356 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-12-01 10:07:14,730 - app - ERROR - Error fetching properties: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_details does not exist
+2024-12-01 10:14:13,963 - app - INFO - Database connection pool created successfully.
+2024-12-01 10:15:47,042 - app - DEBUG - Fetched properties for dashboard: []
+2024-12-01 10:16:30,998 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:16:30,999 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:16:31,010 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 391, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'status' at row 1
+2024-12-01 10:16:40,334 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:16:40,335 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:16:40,338 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 391, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'status' at row 1
+2024-12-01 10:16:41,096 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:16:41,097 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:16:41,099 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 391, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'status' at row 1
+2024-12-01 10:16:47,112 - app - DEBUG - Starting admin_add_property...
+2024-12-01 10:16:47,112 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-12-01 10:16:47,114 - app - ERROR - Error in admin_add_property: 1265 (01000): Data truncated for column 'status' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Data truncated for column 'status' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 391, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1265 (01000): Data truncated for column 'status' at row 1
+2024-12-01 10:16:56,061 - app - DEBUG - Fetched properties for dashboard: []
