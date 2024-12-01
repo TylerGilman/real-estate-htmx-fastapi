@@ -1,6 +1,7 @@
 DELIMITER //
 
 -- Create or get admin role
+DROP PROCEDURE IF EXISTS get_or_create_admin_role;
 CREATE PROCEDURE get_or_create_admin_role()
 BEGIN
     DECLARE admin_role_id INT;
@@ -23,6 +24,7 @@ BEGIN
 END //
 
 -- Validate user session
+DROP PROCEDURE IF EXISTS validate_session;
 CREATE PROCEDURE validate_session(
     IN p_session_id VARCHAR(100),
     IN p_ip_address VARCHAR(45)
@@ -49,6 +51,7 @@ BEGIN
 END //
 
 -- Check user permissions
+DROP PROCEDURE IF EXISTS check_user_permisson;
 CREATE PROCEDURE check_user_permission(
     IN p_user_id INT,
     IN p_permission VARCHAR(50)
@@ -73,6 +76,7 @@ BEGIN
 END //
 
 -- Get user by username with role and details
+DROP PROCEDURE IF EXISTS get_user_by_username;
 CREATE PROCEDURE get_user_by_username(
     IN p_username VARCHAR(100)
 )
@@ -98,6 +102,7 @@ BEGIN
 END //
 
 -- Create admin user
+DROP PROCEDURE IF EXISTS create_admin_user;
 CREATE PROCEDURE create_admin_user(
     IN p_username VARCHAR(100),
     IN p_password_hash VARCHAR(255)
@@ -153,6 +158,7 @@ BEGIN
 END //
 
 -- Create regular user
+DROP PROCEDURE IF EXISTS create_user;
 CREATE PROCEDURE create_user(
     IN p_username VARCHAR(100),
     IN p_password_hash VARCHAR(255),
@@ -191,6 +197,7 @@ BEGIN
 END //
 
 -- Log user login
+DROP PROCEDURE IF EXISTS log_user_login;
 CREATE PROCEDURE log_user_login(
     IN p_user_id INT,
     IN p_ip_address VARCHAR(45)

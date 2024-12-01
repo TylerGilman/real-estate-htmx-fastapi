@@ -760,3 +760,1157 @@ Traceback (most recent call last):
   File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
     raise get_mysql_exception(
 mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:41:12,883 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:41:15,223 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:41:18,831 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:41:19,456 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:45:00,528 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:45:03,513 - app - ERROR - Dashboard error: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-11-30 18:47:23,102 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:47:25,209 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:47:26,745 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:47:27,020 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:48:44,185 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:48:46,419 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:51:07,070 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:51:12,650 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:51:14,445 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:51:15,240 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:53:45,643 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:53:46,370 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 18:58:09,394 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:58:10,090 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_admin_dashboard_stats does not exist
+2024-11-30 18:59:19,050 - app - INFO - Database connection pool created successfully.
+2024-11-30 18:59:20,998 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Users' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Users' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Users' doesn't exist
+2024-11-30 18:59:22,630 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Users' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Users' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Users' doesn't exist
+2024-11-30 19:00:08,079 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:00:09,967 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Users' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Users' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Users' doesn't exist
+2024-11-30 19:01:44,608 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:01:51,713 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:01:53,423 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:01:56,241 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:03:48,016 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:03:51,319 - app - ERROR - Authentication error: 1146 (42S02): Table 'real_estate.UserRole' doesn't exist
+2024-11-30 19:05:25,238 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:05:27,245 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:05:30,562 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:10:43,939 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:10:44,443 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 19:10:46,177 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_clients does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 24, in admin_dashboard
+    clients = execute_procedure(conn, 'get_all_clients')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_clients does not exist
+2024-11-30 19:14:31,153 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:14:32,734 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:14:34,004 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:14:34,865 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:14:35,770 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:14:55,094 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:14:59,887 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Properties' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Properties' doesn't exist
+2024-11-30 19:16:29,784 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:16:32,061 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Transactions' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+2024-11-30 19:16:34,402 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Transactions' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+2024-11-30 19:17:19,629 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:17:20,387 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Transactions' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+2024-11-30 19:17:22,383 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Transactions' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Transactions' doesn't exist
+2024-11-30 19:17:45,891 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:17:47,305 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Agents' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Agents' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 41, in admin_dashboard
+    dashboard_stats = execute_procedure(conn, 'get_admin_dashboard_stats')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Agents' doesn't exist
+2024-11-30 19:18:27,660 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:18:29,518 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 46, in admin_dashboard
+    context["properties"] = execute_procedure(conn, 'get_all_properties')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties does not exist
+2024-11-30 19:20:04,563 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:20:06,237 - app - ERROR - Dashboard error: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.get_all_agents; expected 4, got 0
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect number of arguments for PROCEDURE real_estate.get_all_agents; expected 4, got 0
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 47, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.get_all_agents; expected 4, got 0
+2024-11-30 19:21:46,708 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:21:49,847 - app - ERROR - Dashboard error: 1146 (42S02): Table 'real_estate.Agents' doesn't exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Table 'real_estate.Agents' doesn't exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 47, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1146 (42S02): Table 'real_estate.Agents' doesn't exist
+2024-11-30 19:22:12,153 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:22:15,506 - app - ERROR - Dashboard error: 1054 (42S22): Unknown column 'email' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'email' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 47, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'email' in 'field list'
+2024-11-30 19:22:17,833 - app - ERROR - Dashboard error: 1054 (42S22): Unknown column 'email' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'email' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 47, in admin_dashboard
+    context["agents"] = execute_procedure(conn, 'get_all_agents')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'email' in 'field list'
+2024-11-30 19:25:57,951 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:26:21,506 - app - ERROR - Failed to create client: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 92, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-11-30 19:27:49,461 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:28:02,911 - app - ERROR - Failed to create client: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 92, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-11-30 19:28:42,043 - app - INFO - Database connection pool created successfully.
+2024-11-30 19:28:44,001 - app - ERROR - Failed to create client: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 92, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-11-30 20:00:30,677 - app - ERROR - Failed to create agent: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.create_agent; expected 10, got 8
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect number of arguments for PROCEDURE real_estate.create_agent; expected 10, got 8
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.create_agent; expected 10, got 8
+2024-11-30 20:01:48,163 - app - INFO - Database connection pool created successfully.
+2024-11-30 20:02:11,868 - app - ERROR - Failed to create client: 1136 (21S01): Column count doesn't match value count at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Column count doesn't match value count at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 92, in create_client
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DataError: 1136 (21S01): Column count doesn't match value count at row 1
+2024-11-30 20:04:42,494 - app - INFO - Database connection pool created successfully.
+2024-11-30 20:05:32,502 - app - ERROR - Failed to create agent: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.create_agent; expected 10, got 8
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect number of arguments for PROCEDURE real_estate.create_agent; expected 10, got 8
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.create_agent; expected 10, got 8
+2024-11-30 20:08:54,106 - app - INFO - Database connection pool created successfully.
+2024-11-30 20:09:47,279 - app - ERROR - Failed to create agent: 1644 (45000): Invalid email format
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Invalid email format
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1644 (45000): Invalid email format
+2024-11-30 20:09:55,576 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 20:10:18,830 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 20:10:25,044 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 20:10:25,676 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 20:11:43,931 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 20:11:44,535 - app - ERROR - Failed to create agent: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 273, in create_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 48, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`real_estate`.`Agent`, CONSTRAINT `Agent_ibfk_1` FOREIGN KEY (`broker_id`) REFERENCES `Brokerage` (`broker_id`))
+2024-11-30 20:12:45,206 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:30:26,877 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:33:02,770 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:33:17,754 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:35:11,167 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:40:19,138 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:40:32,539 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:40:51,129 - app - INFO - Database connection pool created successfully.
+2024-11-30 21:41:08,319 - app - INFO - Database connection pool created successfully.

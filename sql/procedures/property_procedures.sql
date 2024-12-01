@@ -1,6 +1,27 @@
 DELIMITER //
 
+
+DROP PROCEDURE IF EXISTS get_all_properties;
+CREATE PROCEDURE get_all_properties()
+BEGIN
+    SELECT 
+        property_id,
+        tax_id,
+        property_address,
+        status,
+        price,
+        lot_size,
+        year_built,
+        zoning,
+        property_tax,
+        created_at,
+        updated_at
+    FROM Property
+    ORDER BY created_at DESC;
+END //
+
 -- Create property
+DROP PROCEDURE IF EXISTS create_property;
 CREATE PROCEDURE create_property(
     IN p_tax_id VARCHAR(50),
     IN p_property_address VARCHAR(255),
@@ -137,6 +158,7 @@ BEGIN
 END //
 
 -- Get property details
+DROP PROCEDURE IF EXISTS get_property_details;
 CREATE PROCEDURE get_property_details(
     IN p_property_id INT
 )
@@ -227,99 +249,68 @@ BEGIN
 END //
 
 -- Search properties
+
+DROP PROCEDURE IF EXISTS search_properties;
 CREATE PROCEDURE search_properties(
-    IN p_min_price DECIMAL(15, 2),
-    IN p_max_price DECIMAL(15, 2),
-    IN p_status VARCHAR(20),
-    IN p_property_type VARCHAR(20),
-    IN p_min_beds INT,
-    IN p_min_baths DECIMAL(3, 1),
-    IN p_min_sqft DECIMAL(10, 2),
-    IN p_max_sqft DECIMAL(10, 2),
-    IN p_zip_code VARCHAR(10),
-    IN p_city VARCHAR(100),
-    IN p_state VARCHAR(2),
-    IN p_has_pool BOOLEAN,
-    IN p_has_basement BOOLEAN,
-    IN p_min_year_built INT,
-    IN p_property_features VARCHAR(255),
+    IN p_min_price DECIMAL(10, 2),
+    IN p_max_price DECIMAL(10, 2),
     IN p_page INT,
     IN p_page_size INT,
     IN p_sort_by VARCHAR(50),
     IN p_sort_direction VARCHAR(4)
 )
 BEGIN
+    -- All DECLARE statements must be at the start of the BEGIN block
     DECLARE v_offset INT;
     DECLARE v_sort_clause VARCHAR(100);
-    
+
+    -- Calculate offset for pagination
     SET v_offset = (p_page - 1) * p_page_size;
+
+    -- Build dynamic sort clause
     SET v_sort_clause = CASE 
         WHEN p_sort_by IS NULL THEN 'p.created_at DESC'
         ELSE CONCAT(p_sort_by, ' ', COALESCE(p_sort_direction, 'ASC'))
     END;
 
-    -- Get total count for pagination
-    SELECT COUNT(*) as total_count
-    FROM Property p
-    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
-    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
-    WHERE (p_min_price IS NULL OR p.price >= p_min_price)
-    AND (p_max_price IS NULL OR p.price <= p_max_price)
-    AND (p_status IS NULL OR p.status = p_status)
-    AND (p_property_type IS NULL 
-        OR (p_property_type = 'RESIDENTIAL' AND r.property_id IS NOT NULL)
-        OR (p_property_type = 'COMMERCIAL' AND c.property_id IS NOT NULL))
-    AND (p_min_beds IS NULL OR r.bedrooms >= p_min_beds)
-    AND (p_min_baths IS NULL OR r.bathrooms >= p_min_baths)
-    AND (p_min_sqft IS NULL 
-        OR (r.square_feet >= p_min_sqft OR c.sqft >= p_min_sqft))
-    AND (p_max_sqft IS NULL 
-        OR (r.square_feet <= p_max_sqft OR c.sqft <= p_max_sqft))
-    AND (p_has_pool IS NULL OR r.has_pool = p_has_pool)
-    AND (p_has_basement IS NULL OR r.has_basement = p_has_basement)
-    AND (p_min_year_built IS NULL OR p.year_built >= p_min_year_built)
-    AND (p_property_features IS NULL OR 
-        p.property_features REGEXP p_property_features);
+    -- Execute the query
+    SET @query = CONCAT(
+        'SELECT p.*, ',
+        '       CASE ',
+        '           WHEN r.property_id IS NOT NULL THEN ''RESIDENTIAL'' ',
+        '           WHEN c.property_id IS NOT NULL THEN ''COMMERCIAL'' ',
+        '       END AS property_type, ',
+        '       r.bedrooms, ',
+        '       r.bathrooms, ',
+        '       r.square_feet AS residential_sqft, ',
+        '       r.has_pool, ',
+        '       r.has_basement, ',
+        '       c.sqft AS commercial_sqft, ',
+        '       c.num_units, ',
+        '       al.asking_price AS current_asking_price, ',
+        '       a.agent_name AS listing_agent, ',
+        '       pi.file_path AS primary_image ',
+        'FROM Properties p ',
+        'LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id ',
+        'LEFT JOIN CommercialProperty c ON p.property_id = c.property_id ',
+        'LEFT JOIN AgentListing al ON p.property_id = al.property_id ',
+        '       AND al.expiration_date > CURDATE() ',
+        'LEFT JOIN Agents a ON al.agent_id = a.agent_id ',
+        'LEFT JOIN PropertyImages pi ON p.property_id = pi.property_id ',
+        '       AND pi.is_primary = TRUE ',
+        'WHERE (p_min_price IS NULL OR p.price >= p_min_price) ',
+        '  AND (p_max_price IS NULL OR p.price <= p_max_price) ',
+        'ORDER BY ', v_sort_clause, ' ',
+        'LIMIT ', p_page_size, ' OFFSET ', v_offset
+    );
 
-    -- Get filtered results
-    SET @sql = CONCAT('
-    SELECT 
-        p.*,
-        CASE 
-            WHEN r.property_id IS NOT NULL THEN ''RESIDENTIAL''
-            WHEN c.property_id IS NOT NULL THEN ''COMMERCIAL''
-        END as property_type,
-        r.bedrooms,
-        r.bathrooms,
-        r.square_feet as residential_sqft,
-        r.has_pool,
-        r.has_basement,
-        c.sqft as commercial_sqft,
-        c.num_units,
-        al.asking_price as current_asking_price,
-        a.agent_name as listing_agent,
-        a.agent_phone,
-        pi.file_path as primary_image
-    FROM Property p
-    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
-    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
-    LEFT JOIN AgentListing al ON p.property_id = al.property_id 
-        AND al.expiration_date > CURDATE()
-    LEFT JOIN Agent a ON al.agent_id = a.agent_id
-    LEFT JOIN PropertyImages pi ON p.property_id = pi.property_id 
-        AND pi.is_primary = TRUE
-    WHERE (? IS NULL OR p.price >= ?)
-    AND (? IS NULL OR p.price <= ?)
-    ORDER BY ', v_sort_clause, '
-    LIMIT ? OFFSET ?');
-
-    PREPARE stmt FROM @sql;
-    EXECUTE stmt USING p_min_price, p_min_price, p_max_price, p_max_price, 
-                     p_page_size, v_offset;
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
 END //
 
 -- Update property
+DROP PROCEDURE IF EXISTS update_property;
 CREATE PROCEDURE update_property(
     IN p_property_id INT,
     IN p_tax_id VARCHAR(50),
@@ -398,3 +389,16 @@ BEGIN
         UPDATE CommercialProperty 
         SET 
             sqft = COALESCE(p_sqft, sqft),
+            industry = COALESCE(p_industry, industry),
+            c_type = COALESCE(p_c_type, c_type),
+            num_units = COALESCE(p_num_units, num_units),
+            parking_spaces = COALESCE(p_parking_spaces, parking_spaces),
+            zoning_type = COALESCE(p_zoning_type, zoning_type)
+        WHERE property_id = p_property_id;
+    ELSE
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid property type for update';
+    END IF;
+
+    COMMIT;
+END //

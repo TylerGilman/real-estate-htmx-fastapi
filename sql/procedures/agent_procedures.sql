@@ -1,6 +1,6 @@
 DELIMITER //
 
--- Create new agent
+DROP PROCEDURE IF EXISTS create_agent;
 CREATE PROCEDURE create_agent(
     IN p_agent_name VARCHAR(255),
     IN p_NRDS VARCHAR(50),
@@ -9,13 +9,11 @@ CREATE PROCEDURE create_agent(
     IN p_SSN VARCHAR(15),
     IN p_license_number VARCHAR(50),
     IN p_license_expiration DATE,
-    IN p_broker_id INT,
-    IN p_commission_rate DECIMAL(5,2),
-    IN p_hire_date DATE
+    IN p_broker_id INT
 )
 BEGIN
     DECLARE new_agent_id INT;
-    
+
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
@@ -35,6 +33,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Invalid email format';
     END IF;
 
+    -- Insert into Agent table
     INSERT INTO Agent (
         agent_name,
         NRDS,
@@ -44,10 +43,7 @@ BEGIN
         license_number,
         license_expiration,
         broker_id,
-        commission_rate,
-        hire_date,
-        created_at,
-        last_modified
+        created_at
     ) VALUES (
         p_agent_name,
         p_NRDS,
@@ -57,9 +53,6 @@ BEGIN
         p_license_number,
         p_license_expiration,
         p_broker_id,
-        p_commission_rate,
-        p_hire_date,
-        NOW(),
         NOW()
     );
 
@@ -67,70 +60,36 @@ BEGIN
 
     COMMIT;
 
-    -- Return created agent
+    -- Return the newly created agent
     SELECT 
         a.*,
-        b.broker_name,
-        b.broker_license
+        b.broker_name
     FROM Agent a
-    JOIN Brokerage b ON a.broker_id = b.broker_id
+    LEFT JOIN Brokerage b ON a.broker_id = b.broker_id
     WHERE a.agent_id = new_agent_id;
 END //
 
 -- Get all agents with summary info
-
-CREATE PROCEDURE get_all_agents(
-    IN p_page INT,
-    IN p_page_size INT,
-    IN p_sort_field VARCHAR(50),
-    IN p_sort_direction VARCHAR(4)
-)
+DROP PROCEDURE IF EXISTS get_all_agents;
+CREATE PROCEDURE get_all_agents()
 BEGIN
-    DECLARE v_offset INT;
-    DECLARE v_sort_clause VARCHAR(100);
-
-    -- Calculate the offset for pagination
-    SET v_offset = (p_page - 1) * p_page_size;
-
-    -- Build the sort clause dynamically
-    SET v_sort_clause = CASE 
-        WHEN p_sort_field IS NULL THEN 'a.created_at DESC'
-        ELSE CONCAT(p_sort_field, ' ', COALESCE(p_sort_direction, 'ASC'))
-    END;
-
-    -- Get total count for pagination
-    SELECT COUNT(*) as total_count FROM Agent;
-
-    -- Assign user-defined variables for dynamic SQL execution
-    SET @page_size = p_page_size;
-    SET @offset = v_offset;
-
-    -- Build the dynamic SQL query
-    SET @sql = CONCAT('
     SELECT 
-        a.*,
-        b.broker_name,
-        COUNT(DISTINCT al.listing_id) as active_listings,
-        COUNT(DISTINCT t.transaction_id) as total_transactions,
-        COALESCE(SUM(t.amount), 0) as total_sales_volume,
-        COALESCE(SUM(t.commission_amount), 0) as total_commission,
-        DATEDIFF(a.license_expiration, CURDATE()) as days_until_license_expiry
-    FROM Agent a
-    JOIN Brokerage b ON a.broker_id = b.broker_id
-    LEFT JOIN AgentListing al ON a.agent_id = al.agent_id 
-        AND al.expiration_date > CURDATE()
-    LEFT JOIN Transaction t ON a.agent_id = t.agent_id
-    GROUP BY a.agent_id
-    ORDER BY ', v_sort_clause, '
-    LIMIT ? OFFSET ?');
-
-    -- Prepare and execute the statement
-    PREPARE stmt FROM @sql;
-    EXECUTE stmt USING @page_size, @offset;
-    DEALLOCATE PREPARE stmt;
+        agent_id,
+        NRDS,
+        agent_name,
+        agent_email,
+        agent_phone,
+        SSN,
+        broker_id,
+        license_number,
+        license_expiration,
+        created_at
+    FROM Agent
+    ORDER BY agent_name ASC;
 END //
 
 -- Get specific agent details
+DROP PROCEDURE IF EXISTS get_agent_details;
 CREATE PROCEDURE get_agent_details(
     IN p_agent_id INT
 )
@@ -199,6 +158,7 @@ BEGIN
 END //
 
 -- Update agent
+DROP PROCEDURE IF EXISTS update_agent;
 CREATE PROCEDURE update_agent(
     IN p_agent_id INT,
     IN p_agent_name VARCHAR(255),
@@ -251,6 +211,7 @@ BEGIN
 END //
 
 -- Delete agent
+DROP PROCEDURE IF EXISTS delete_agent;
 CREATE PROCEDURE delete_agent(
     IN p_agent_id INT
 )
@@ -312,6 +273,7 @@ BEGIN
 END //
 
 -- Get agent performance metrics
+DROP PROCEDURE IF EXISTS get_agent_performance;
 CREATE PROCEDURE get_agent_performance(
     IN p_agent_id INT,
     IN p_start_date DATE,

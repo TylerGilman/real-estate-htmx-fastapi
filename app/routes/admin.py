@@ -251,6 +251,83 @@ async def agents_table(request: Request, conn=Depends(get_db_connection)):
         logger.error(f"Failed to fetch agents table: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail="Failed to load agents")
 
+@router.post("/property", response_class=HTMLResponse)
+async def admin_add_property(
+    request: Request,
+    property_name: str,
+    tax_id: str,
+    property_address: str,
+    status: str,
+    price: float,
+    lot_size: Optional[float] = None,
+    year_built: Optional[int] = None,
+    zoning: Optional[str] = None,
+    property_tax: Optional[float] = None,
+    agent_id: int = None,
+    asking_price: float = None,
+    listing_date: Optional[str] = None,
+    expiration_date: Optional[str] = None,
+    db=Depends(get_db_connection)
+):
+    """
+    Admin adds a property and optionally creates an agent listing.
+
+    Renders an HTML row for HTMX swapping on success.
+    """
+    try:
+        # Step 1: Create the property
+        property_id = execute_procedure(
+            db,
+            "create_property",
+            [
+                property_name,
+                tax_id,
+                property_address,
+                status,
+                price,
+                lot_size,
+                year_built,
+                zoning,
+                property_tax
+            ]
+        )
+        if not property_id:
+            raise HTTPException(detail="Failed to create property")
+
+        # Step 2: Optionally create the agent listing
+        if agent_id:
+            result = execute_procedure(
+                db,
+                "create_agent_listing",
+                [
+                    property_id,
+                    agent_id,
+                    asking_price,
+                    listing_date,
+                    expiration_date
+                ]
+            )
+            if not result:
+                raise HTTPException(detail="Failed to create agent listing")
+
+        # Step 3: Fetch the created property for rendering
+        property_data = execute_procedure(db, "get_property_details", [property_id])
+        if not property_data:
+            raise HTTPException(detail="Failed to retrieve property details")
+
+        return templates.TemplateResponse(
+            "partials/property_row.html",  # HTMX row template
+            {
+                "request": request,
+                "property": property_data[0]
+            }
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            detail=f"Error adding property: {str(e)}"
+        )
+
 
 @router.post("/agents", response_class=HTMLResponse)
 async def create_agent(
