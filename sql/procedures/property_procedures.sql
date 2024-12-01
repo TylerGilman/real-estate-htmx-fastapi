@@ -81,7 +81,7 @@ BEGIN
         zoning,
         property_tax,
         created_at,
-        last_modified
+        updated_at -- Use updated_at instead of last_modified
     ) VALUES (
         p_tax_id,
         p_property_address,
@@ -92,7 +92,7 @@ BEGIN
         p_zoning,
         p_property_tax,
         NOW(),
-        NOW()
+        NOW() -- Provide the same value for both created_at and updated_at initially
     );
 
     SET new_property_id = LAST_INSERT_ID();

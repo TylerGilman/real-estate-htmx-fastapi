@@ -2441,3 +2441,95 @@ jinja2.exceptions.TemplateNotFound: admin/agents/agent_row.html
 2024-11-30 22:44:47,122 - app - DEBUG - Procedure result: [{'agent_id': 4, 'agent_name': 'gilman', 'agent_email': 'gil@gmail.com', 'broker_name': 'Cherokee Street Real Estate'}]
 2024-11-30 22:48:20,467 - app - INFO - Database connection pool created successfully.
 2024-11-30 22:48:41,389 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:11:35,632 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:12:10,014 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:12:50,784 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:14:25,858 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:14:34,812 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:16:29,809 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:16:41,860 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:17:06,453 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:17:21,678 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:18:50,817 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:22:18,069 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:22:46,648 - app - INFO - test
+2024-11-30 23:22:46,649 - app - DEBUG - Starting admin_add_property...
+2024-11-30 23:22:46,649 - app - DEBUG - Received parameters: {'property_name': 'aer', 'tax_id': 'erw3', 'property_address': '323r', 'status': 'FOR_SALE', 'price': 3234.0, 'lot_size': 1231.0, 'year_built': 1802, 'zoning': '213', 'property_tax': 123123.0, 'agent_id': 4, 'asking_price': 32432.0, 'listing_date': '2030-01-02', 'expiration_date': '2034-12-09'}
+2024-11-30 23:22:46,651 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-11-30 23:22:46,656 - app - ERROR - Error in admin_add_property: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.create_property; expected 22, got 9
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect number of arguments for PROCEDURE real_estate.create_property; expected 22, got 9
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 393, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.create_property; expected 22, got 9
+2024-11-30 23:26:04,419 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:26:32,072 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:26:37,861 - app - INFO - Database connection pool created successfully.
+2024-11-30 23:29:07,349 - app - DEBUG - Starting admin_add_property...
+2024-11-30 23:29:07,350 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-11-30 23:29:07,352 - app - ERROR - Error in admin_add_property: 1264 (22003): Out of range value for column 'p_bathrooms' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Out of range value for column 'p_bathrooms' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 388, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DataError: 1264 (22003): Out of range value for column 'p_bathrooms' at row 1
+2024-11-30 23:29:32,716 - app - DEBUG - Starting admin_add_property...
+2024-11-30 23:29:32,717 - app - DEBUG - Calling stored procedure 'create_property'...
+2024-11-30 23:29:32,719 - app - ERROR - Error in admin_add_property: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 388, in admin_add_property
+    property_id_result = execute_procedure(
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-11-30 23:34:19,439 - app - INFO - Database connection pool created successfully.

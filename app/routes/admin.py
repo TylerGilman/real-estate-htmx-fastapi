@@ -346,44 +346,33 @@ async def update_agent(
         logger.error(f"Failed to update agent: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error updating agent: {str(e)}")
 
-
-@router.delete("/properties/{property_id}")
-async def delete_property(property_id: int, conn=Depends(get_db_connection)):
-    """Delete a property using stored procedure"""
-    try:
-        execute_procedure(conn, 'delete_property', (property_id,))
-        return Response("")
-    except Exception as e:
-        logger.error(f"Failed to delete property {property_id}: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to delete property: {str(e)}")
-
-
-@router.delete("/agents/{agent_id}")
-async def delete_agent(agent_id: int, conn=Depends(get_db_connection)):
-    """Delete an agent using stored procedure"""
-    try:
-        execute_procedure(conn, 'delete_agent', (agent_id,))
-        return JSONResponse(content={"success": True, "message": "Agent deleted successfully"})
-    except Exception as e:
-        logger.error(f"Failed to delete agent: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
-
 @router.post("/property", response_class=HTMLResponse)
 async def admin_add_property(
     request: Request,
-    property_name: str,
-    tax_id: str,
-    property_address: str,
-    status: str,
-    price: float,
-    lot_size: Optional[float] = None,
-    year_built: Optional[int] = None,
-    zoning: Optional[str] = None,
-    property_tax: Optional[float] = None,
-    agent_id: Optional[int] = None,
-    asking_price: Optional[float] = None,
-    listing_date: Optional[str] = None,
-    expiration_date: Optional[str] = None,
+    tax_id: str = Form(...),
+    property_address: str = Form(...),
+    status: str = Form(...),
+    price: float = Form(...),
+    lot_size: Optional[float] = Form(None),
+    year_built: Optional[int] = Form(None),
+    zoning: Optional[str] = Form(None),
+    property_tax: Optional[float] = Form(None),
+    property_type: str = Form(...),
+    # Residential specific fields
+    bedrooms: Optional[int] = Form(None),
+    bathrooms: Optional[float] = Form(None),
+    r_type: Optional[str] = Form(None),
+    square_feet: Optional[float] = Form(None),
+    garage_spaces: Optional[int] = Form(None),
+    has_basement: Optional[bool] = Form(None),
+    has_pool: Optional[bool] = Form(None),
+    # Commercial specific fields
+    sqft: Optional[float] = Form(None),
+    industry: Optional[str] = Form(None),
+    c_type: Optional[str] = Form(None),
+    num_units: Optional[int] = Form(None),
+    parking_spaces: Optional[int] = Form(None),
+    zoning_type: Optional[str] = Form(None),
     db=Depends(get_db_connection)
 ):
     """
@@ -391,45 +380,40 @@ async def admin_add_property(
 
     Renders an HTML row for HTMX swapping on success.
     """
-    import logging
-
-    logger = logging.getLogger("app")
-    logger.setLevel(logging.DEBUG)  # Ensure debug logging is enabled
-
     try:
         logger.debug("Starting admin_add_property...")
-        logger.debug("Received parameters: %s", {
-            "property_name": property_name,
-            "tax_id": tax_id,
-            "property_address": property_address,
-            "status": status,
-            "price": price,
-            "lot_size": lot_size,
-            "year_built": year_built,
-            "zoning": zoning,
-            "property_tax": property_tax,
-            "agent_id": agent_id,
-            "asking_price": asking_price,
-            "listing_date": listing_date,
-            "expiration_date": expiration_date,
-        })
-
-        # Step 1: Create the property
+        
+        # Call the procedure with all parameters
         logger.debug("Calling stored procedure 'create_property'...")
         property_id_result = execute_procedure(
             db,
             "create_property",
-            [
-                property_name,
+            (
                 tax_id,
                 property_address,
                 status,
                 price,
-                lot_size,
-                year_built,
-                zoning,
-                property_tax
-            ]
+                lot_size or 0.0,  # Use 0.0 for optional numeric fields if not provided
+                year_built or 0,
+                zoning or "",
+                property_tax or 0.0,
+                property_type,
+                # Residential parameters
+                bedrooms or 0,
+                bathrooms or 0.0,
+                r_type or "",
+                square_feet or 0.0,
+                garage_spaces or 0,
+                has_basement or False,
+                has_pool or False,
+                # Commercial parameters
+                sqft or 0.0,
+                industry or "",
+                c_type or "",
+                num_units or 0,
+                parking_spaces or 0,
+                zoning_type or ""
+            )
         )
         logger.debug("Result from 'create_property': %s", property_id_result)
 
@@ -440,38 +424,19 @@ async def admin_add_property(
         property_id = property_id_result[0][0]
         logger.debug("Created property with ID: %s", property_id)
 
-        # Step 2: Optionally create the agent listing
-        if agent_id:
-            logger.debug("Calling stored procedure 'create_agent_listing'...")
-            listing_result = execute_procedure(
-                db,
-                "create_agent_listing",
-                [
-                    property_id,
-                    agent_id,
-                    asking_price,
-                    listing_date,
-                    expiration_date
-                ]
-            )
-            logger.debug("Result from 'create_agent_listing': %s", listing_result)
-
-            if not listing_result:
-                logger.error("Failed to create agent listing: No result returned")
-                raise ValueError("Failed to create agent listing")
-
-        # Step 3: Fetch the created property for rendering
+        # Fetch property details for rendering
         logger.debug("Fetching property details using 'get_property_details'...")
-        property_data = execute_procedure(db, "get_property_details", [property_id])
+        property_data = execute_procedure(db, "get_property_details", (property_id,))
         logger.debug("Result from 'get_property_details': %s", property_data)
 
         if not property_data or len(property_data) == 0:
             logger.error("Failed to retrieve property details: No data returned")
             raise ValueError("Failed to retrieve property details")
 
+        # Render property row template
         logger.debug("Rendering property row template...")
         return templates.TemplateResponse(
-            "partials/property_row.html",
+            "admin/properties/table_row.html",
             {
                 "request": request,
                 "property": property_data[0]
