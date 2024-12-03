@@ -7,7 +7,8 @@
             <select name="agent_id" required class="form-select">
                 <option value="">Choose an agent</option>
                 {% for agent in agents %}
-                <option value="{{ agent.agent_id }}">
+                <option value="{{ agent.agent_id }}" 
+                        {% if property.agent_id == agent.agent_id %}selected{% endif %}>
                     {{ agent.agent_name }} ({{ agent.agent_phone }})
                 </option>
                 {% endfor %}
@@ -19,7 +20,8 @@
             <select name="client_id" required class="form-select">
                 <option value="">Choose a client</option>
                 {% for client in clients %}
-                <option value="{{ client.client_id }}">
+                <option value="{{ client.client_id }}"
+                        {% if property.client_id == client.client_id %}selected{% endif %}>
                     {{ client.client_name }} ({{ client.client_phone }})
                 </option>
                 {% endfor %}
@@ -33,137 +35,123 @@
     <div class="form-header">Property Details</div>
     <div class="form-grid">
         <div class="form-group">
-            <label>Property Name</label>
-            <input type="text" name="property_name" required placeholder="Property Name">
-        </div>
-
-        <div class="form-group">
             <label>Tax ID</label>
-            <input type="text" name="tax_id" required placeholder="Tax ID">
+            <input type="text" name="tax_id" required placeholder="Tax ID" 
+                   value="{{ property.tax_id|default('') }}">
         </div>
 
         <div class="form-group">
             <label>Address</label>
-            <input type="text" name="property_address" required placeholder="Address">
+            <input type="text" name="property_address" required placeholder="Address"
+                   value="{{ property.property_address|default('') }}">
         </div>
         
         <div class="form-group">
             <label>Price</label>
-            <input type="number" name="price" required min="0" step="0.01" placeholder="Enter property price">
+            <input type="number" name="price" required min="0" step="0.01" placeholder="Enter property price"
+                   value="{{ property.price|default('') }}">
             <small class="help-text">Enter price in dollars</small>
         </div>
 
-      <div class="form-group">
-          <label>Status</label>
-          <select name="status" required class="form-select">
-              <option value="">Select status</option>
-              <option value="For Sale">For Sale</option>
-              <option value="For Lease">For Lease</option>
-              <option value="Sold">Sold</option>
-              <option value="Leased">Leased</option>
-          </select>
-      </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status" required class="form-select">
+                <option value="">Select status</option>
+                {% for status in ['For Sale', 'For Lease', 'Sold', 'Leased'] %}
+                    <option value="{{ status }}" 
+                            {% if property.status == status %}selected{% endif %}>
+                        {{ status }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
         <div class="form-group">
             <label>Property Type</label>
             <select name="property_type" required id="propertyType" onchange="togglePropertyTypeFields()">
                 <option value="">Select Property Type</option>
-                <option value="RESIDENTIAL">Residential</option>
-                <option value="COMMERCIAL">Commercial</option>
+                <option value="RESIDENTIAL" {% if property.property_type == 'RESIDENTIAL' %}selected{% endif %}>Residential</option>
+                <option value="COMMERCIAL" {% if property.property_type == 'COMMERCIAL' %}selected{% endif %}>Commercial</option>
             </select>
         </div>
     </div>
 </div>
 
 <!-- Residential Fields -->
-<div id="residentialFields" class="form-section hidden">
+<div id="residentialFields" class="form-section {% if not property.property_type or property.property_type != 'RESIDENTIAL' %}hidden{% endif %}">
     <div class="form-header">Residential Details</div>
     <div class="form-grid">
         <div class="form-group">
             <label>Bedrooms</label>
-            <input type="number" name="bedrooms" min="0" placeholder="Number of Bedrooms">
+            <input type="number" name="bedrooms" min="0" placeholder="Number of Bedrooms"
+                   value="{{ property.bedrooms|default('') }}">
         </div>
         <div class="form-group">
             <label>Bathrooms</label>
-            <input type="number" name="bathrooms" min="0" step="0.5" placeholder="Number of Bathrooms">
+            <input type="number" name="bathrooms" min="0" step="0.5" placeholder="Number of Bathrooms"
+                   value="{{ property.bathrooms|default('') }}">
         </div>
         <div class="form-group">
             <label>Residential Type</label>
-            <input type="text" name="r_type" placeholder="Residential Type">
+            <input type="text" name="r_type" placeholder="Residential Type"
+                   value="{{ property.r_type|default('') }}">
         </div>
         <div class="form-group">
             <label>Square Feet</label>
-            <input type="number" name="square_feet" min="0" placeholder="Square Feet">
+            <input type="number" name="square_feet" min="0" placeholder="Square Feet"
+                   value="{{ property.square_feet|default('') }}">
         </div>
         <div class="form-group">
             <label>Garage Spaces</label>
-            <input type="number" name="garage_spaces" min="0" placeholder="Garage Spaces">
+            <input type="number" name="garage_spaces" min="0" placeholder="Garage Spaces"
+                   value="{{ property.garage_spaces|default('') }}">
         </div>
         <div class="form-group">
             <label>Has Basement?</label>
-            <input type="checkbox" name="has_basement">
+            <input type="checkbox" name="has_basement" 
+                   {% if property.has_basement %}checked{% endif %}>
         </div>
         <div class="form-group">
             <label>Has Pool?</label>
-            <input type="checkbox" name="has_pool">
+            <input type="checkbox" name="has_pool"
+                   {% if property.has_pool %}checked{% endif %}>
         </div>
     </div>
 </div>
 
 <!-- Commercial Fields -->
-<div id="commercialFields" class="form-section hidden">
+<div id="commercialFields" class="form-section {% if not property.property_type or property.property_type != 'COMMERCIAL' %}hidden{% endif %}">
     <div class="form-header">Commercial Details</div>
     <div class="form-grid">
         <div class="form-group">
             <label>Square Feet</label>
-            <input type="number" name="sqft" min="0" placeholder="Square Feet">
+            <input type="number" name="sqft" min="0" placeholder="Square Feet"
+                   value="{{ property.sqft|default('') }}">
         </div>
         <div class="form-group">
             <label>Industry</label>
-            <input type="text" name="industry" placeholder="Industry">
+            <input type="text" name="industry" placeholder="Industry"
+                   value="{{ property.industry|default('') }}">
         </div>
         <div class="form-group">
             <label>Commercial Type</label>
-            <input type="text" name="c_type" placeholder="Commercial Type">
+            <input type="text" name="c_type" placeholder="Commercial Type"
+                   value="{{ property.c_type|default('') }}">
         </div>
         <div class="form-group">
             <label>Number of Units</label>
-            <input type="number" name="num_units" min="0" placeholder="Number of Units">
+            <input type="number" name="num_units" min="0" placeholder="Number of Units"
+                   value="{{ property.num_units|default('') }}">
         </div>
         <div class="form-group">
             <label>Parking Spaces</label>
-            <input type="number" name="parking_spaces" min="0" placeholder="Parking Spaces">
+            <input type="number" name="parking_spaces" min="0" placeholder="Parking Spaces"
+                   value="{{ property.parking_spaces|default('') }}">
         </div>
         <div class="form-group">
             <label>Zoning Type</label>
-            <input type="text" name="zoning_type" placeholder="Zoning Type">
+            <input type="text" name="zoning_type" placeholder="Zoning Type"
+                   value="{{ property.zoning_type|default('') }}">
         </div>
     </div>
 </div>
-
-<!-- JavaScript for Field Toggling -->
-<script>
-    function togglePropertyTypeFields() {
-        const propertyType = document.getElementById("propertyType").value;
-        const residentialFields = document.getElementById("residentialFields");
-        const commercialFields = document.getElementById("commercialFields");
-
-        // Show relevant fields based on property type
-        if (propertyType === "RESIDENTIAL") {
-            residentialFields.classList.remove("hidden");
-            commercialFields.classList.add("hidden");
-        } else if (propertyType === "COMMERCIAL") {
-            residentialFields.classList.add("hidden");
-            commercialFields.classList.remove("hidden");
-        } else {
-            residentialFields.classList.add("hidden");
-            commercialFields.classList.add("hidden");
-        }
-    }
-</script>
-
-<style>
-    .hidden {
-        display: none;
-    }
-</style>

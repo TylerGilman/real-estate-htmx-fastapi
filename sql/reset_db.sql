@@ -12,6 +12,7 @@ SOURCE procedures/agent_procedures.sql
 SOURCE procedures/property_procedures.sql
 SOURCE procedures/client_procedures.sql
 SOURCE procedures/listing_procedures.sql
+SOURCE procedures/image_procedures.sql
 SOURCE procedures/transaction_procedures.sql
 SOURCE procedures/dashboard_procedures.sql
 

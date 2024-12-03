@@ -128,3 +128,35 @@ function formatPrice(input) {
         input.value = value;
     }
 }
+
+function togglePropertyTypeFields() {
+    const propertyType = document.getElementById("propertyType");
+    const residentialFields = document.getElementById("residentialFields");
+    const commercialFields = document.getElementById("commercialFields");
+
+    if (propertyType) {
+        if (propertyType.value === "RESIDENTIAL") {
+            residentialFields.classList.remove("hidden");
+            commercialFields.classList.add("hidden");
+        } else if (propertyType.value === "COMMERCIAL") {
+            residentialFields.classList.add("hidden");
+            commercialFields.classList.remove("hidden");
+        } else {
+            residentialFields.classList.add("hidden");
+            commercialFields.classList.add("hidden");
+        }
+    }
+}
+
+// HTMX event handlers
+document.addEventListener('htmx:afterSwap', function(evt) {
+    // Toggle property type fields after form swap
+    if (evt.detail.target.id === 'add-property-form') {
+        const propertyType = document.getElementById("propertyType");
+        if (propertyType) {
+            togglePropertyTypeFields();
+        }
+        // Show form when editing
+        evt.detail.target.classList.remove('hidden');
+    }
+});

@@ -3359,3 +3359,423 @@ mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get
 2024-12-01 18:10:37,711 - app - DEBUG - Fetching listings...
 2024-12-01 18:10:37,718 - app - DEBUG - Found 3 listings
 2024-12-01 18:10:54,866 - app - DEBUG - Found property details: {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 3, 'agent_name': 'Bob Wilson', 'agent_phone': '555-555-6666', 'bedrooms': None, 'bathrooms': None, 'r_type': None, 'square_feet': None, 'garage_spaces': None, 'has_basement': None, 'has_pool': None, 'sqft': Decimal('10000.00'), 'industry': 'Retail', 'c_type': 'Shopping Center', 'num_units': 5, 'parking_spaces': 20, 'zoning_type': 'C-1'}
+2024-12-02 16:21:07,559 - app - INFO - Database connection pool created successfully.
+2024-12-02 16:21:14,649 - app - DEBUG - Running debug query...
+2024-12-02 16:21:14,653 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:21:14,654 - app - DEBUG - Fetching listings...
+2024-12-02 16:21:14,656 - app - DEBUG - Found 3 listings
+2024-12-02 16:21:21,241 - app - DEBUG - Found property details: {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 3, 'agent_name': 'Bob Wilson', 'agent_phone': '555-555-6666', 'bedrooms': None, 'bathrooms': None, 'r_type': None, 'square_feet': None, 'garage_spaces': None, 'has_basement': None, 'has_pool': None, 'sqft': Decimal('10000.00'), 'industry': 'Retail', 'c_type': 'Shopping Center', 'num_units': 5, 'parking_spaces': 20, 'zoning_type': 'C-1'}
+2024-12-02 16:21:22,895 - app - DEBUG - Running debug query...
+2024-12-02 16:21:22,898 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:21:22,898 - app - DEBUG - Fetching listings...
+2024-12-02 16:21:22,899 - app - DEBUG - Found 3 listings
+2024-12-02 16:21:24,678 - app - DEBUG - Found property details: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 1, 'agent_name': 'John Smith', 'agent_phone': '555-111-2222', 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None}
+2024-12-02 16:21:25,466 - app - DEBUG - Running debug query...
+2024-12-02 16:21:25,469 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:21:25,469 - app - DEBUG - Fetching listings...
+2024-12-02 16:21:25,470 - app - DEBUG - Found 3 listings
+2024-12-02 16:21:28,850 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 16:22:04,532 - app - INFO - User logged out: admin
+2024-12-02 16:22:04,547 - app - DEBUG - Running debug query...
+2024-12-02 16:22:04,550 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:22:04,551 - app - DEBUG - Fetching listings...
+2024-12-02 16:22:04,554 - app - DEBUG - Found 3 listings
+2024-12-02 16:22:14,808 - app - ERROR - Database error during authentication: 1054 (42S22): Unknown column 'u.last_login' in 'field list'
+2024-12-02 16:22:14,816 - app - WARNING - Authentication failed for user Bob: System error occurred
+2024-12-02 16:22:21,486 - app - INFO - Successful login for user: admin
+2024-12-02 16:22:21,500 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 16:22:42,125 - app - DEBUG - Running debug query...
+2024-12-02 16:22:42,127 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:22:42,127 - app - DEBUG - Fetching listings...
+2024-12-02 16:22:42,128 - app - DEBUG - Found 3 listings
+2024-12-02 16:22:44,927 - app - DEBUG - Found property details: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 1, 'agent_name': 'John Smith', 'agent_phone': '555-111-2222', 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None}
+2024-12-02 16:22:48,094 - app - DEBUG - Running debug query...
+2024-12-02 16:22:48,098 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:22:48,099 - app - DEBUG - Fetching listings...
+2024-12-02 16:22:48,101 - app - DEBUG - Found 3 listings
+2024-12-02 16:22:50,769 - app - DEBUG - Found property details: {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 3, 'agent_name': 'Bob Wilson', 'agent_phone': '555-555-6666', 'bedrooms': None, 'bathrooms': None, 'r_type': None, 'square_feet': None, 'garage_spaces': None, 'has_basement': None, 'has_pool': None, 'sqft': Decimal('10000.00'), 'industry': 'Retail', 'c_type': 'Shopping Center', 'num_units': 5, 'parking_spaces': 20, 'zoning_type': 'C-1'}
+2024-12-02 16:22:51,658 - app - DEBUG - Running debug query...
+2024-12-02 16:22:51,663 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:22:51,664 - app - DEBUG - Fetching listings...
+2024-12-02 16:22:51,667 - app - DEBUG - Found 3 listings
+2024-12-02 16:22:54,749 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 16:23:22,688 - app - DEBUG - Running debug query...
+2024-12-02 16:23:22,690 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:23:22,690 - app - DEBUG - Fetching listings...
+2024-12-02 16:23:22,692 - app - DEBUG - Found 3 listings
+2024-12-02 16:23:26,238 - app - DEBUG - Found property details: {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 3, 'agent_name': 'Bob Wilson', 'agent_phone': '555-555-6666', 'bedrooms': None, 'bathrooms': None, 'r_type': None, 'square_feet': None, 'garage_spaces': None, 'has_basement': None, 'has_pool': None, 'sqft': Decimal('10000.00'), 'industry': 'Retail', 'c_type': 'Shopping Center', 'num_units': 5, 'parking_spaces': 20, 'zoning_type': 'C-1'}
+2024-12-02 16:23:50,479 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 16:24:17,373 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 16:25:23,068 - app - DEBUG - Running debug query...
+2024-12-02 16:25:23,070 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:25:23,070 - app - DEBUG - Fetching listings...
+2024-12-02 16:25:23,071 - app - DEBUG - Found 3 listings
+2024-12-02 16:25:26,612 - app - DEBUG - Found property details: {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'agent_id': 3, 'agent_name': 'Bob Wilson', 'agent_phone': '555-555-6666', 'bedrooms': None, 'bathrooms': None, 'r_type': None, 'square_feet': None, 'garage_spaces': None, 'has_basement': None, 'has_pool': None, 'sqft': Decimal('10000.00'), 'industry': 'Retail', 'c_type': 'Shopping Center', 'num_units': 5, 'parking_spaces': 20, 'zoning_type': 'C-1'}
+2024-12-02 16:25:28,621 - app - DEBUG - Running debug query...
+2024-12-02 16:25:28,624 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 16:25:28,624 - app - DEBUG - Fetching listings...
+2024-12-02 16:25:28,626 - app - DEBUG - Found 3 listings
+2024-12-02 17:30:54,973 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:32:42,298 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:33:48,089 - app - DEBUG - Running debug query...
+2024-12-02 17:33:48,093 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 17:33:48,094 - app - DEBUG - Fetching listings...
+2024-12-02 17:33:48,097 - app - DEBUG - Found 3 listings
+2024-12-02 17:33:51,293 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 17:33:51,337 - app - ERROR - Dashboard error: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 51, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 44, in block 'content'
+    {% include "admin/properties/form.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form.html", line 8, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 146, in top-level template code
+    {% for image in property.images %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-02 17:33:51,921 - app - DEBUG - Fetched properties for dashboard: [{'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}, {'property_id': 3, 'tax_id': 'TAX003', 'property_address': '789 Pine St, Boston, MA', 'status': 'For Sale', 'price': Decimal('350000.00'), 'lot_size': Decimal('4000.00'), 'year_built': 1985, 'zoning': 'Residential', 'property_tax': Decimal('3500.00'), 'created_at': datetime.datetime(2024, 12, 1, 18, 10, 30), 'updated_at': datetime.datetime(2024, 12, 1, 18, 10, 30)}]
+2024-12-02 17:33:51,924 - app - ERROR - Dashboard error: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 51, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 44, in block 'content'
+    {% include "admin/properties/form.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form.html", line 8, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 146, in top-level template code
+    {% for image in property.images %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-02 17:41:17,433 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:42:55,296 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties_with_images does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 29, in admin_dashboard
+    properties = execute_procedure(conn, "get_all_properties_with_images")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+2024-12-02 17:42:56,244 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties_with_images does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 29, in admin_dashboard
+    properties = execute_procedure(conn, "get_all_properties_with_images")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+2024-12-02 17:43:11,741 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:43:13,960 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties_with_images does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 29, in admin_dashboard
+    properties = execute_procedure(conn, "get_all_properties_with_images")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+2024-12-02 17:44:33,676 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:44:40,521 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:44:44,365 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:44:45,130 - app - ERROR - Dashboard error: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: PROCEDURE real_estate.get_all_properties_with_images does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 29, in admin_dashboard
+    properties = execute_procedure(conn, "get_all_properties_with_images")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1305 (42000): PROCEDURE real_estate.get_all_properties_with_images does not exist
+2024-12-02 17:44:54,777 - app - INFO - Database connection pool created successfully.
+2024-12-02 17:45:47,674 - app - DEBUG - Running debug query...
+2024-12-02 17:45:47,679 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-02 17:45:47,679 - app - DEBUG - Fetching listings...
+2024-12-02 17:45:47,681 - app - DEBUG - Found 3 listings
+2024-12-02 17:45:52,558 - app - ERROR - Authentication error: 
+2024-12-02 17:45:53,093 - app - ERROR - Authentication error: 
+2024-12-02 17:46:05,793 - app - INFO - Successful login for user: admin
+2024-12-03 17:01:55,589 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:02:00,274 - app - DEBUG - Running debug query...
+2024-12-03 17:02:00,281 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:02:00,282 - app - DEBUG - Fetching listings...
+2024-12-03 17:02:00,284 - app - DEBUG - Found 3 listings
+2024-12-03 17:02:08,626 - app - DEBUG - Found property details: {'property_id': 2, 'tax_id': 'TAX002', 'property_address': '456 Oak Ave, Boston, MA', 'status': 'For Lease', 'price': Decimal('750000.00'), 'lot_size': Decimal('10000.00'), 'year_built': 2000, 'zoning': 'Commercial', 'property_tax': Decimal('7500.00'), 'created_at': datetime.datetime(2024, 12, 2, 17, 44, 52), 'updated_at': datetime.datetime(2024, 12, 2, 17, 44, 52), 'agent_id': 1, 'agent_name': 'John Smith', 'agent_phone': '555-111-2222', 'bedrooms': None, 'bathrooms': None, 'r_type': None, 'square_feet': None, 'garage_spaces': None, 'has_basement': None, 'has_pool': None, 'sqft': Decimal('10000.00'), 'industry': 'Retail', 'c_type': 'Shopping Center', 'num_units': 5, 'parking_spaces': 20, 'zoning_type': 'C-1'}
+2024-12-03 17:02:10,381 - app - DEBUG - Running debug query...
+2024-12-03 17:02:10,383 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:02:10,384 - app - DEBUG - Fetching listings...
+2024-12-03 17:02:10,385 - app - DEBUG - Found 3 listings
+2024-12-03 17:05:08,186 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:06:20,072 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:06:33,953 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:06:56,251 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:08:02,415 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:08:04,149 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:11:21,205 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:11:22,819 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:20:46,300 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:21:16,393 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:22:41,239 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:23:32,377 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:27:55,278 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:27:59,220 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:28:26,309 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:28:30,578 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:34:59,706 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:35:03,587 - app - DEBUG - Starting property update...
+2024-12-03 17:35:03,587 - app - DEBUG - Property ID: 1
+2024-12-03 17:35:03,588 - app - DEBUG - Form Data - Address: 123 Main St, Boston, MA, Price: 500000.0, Status: For Sale
+2024-12-03 17:35:03,592 - app - ERROR - Error updating property: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.update_property; expected 22, got 10
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect number of arguments for PROCEDURE real_estate.update_property; expected 22, got 10
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 460, in update_property
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1318 (42000): Incorrect number of arguments for PROCEDURE real_estate.update_property; expected 22, got 10
+2024-12-03 17:40:16,060 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:41:36,544 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:42:08,014 - app - DEBUG - Running debug query...
+2024-12-03 17:42:08,018 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:42:08,018 - app - DEBUG - Fetching listings...
+2024-12-03 17:42:08,020 - app - DEBUG - Found 3 listings
+2024-12-03 17:43:00,289 - app - DEBUG - Running debug query...
+2024-12-03 17:43:00,293 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:43:00,293 - app - DEBUG - Fetching listings...
+2024-12-03 17:43:00,296 - app - DEBUG - Found 3 listings
+2024-12-03 17:43:01,587 - app - DEBUG - Running debug query...
+2024-12-03 17:43:01,591 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:43:01,592 - app - DEBUG - Fetching listings...
+2024-12-03 17:43:01,594 - app - DEBUG - Found 3 listings
+2024-12-03 17:43:23,373 - app - DEBUG - Running debug query...
+2024-12-03 17:43:23,378 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:43:23,378 - app - DEBUG - Fetching listings...
+2024-12-03 17:43:23,381 - app - DEBUG - Found 3 listings
+2024-12-03 17:43:24,396 - app - DEBUG - Running debug query...
+2024-12-03 17:43:24,398 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-03 17:43:24,399 - app - DEBUG - Fetching listings...
+2024-12-03 17:43:24,401 - app - DEBUG - Found 3 listings
+2024-12-03 17:47:57,627 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:48:03,825 - app - DEBUG - Updating property 2
+2024-12-03 17:48:03,828 - app - ERROR - Error updating property: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 455, in update_property
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-12-03 17:50:45,876 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:51:07,141 - app - DEBUG - Updating property 1
+2024-12-03 17:51:07,153 - app - ERROR - Error updating property: 1364 (HY000): Field 'asking_price' doesn't have a default value
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Field 'asking_price' doesn't have a default value
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 468, in update_property
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1364 (HY000): Field 'asking_price' doesn't have a default value
+2024-12-03 17:53:00,382 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:53:05,288 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:53:28,935 - app - DEBUG - Updating property 1
+2024-12-03 17:53:28,937 - app - ERROR - Error updating property: name 'lot_size' is not defined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 442, in update_property
+    lot_size, year_built, zoning, property_tax,
+    ^^^^^^^^
+NameError: name 'lot_size' is not defined
+2024-12-03 17:54:22,588 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:54:26,455 - app - INFO - Database connection pool created successfully.
+2024-12-03 17:54:41,019 - app - DEBUG - Updating property 1
+2024-12-03 17:54:41,026 - app - ERROR - Error updating property: 1292 (22007): Incorrect date value: 'SellerAgent' for column 'p_listing_date' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect date value: 'SellerAgent' for column 'p_listing_date' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 487, in update_property
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DataError: 1292 (22007): Incorrect date value: 'SellerAgent' for column 'p_listing_date' at row 1
+2024-12-03 17:54:42,145 - app - DEBUG - Updating property 1
+2024-12-03 17:54:42,148 - app - ERROR - Error updating property: 1292 (22007): Incorrect date value: 'SellerAgent' for column 'p_listing_date' at row 1
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect date value: 'SellerAgent' for column 'p_listing_date' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 487, in update_property
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DataError: 1292 (22007): Incorrect date value: 'SellerAgent' for column 'p_listing_date' at row 1

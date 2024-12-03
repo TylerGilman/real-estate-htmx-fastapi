@@ -42,7 +42,9 @@
     <div class="table-cell actions">
         <button class="action-button edit"
                 hx-get="/admin/properties/{{ property.property_id }}/edit"
-                hx-target="#property-form-container">
+                hx-target="#add-property-form"
+                hx-swap="outerHTML"
+                hx-push-url="false">
             Edit
         </button>
         <button class="action-button delete"

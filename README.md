@@ -139,6 +139,21 @@ Key procedures include:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+## Development Guidelines
+
+- Follow PEP 8 style guide
+- Write tests for new features
+- Update documentation when making changes
+- Use alembic for database migrations
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
 ## Authors
 
 - Tyler Gilman, Nick Mascolo, George Megdanis
@@ -148,3 +163,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - FastAPI documentation
 - HTMX documentation
 - MySQL documentation
+
+## Project Status and TODO List
+
+See [TODO.md](TODO.md) for a detailed list of:
+- Current development priorities
+- Planned features
+- Known issues
+- Future enhancements
+- Maintenance tasks

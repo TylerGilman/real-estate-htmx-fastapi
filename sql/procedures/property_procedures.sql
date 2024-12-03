@@ -1,6 +1,98 @@
 DELIMITER //
 
-DELIMITER //
+CREATE PROCEDURE update_residential_property(
+    IN p_property_id INT,
+    IN p_bedrooms INT,
+    IN p_bathrooms DECIMAL(3,1),
+    IN p_r_type VARCHAR(50),
+    IN p_square_feet DECIMAL(10,2),
+    IN p_garage_spaces INT,
+    IN p_has_basement BOOLEAN,
+    IN p_has_pool BOOLEAN
+)
+BEGIN
+    INSERT INTO ResidentialProperty (
+        property_id, bedrooms, bathrooms, r_type, square_feet,
+        garage_spaces, has_basement, has_pool
+    )
+    VALUES (
+        p_property_id, p_bedrooms, p_bathrooms, p_r_type, p_square_feet,
+        p_garage_spaces, p_has_basement, p_has_pool
+    )
+    ON DUPLICATE KEY UPDATE
+        bedrooms = p_bedrooms,
+        bathrooms = p_bathrooms,
+        r_type = p_r_type,
+        square_feet = p_square_feet,
+        garage_spaces = p_garage_spaces,
+        has_basement = p_has_basement,
+        has_pool = p_has_pool;
+END //
+
+CREATE PROCEDURE update_commercial_property(
+    IN p_property_id INT,
+    IN p_sqft DECIMAL(10,2),
+    IN p_industry VARCHAR(255),
+    IN p_c_type VARCHAR(50),
+    IN p_num_units INT,
+    IN p_parking_spaces INT,
+    IN p_zoning_type VARCHAR(50)
+)
+BEGIN
+    INSERT INTO CommercialProperty (
+        property_id, sqft, industry, c_type, num_units,
+        parking_spaces, zoning_type
+    )
+    VALUES (
+        p_property_id, p_sqft, p_industry, p_c_type, p_num_units,
+        p_parking_spaces, p_zoning_type
+    )
+    ON DUPLICATE KEY UPDATE
+        sqft = p_sqft,
+        industry = p_industry,
+        c_type = p_c_type,
+        num_units = p_num_units,
+        parking_spaces = p_parking_spaces,
+        zoning_type = p_zoning_type;
+END //
+
+CREATE PROCEDURE get_property_details_with_images(
+    IN p_property_id INT
+)
+BEGIN
+    -- Get property details
+    SELECT 
+        p.*,
+        rp.bedrooms,
+        rp.bathrooms,
+        rp.r_type,
+        rp.square_feet,
+        rp.garage_spaces,
+        rp.has_basement,
+        rp.has_pool,
+        cp.sqft,
+        cp.industry,
+        cp.c_type,
+        cp.num_units,
+        cp.parking_spaces,
+        cp.zoning_type,
+        -- Get images as JSON array
+        (
+            SELECT JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'image_id', pi.image_id,
+                    'file_path', pi.file_path,
+                    'is_primary', pi.is_primary
+                )
+            )
+            FROM PropertyImages pi
+            WHERE pi.property_id = p.property_id
+        ) as images
+    FROM Property p
+    LEFT JOIN ResidentialProperty rp ON p.property_id = rp.property_id
+    LEFT JOIN CommercialProperty cp ON p.property_id = cp.property_id
+    WHERE p.property_id = p_property_id;
+END //
 
 CREATE PROCEDURE get_all_properties_with_details()
 BEGIN
@@ -287,7 +379,6 @@ BEGIN
 END //
 
 -- Update property
-DROP PROCEDURE IF EXISTS update_property;
 CREATE PROCEDURE update_property(
     IN p_property_id INT,
     IN p_tax_id VARCHAR(50),
@@ -315,67 +406,46 @@ CREATE PROCEDURE update_property(
     IN p_zoning_type VARCHAR(50)
 )
 BEGIN
-    DECLARE v_property_type VARCHAR(20);
-    
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    START TRANSACTION;
-    
-    -- Determine property type
-    SELECT 
-        CASE 
-            WHEN r.property_id IS NOT NULL THEN 'RESIDENTIAL'
-            WHEN c.property_id IS NOT NULL THEN 'COMMERCIAL'
-        END INTO v_property_type
-    FROM Property p
-    LEFT JOIN ResidentialProperty r ON p.property_id = r.property_id
-    LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
-    WHERE p.property_id = p_property_id;
-
-    -- Update base property information
-    UPDATE Property 
+    -- Update base property
+    UPDATE Property
     SET 
-        tax_id = COALESCE(p_tax_id, tax_id),
-        property_address = COALESCE(p_property_address, property_address),
-        status = COALESCE(p_status, status),
-        price = COALESCE(p_price, price),
-        lot_size = COALESCE(p_lot_size, lot_size),
-        year_built = COALESCE(p_year_built, year_built),
-        zoning = COALESCE(p_zoning, zoning),
-        property_tax = COALESCE(p_property_tax, property_tax),
-        last_modified = NOW()
+        tax_id = p_tax_id,
+        property_address = p_property_address,
+        status = p_status,
+        price = p_price,
+        lot_size = p_lot_size,
+        year_built = p_year_built,
+        zoning = p_zoning,
+        property_tax = p_property_tax,
+        updated_at = CURRENT_TIMESTAMP
     WHERE property_id = p_property_id;
 
-    -- Update type-specific information
-    IF v_property_type = 'RESIDENTIAL' THEN
-        UPDATE ResidentialProperty 
+    -- Update or insert Residential Property if it exists
+    IF EXISTS (SELECT 1 FROM ResidentialProperty WHERE property_id = p_property_id) THEN
+        UPDATE ResidentialProperty
         SET 
-            bedrooms = COALESCE(p_bedrooms, bedrooms),
-            bathrooms = COALESCE(p_bathrooms, bathrooms),
-            r_type = COALESCE(p_r_type, r_type),
-            square_feet = COALESCE(p_square_feet, square_feet),
-            garage_spaces = COALESCE(p_garage_spaces, garage_spaces),
-            has_basement = COALESCE(p_has_basement, has_basement),
-            has_pool = COALESCE(p_has_pool, has_pool)
+            bedrooms = p_bedrooms,
+            bathrooms = p_bathrooms,
+            r_type = p_r_type,
+            square_feet = p_square_feet,
+            garage_spaces = p_garage_spaces,
+            has_basement = p_has_basement,
+            has_pool = p_has_pool
         WHERE property_id = p_property_id;
-    ELSEIF v_property_type = 'COMMERCIAL' THEN
-        UPDATE CommercialProperty 
-        SET 
-            sqft = COALESCE(p_sqft, sqft),
-            industry = COALESCE(p_industry, industry),
-            c_type = COALESCE(p_c_type, c_type),
-            num_units = COALESCE(p_num_units, num_units),
-            parking_spaces = COALESCE(p_parking_spaces, parking_spaces),
-            zoning_type = COALESCE(p_zoning_type, zoning_type)
-        WHERE property_id = p_property_id;
-    ELSE
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Invalid property type for update';
     END IF;
 
-    COMMIT;
+    -- Update or insert Commercial Property if it exists
+    IF EXISTS (SELECT 1 FROM CommercialProperty WHERE property_id = p_property_id) THEN
+        UPDATE CommercialProperty
+        SET 
+            sqft = p_sqft,
+            industry = p_industry,
+            c_type = p_c_type,
+            num_units = p_num_units,
+            parking_spaces = p_parking_spaces,
+            zoning_type = p_zoning_type
+        WHERE property_id = p_property_id;
+    END IF;
 END //
+
+DELIMITER ;
