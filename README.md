@@ -70,7 +70,7 @@ ENVIRONMENT=development
 
 5. Initialize the database:
 ```bash
-python manage_db.py init
+python utils/reset_db.py
 ```
 
 ## Running the Application
