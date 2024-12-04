@@ -16,7 +16,7 @@
           class="property-form"
           hx-target="#properties-list"
           hx-push-url="false"
-          hx-swap="innerHTML">
+          hx-swap="outerHTML">
          
         <!-- Hidden input to track form type -->
         <input type="hidden" name="form_type" value="{% if property %}edit{% else %}add{% endif %}">
