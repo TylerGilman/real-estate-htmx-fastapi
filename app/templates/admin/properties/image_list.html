@@ -14,6 +14,7 @@
             <button class="delete-btn"
                     hx-delete="/admin/properties/images/{{ image.image_id }}"
                     hx-confirm="Are you sure you want to delete this image?"
+                    hx-target="#image-{{ image.image_id }}"
                     hx-swap="outerHTML">
                 Delete
             </button>

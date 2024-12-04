@@ -1,5 +1,10 @@
 DELIMITER //
 
+CREATE PROCEDURE get_image_by_id(IN p_image_id INT)
+BEGIN
+    SELECT * FROM PropertyImages WHERE image_id = p_image_id;
+END //
+
 CREATE PROCEDURE get_all_properties_with_images()
 BEGIN
     -- Get all properties

@@ -675,37 +675,50 @@ async def update_agent(
 
 @router.delete("/properties/images/{image_id}")
 async def delete_image(
+    request: Request,
     image_id: int,
-    current_user: dict = Depends(get_current_admin),
     conn=Depends(get_db_connection),
 ):
     """Delete a property image"""
     try:
-        # Get image info before deleting
-        image_info = execute_procedure(conn, "get_image_info", (image_id,))
-        if not image_info:
+        # Get image path before deleting
+        images = execute_procedure(conn, "get_image_by_id", (image_id,))
+
+        if not images:
             raise HTTPException(status_code=404, detail="Image not found")
-
-        property_id = image_info[0]["property_id"]
-        file_path = image_info[0]["file_path"]
-
-        # Delete physical file
-        delete_property_images([file_path])
 
         # Delete from database
         execute_procedure(conn, "delete_property_image", (image_id,))
 
-        # Return updated gallery
-        property_images = execute_procedure(conn, "get_property_images", (property_id,))
+        # Delete physical files
+        if images[0]["file_path"]:
+            try:
+                file_path = os.path.join("app", "static", images[0]["file_path"])
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                logger.error(f"Error deleting physical file: {str(e)}")
 
+        # Return a toast notification
         return templates.TemplateResponse(
-            "admin/properties/image_gallery.html",
-            {"request": {}, "property_id": property_id, "images": property_images},
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": "Image deleted successfully",
+                "type": "success"
+            }
         )
 
     except Exception as e:
         logger.error(f"Error deleting image: {str(e)}")
-        raise HTTPException(status_code=500, detail="Error deleting image")
+        return templates.TemplateResponse(
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": "Failed to delete image",
+                "type": "error"
+            }
+        )
 
 
 @router.delete("/clients/{client_id}")
