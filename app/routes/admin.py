@@ -139,7 +139,6 @@ async def agents_table(request: Request, conn=Depends(get_db_connection)):
         raise HTTPException(status_code=500, detail="Failed to load agents")
 
 
-
 @router.get("/clients/{client_id}/edit")
 async def edit_client_form(
     request: Request, client_id: int, conn=Depends(get_db_connection)
@@ -160,21 +159,21 @@ async def edit_client_form(
 
 @router.get("/properties/{property_id}/edit")
 async def edit_property_form(
-    request: Request,
-    property_id: int,
-    conn=Depends(get_db_connection)
+    request: Request, property_id: int, conn=Depends(get_db_connection)
 ):
     """Get the edit form for a property"""
     try:
         # Get property with images and details
-        property_details = execute_procedure(conn, 'get_property_details_with_images', (property_id,))
+        property_details = execute_procedure(
+            conn, "get_property_details_with_images", (property_id,)
+        )
         if not property_details:
             raise HTTPException(status_code=404, detail="Property not found")
-        
+
         # Get agents and clients for form dropdowns
-        agents = execute_procedure(conn, 'get_all_agents')
-        clients = execute_procedure(conn, 'get_all_clients')
-        
+        agents = execute_procedure(conn, "get_all_agents")
+        clients = execute_procedure(conn, "get_all_clients")
+
         # Render the edit template
         return templates.TemplateResponse(
             "admin/properties/edit.html",  # Use edit.html instead of form.html
@@ -182,12 +181,13 @@ async def edit_property_form(
                 "request": request,
                 "property": property_details[0],
                 "agents": agents,
-                "clients": clients
-            }
+                "clients": clients,
+            },
         )
     except Exception as e:
         logger.error(f"Error fetching property edit form: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.get("/agents/{agent_id}/edit", response_class=HTMLResponse)
 async def edit_agent_form(
@@ -350,6 +350,7 @@ async def admin_add_property(
 
 # PUT Routes
 
+
 @router.put("/properties/{property_id}", response_class=HTMLResponse)
 async def update_property(
     request: Request,
@@ -382,17 +383,17 @@ async def update_property(
     num_units: int = Form(0),
     parking_spaces: int = Form(0),
     zoning_type: str = Form(None),
-    conn=Depends(get_db_connection)
+    conn=Depends(get_db_connection),
 ):
     try:
         logger.debug(f"Updating property {property_id}")
-        
+
         # First update base property
         execute_procedure(
             conn,
             "update_property",
             (
-                property_id, 
+                property_id,
                 tax_id,
                 property_address,
                 status,
@@ -413,12 +414,12 @@ async def update_property(
                 c_type,
                 num_units,
                 parking_spaces,
-                zoning_type
-            )
+                zoning_type,
+            ),
         )
 
         # Update agent listing with asking price
-        exclusive = 1 
+        exclusive = 1
         execute_procedure(
             conn,
             "update_agent_listing",
@@ -426,10 +427,10 @@ async def update_property(
                 property_id,
                 agent_id,
                 client_id,
-                'SellerAgent',  # Ensure this value is valid
+                "SellerAgent",  # Ensure this value is valid
                 price,
-                exclusive  # Explicitly set the value for `exclusive`
-            )
+                exclusive,  # Explicitly set the value for `exclusive`
+            ),
         )
 
         # Update type-specific details
@@ -445,8 +446,8 @@ async def update_property(
                     square_feet,
                     garage_spaces,
                     has_basement,
-                    has_pool
-                )
+                    has_pool,
+                ),
             )
         elif property_type == "COMMERCIAL":
             execute_procedure(
@@ -459,31 +460,29 @@ async def update_property(
                     c_type,
                     num_units,
                     parking_spaces,
-                    zoning_type
-                )
+                    zoning_type,
+                ),
             )
 
         # Get updated property for response
         updated_property = execute_procedure(
-            conn,
-            "get_property_details_with_images",
-            (property_id,)
+            conn, "get_property_details_with_images", (property_id,)
         )
 
         if not updated_property:
-            raise HTTPException(status_code=404, detail="Property not found after update")
+            raise HTTPException(
+                status_code=404, detail="Property not found after update"
+            )
 
         return templates.TemplateResponse(
             "admin/properties/table_row.html",
-            {
-                "request": request,
-                "property": updated_property[0]
-            }
+            {"request": request, "property": updated_property[0]},
         )
 
     except Exception as e:
         logger.error(f"Error updating property: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.put("/clients/{client_id}")
 async def update_client(
@@ -532,8 +531,6 @@ async def update_agent(
     agent_email: str = Form(...),
     license_number: str = Form(...),
     license_expiration: str = Form(...),
-    commission_rate: float = Form(...),
-    broker_id: int = Form(...),
     conn=Depends(get_db_connection),
 ):
     """Update an agent's details."""
@@ -552,8 +549,7 @@ async def update_agent(
                 agent_email,
                 license_number,
                 expiration_date,
-                commission_rate,
-                broker_id,
+                1,
             ),
         )
 

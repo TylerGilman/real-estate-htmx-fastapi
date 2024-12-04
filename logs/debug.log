@@ -4050,3 +4050,76 @@ mysql.connector.errors.ProgrammingError: 1318 (42000): Incorrect number of argum
 2024-12-03 19:04:25,507 - app - INFO - Database connection pool created successfully.
 2024-12-03 19:04:39,613 - app - INFO - Database connection pool created successfully.
 2024-12-03 19:37:23,008 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:01:40,039 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:03:59,656 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:04:07,159 - app - ERROR - Error updating agent: 1054 (42S22): Unknown column 'commission_rate' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'commission_rate' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 543, in update_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'commission_rate' in 'field list'
+2024-12-03 20:04:46,067 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:04:51,346 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:06:22,416 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:07:12,026 - app - INFO - Database connection pool created successfully.
+2024-12-03 20:07:25,055 - app - ERROR - Error updating agent: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 542, in update_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-12-03 20:07:25,232 - app - ERROR - Error updating agent: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 542, in update_agent
+    execute_procedure(
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-12-03 20:08:30,092 - app - INFO - Database connection pool created successfully.

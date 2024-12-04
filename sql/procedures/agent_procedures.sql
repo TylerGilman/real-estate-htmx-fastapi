@@ -313,7 +313,6 @@ CREATE PROCEDURE update_agent(
     IN p_agent_email VARCHAR(255),
     IN p_license_number VARCHAR(50),
     IN p_license_expiration DATE,
-    IN p_commission_rate DECIMAL(5,2),
     IN p_broker_id INT
 )
 BEGIN
@@ -346,9 +345,7 @@ BEGIN
         agent_email = COALESCE(p_agent_email, agent_email),
         license_number = COALESCE(p_license_number, license_number),
         license_expiration = COALESCE(p_license_expiration, license_expiration),
-        commission_rate = COALESCE(p_commission_rate, commission_rate),
-        broker_id = COALESCE(p_broker_id, broker_id),
-        last_modified = NOW()
+        broker_id = COALESCE(p_broker_id, broker_id)
     WHERE agent_id = p_agent_id;
 
     COMMIT;
