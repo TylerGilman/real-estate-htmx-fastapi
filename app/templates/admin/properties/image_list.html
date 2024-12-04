@@ -1,0 +1,28 @@
+<div id="image-list" class="current-images">
+  {% if images %}
+    {% for image in images %}
+    <div class="image-container" id="image-{{ image.image_id }}">
+        <img src="{{ image.file_path }}" alt="Property image">
+        <div class="image-actions">
+            <button class="set-primary-btn {% if image.is_primary %}active{% endif %}"
+                    hx-put="/admin/properties/images/{{ image.image_id }}/primary"
+                    hx-target="#image-list">
+                {% if image.is_primary %}
+                Primary Image
+                {% else %}
+                Set as Primary
+                {% endif %}
+            </button>
+            <button class="delete-btn"
+                    hx-delete="/admin/properties/images/{{ image.image_id }}"
+                    hx-confirm="Are you sure you want to delete this image?"
+                    hx-target="#property-images">
+                Delete
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+  {% else %}
+  This property has no uploaded images!
+  {% endif %}
+</div>

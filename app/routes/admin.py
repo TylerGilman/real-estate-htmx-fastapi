@@ -12,10 +12,13 @@ from typing import Optional, List
 import json
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from starlette.routing import websocket_session
 from ..core.logging_config import logger
 from ..core.database import get_db_connection, execute_procedure
+from ..core.image_utils import save_property_image, delete_property_images, validate_image
 from ..core.security import get_current_admin
 from datetime import date
+import os
 
 UPLOAD_DIR = "app/static/property_images"
 
@@ -178,7 +181,6 @@ async def property_form(
     request: Request,
     form_type: str = Query("add"),  # 'add' or 'edit'
     property_id: Optional[int] = None,
-    current_user: dict = Depends(get_current_admin),
     conn=Depends(get_db_connection),
 ):
     """Unified route for property forms"""
@@ -192,13 +194,12 @@ async def property_form(
             )
             if not property_details:
                 raise HTTPException(status_code=404, detail="Property not found")
-
             property_data = property_details[0]
-            context["property"] = property_data
-
-            # Log the property data to debug
-            logger.debug(f"Property data for editing: {property_data}")
-
+            # Return updated image list
+            images = execute_procedure(conn, "get_property_images", (property_id,))
+            context = {"request": request,
+                       "property": property_data,
+                       "images": images}
         return templates.TemplateResponse(
             "admin/properties/property_form.html", context
         )
@@ -234,54 +235,38 @@ async def agent_form(
 
 # POST routes
 @router.post("/properties/{property_id}/images")
-async def upload_property_images(
+async def upload_property_image(
+    request: Request,
     property_id: int,
-    files: list[UploadFile] = File(...),
-    current_user: dict = Depends(get_current_admin),
+    file: UploadFile = File(...),
     conn=Depends(get_db_connection),
 ):
-    """Upload multiple property images"""
+    """Upload a new property image."""
+    if not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="Invalid file type")
+
     try:
-        uploaded_images = []
-        for file in files:
-            # Validate image
-            if not validate_image(file):
-                continue
+        # Save the uploaded file
+        web_location = f"/static/uploads/properties/{property_id}/{file.filename}"
+        file_location = "./app" + web_location
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+        with open(file_location, "wb") as f:
+            f.write(await file.read())
 
-            # Save image and create thumbnail
-            main_path, thumb_path = await save_property_image(file, property_id)
-
-            # Add to database
-            image_result = execute_procedure(
-                conn,
-                "add_property_image",
-                (property_id, main_path, False),  # Not primary by default
-            )
-
-            if image_result:
-                uploaded_images.append(
-                    {
-                        "image_id": image_result[0]["image_id"],
-                        "file_path": main_path,
-                        "thumb_path": thumb_path,
-                    }
-                )
-
-        # Return the updated images section
-        property_images = execute_procedure(conn, "get_property_images", (property_id,))
-
+        # Add the file path to the database
+        execute_procedure(conn, "add_property_image", (property_id, web_location, False))
+        
+        # Return updated image list
+        updated_images = execute_procedure(conn, "get_property_images", (property_id,))
+        context = {"request": request,
+                   "images": updated_images}
         return templates.TemplateResponse(
-            "admin/properties/image_gallery.html",
-            {
-                "request": {},  # Required by FastAPI
-                "property_id": property_id,
-                "images": property_images,
-            },
+            "admin/properties/image_list.html",
+            context,
         )
-
     except Exception as e:
-        logger.error(f"Error uploading images: {str(e)}")
-        raise HTTPException(status_code=500, detail="Error uploading images")
+        logger.error(f"Error uploading image: {e}")
+        raise HTTPException(status_code=500, detail="Failed to upload image")
 
 
 @router.post("/clients")
@@ -697,6 +682,9 @@ async def delete_image(
 
         property_id = image_info[0]["property_id"]
         file_path = image_info[0]["file_path"]
+
+        # Delete physical file
+        delete_property_images([file_path])
 
         # Delete from database
         execute_procedure(conn, "delete_property_image", (image_id,))

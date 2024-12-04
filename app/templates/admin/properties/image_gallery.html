@@ -1,43 +1,21 @@
-{# templates/admin/properties/image_gallery.html #}
-<div class="image-gallery" id="property-images">
-    <div class="current-images">
-        {% for image in images %}
-        <div class="image-container" id="image-{{ image.image_id }}">
-            <img src="/static/{{ image.file_path }}" alt="Property image">
-            <div class="image-actions">
-                <button class="set-primary-btn {% if image.is_primary %}active{% endif %}"
-                        hx-put="/admin/properties/images/{{ image.image_id }}/primary"
-                        hx-target="#property-images">
-                    {% if image.is_primary %}
-                    Primary Image
-                    {% else %}
-                    Set as Primary
-                    {% endif %}
-                </button>
-                <button class="delete-btn"
-                        hx-delete="/admin/properties/images/{{ image.image_id }}"
-                        hx-confirm="Are you sure you want to delete this image?"
-                        hx-target="#property-images">
-                    Delete
-                </button>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+<div class="image-gallery">
+    {% include "admin/properties/image_list.html" %}
     
     <div class="upload-section">
-        <form hx-post="/admin/properties/{{ property_id }}/images"
+        <form hx-post="/admin/properties/{{ property.property_id }}/images"
               hx-encoding="multipart/form-data"
-              hx-target="#property-images"
+              hx-target="#image_list"
               class="upload-form">
             <label class="file-upload-label">
                 <span>Add Images</span>
-                <input type="file"
-                       name="files"
-                       multiple
+                <input type="file" 
+                       name="file" 
                        accept=".jpg,.jpeg,.png,.webp"
-                       class="hidden"
-                       onchange="this.form.submit()">
+                       hx-post="/admin/properties/{{ property.property_id }}/images"
+                       hx-encoding="multipart/form-data"
+                       hx-trigger="change"
+                       hx-target="#property-list"
+                       hx-swap="outerHTML">
             </label>
             <div class="upload-help">
                 Max 5MB per image. JPG, PNG or WebP only.
