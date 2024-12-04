@@ -1,0 +1,84 @@
+{# templates/admin/clients/client_form.html #}
+<div id="client-form-container" class="form-container">
+    <div class="admin-header">
+        <h2>{% if client %}Edit{% else %}Add New{% endif %} Client</h2>
+        <button type="button" class="close-button" onclick="cancelForm('client-form-container')" aria-label="Close form">×</button>
+    </div>
+    
+    <form {% if client %}
+          hx-put="/admin/clients/{{ client.client_id }}"
+          {% else %}
+          hx-post="/admin/clients"
+          {% endif %}
+          class="client-form"
+          hx-target="#clients-list"
+          hx-swap="innerHTML">
+        
+        <div class="form-section">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Client Name</label>
+                    <input type="text" 
+                           name="client_name" 
+                           value="{{ client.client_name if client else '' }}"
+                           required 
+                           class="form-input"
+                           placeholder="Enter client's full name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" 
+                           name="client_phone" 
+                           value="{{ client.client_phone if client else '' }}"
+                           required 
+                           class="form-input"
+                           oninput="formatPhoneNumber(this)"
+                           placeholder="(XXX) XXX-XXXX">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" 
+                           name="client_email" 
+                           value="{{ client.client_email if client else '' }}"
+                           required 
+                           class="form-input"
+                           placeholder="client@example.com">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Mailing Address</label>
+                    <input type="text" 
+                           name="mailing_address" 
+                           value="{{ client.mailing_address if client else '' }}"
+                           required 
+                           class="form-input"
+                           placeholder="Enter complete mailing address">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Client Roles</label>
+                    <div class="checkbox-group">
+                        {% for role in ['Buyer', 'Seller', 'Tenant', 'Landlord'] %}
+                            <label class="checkbox-label">
+                                <input type="checkbox" 
+                                       name="roles" 
+                                       value="{{ role }}"
+                                       {% if client and client.roles and role in client.roles.split(',') %}checked{% endif %}>
+                                {{ role }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" onclick="cancelForm('client-form-container')" class="cancel-button">Cancel</button>
+            <button type="submit" class="submit-button">
+                {% if client %}Update{% else %}Create{% endif %} Client
+            </button>
+        </div>
+    </form>
+</div>

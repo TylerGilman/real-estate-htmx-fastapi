@@ -1,0 +1,35 @@
+{# templates/admin/properties/property_form.html #}
+<div id="property-form-container" class="form-container">
+    <div class="admin-header">
+        <h2>{% if property %}Edit{% else %}Add New{% endif %} Property</h2>
+        <button type="button" 
+                class="close-button" 
+                onclick="cancelForm('property-form-container', 'add')" 
+                aria-label="Close form">×</button>
+    </div>
+    
+    <form {% if property %}
+          hx-put="/admin/properties/{{ property.property_id }}"
+          {% else %}
+          hx-post="/admin/properties"
+          {% endif %}
+          class="property-form"
+          hx-target="#properties-list"
+          hx-push-url="false"
+          hx-swap="innerHTML">
+        
+        <!-- Hidden input to track form type -->
+        <input type="hidden" name="form_type" value="{% if property %}edit{% else %}add{% endif %}">
+        
+        {% include "admin/properties/form_fields.html" %}
+
+        <div class="button-group">
+            <button type="button" 
+                    onclick="cancelForm('property-form-container', 'add')" 
+                    class="cancel-button">Cancel</button>
+            <button type="submit" class="submit-button">
+                {% if property %}Update{% else %}Create{% endif %} Property
+            </button>
+        </div>
+    </form>
+</div>

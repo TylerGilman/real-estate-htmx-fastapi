@@ -4216,3 +4216,358 @@ jinja2.exceptions.TemplateNotFound: admin/clients/edit_form.html
 2024-12-04 01:17:13,690 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
 2024-12-04 01:17:13,690 - app - DEBUG - Fetching listings...
 2024-12-04 01:17:13,692 - app - DEBUG - Found 4 listings
+2024-12-04 01:17:42,523 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:21:57,885 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:22:04,857 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:22:08,451 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:42:49,818 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:43:02,215 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:43:14,012 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:43:26,264 - app - ERROR - Dashboard error: name 'date' is not defined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 42, in admin_dashboard
+    "today": date.today(),
+             ^^^^
+NameError: name 'date' is not defined
+2024-12-04 01:43:26,974 - app - ERROR - Dashboard error: name 'date' is not defined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 42, in admin_dashboard
+    "today": date.today(),
+             ^^^^
+NameError: name 'date' is not defined
+2024-12-04 01:43:43,646 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:44:01,881 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:47:40,956 - app - ERROR - Dashboard error: admin/properties/property-form.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 55, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 49, in block 'content'
+    {% include "admin/properties/property-form.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/properties/property-form.html
+2024-12-04 01:47:42,044 - app - ERROR - Dashboard error: admin/properties/property-form.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 55, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 49, in block 'content'
+    {% include "admin/properties/property-form.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/properties/property-form.html
+2024-12-04 01:50:34,890 - app - ERROR - Error loading property form: 'property' is undefined
+2024-12-04 01:53:35,984 - app - INFO - Database connection pool created successfully.
+2024-12-04 02:26:47,401 - app - DEBUG - Property data for editing: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '69 road', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('0.00'), 'year_built': None, 'zoning': None, 'property_tax': Decimal('0.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 1, 9, 5), 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None, 'images': None}
+2024-12-04 02:26:59,139 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 25, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:27:19,318 - app - DEBUG - Property data for editing: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '69 road', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('0.00'), 'year_built': None, 'zoning': None, 'property_tax': Decimal('0.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 1, 9, 5), 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None, 'images': None}
+2024-12-04 02:28:58,913 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 25, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:31:35,090 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 25, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:31:35,984 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 25, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:31:36,747 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 25, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:33:23,787 - app - DEBUG - Property data for editing: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '69 road', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('0.00'), 'year_built': None, 'zoning': None, 'property_tax': Decimal('0.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 1, 9, 5), 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None, 'images': None}
+2024-12-04 02:33:25,145 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 24, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:33:26,208 - app - ERROR - Error loading property form: 'property' is undefined
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 191, in property_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/properties/property_form.html", line 24, in top-level template code
+    {% include "admin/properties/form_fields.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/properties/form_fields.html", line 40, in top-level template code
+    value="{{ property.tax_id|default('') }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'property' is undefined
+2024-12-04 02:37:53,079 - app - DEBUG - Property data for editing: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '69 road', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('0.00'), 'year_built': None, 'zoning': None, 'property_tax': Decimal('0.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 1, 9, 5), 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None, 'images': None}
+2024-12-04 02:38:03,958 - app - DEBUG - Property data for editing: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '69 road', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('0.00'), 'year_built': None, 'zoning': None, 'property_tax': Decimal('0.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 1, 9, 5), 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None, 'images': None}
+2024-12-04 02:39:34,047 - app - INFO - Database connection pool created successfully.
+2024-12-04 02:39:38,117 - app - INFO - Database connection pool created successfully.
+2024-12-04 02:40:55,750 - app - INFO - Database connection pool created successfully.
+2024-12-04 02:40:59,473 - app - INFO - Database connection pool created successfully.
+2024-12-04 02:43:08,940 - app - DEBUG - Running debug query...
+2024-12-04 02:43:08,944 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 02:43:08,944 - app - DEBUG - Fetching listings...
+2024-12-04 02:43:08,947 - app - DEBUG - Found 4 listings
+2024-12-04 02:43:09,419 - app - DEBUG - Running debug query...
+2024-12-04 02:43:09,422 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 02:43:09,422 - app - DEBUG - Fetching listings...
+2024-12-04 02:43:09,425 - app - DEBUG - Found 4 listings
+2024-12-04 02:43:17,375 - app - ERROR - Error loading client form: admin/clients/client_form.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 161, in client_form
+    return templates.TemplateResponse("admin/clients/client_form.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 112, in TemplateResponse
+    template = self.get_template(name)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 94, in get_template
+    return self.env.get_template(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/clients/client_form.html
+2024-12-04 02:46:19,944 - app - ERROR - Dashboard error: admin/agents/form.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 55, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 107, in block 'content'
+    {% include "admin/agents/form.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/agents/form.html
+2024-12-04 02:46:21,054 - app - ERROR - Dashboard error: admin/agents/form.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 55, in admin_dashboard
+    return templates.TemplateResponse("admin/dashboard.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 113, in TemplateResponse
+    return _TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 39, in __init__
+    content = template.render(context)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "app/templates/admin/dashboard.html", line 1, in top-level template code
+    {% extends "admin/admin_base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/admin_base.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "app/templates/base.html", line 26, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app/templates/admin/dashboard.html", line 107, in block 'content'
+    {% include "admin/agents/form.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/agents/form.html
+2024-12-04 02:47:03,350 - app - DEBUG - Client data for editing: {'client_id': 3, 'client_name': 'Lisa Wilson', 'client_phone': '555-333-5555', 'client_email': 'lisa.w@email.com', 'mailing_address': '123 Maple St, Boston, MA', 'SSN': '345-67-8901', 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17)}

@@ -16,13 +16,16 @@
             </svg>
         </button>
     </div>
-    <button class="action-button" onclick="toggleForm('client-form-container')">Add New Client</button>
+    <button class="action-button" 
+            hx-get="/admin/clients/form?form_type=add"
+            hx-swap="outerHTML"
+            hx-target="#client-form-container">
+        Add New Client
+    </button>
 </div>
 <div id="clients-content" class="section-content">
   <div id="client-form-container" class="form-container hidden">
-    <div id="add-client-form">
-        {% include "admin/clients/form.html" %}
-    </div>
+      This will be swapped out
   </div>
     {% include "admin/clients/table.html" %}
 </div>
@@ -40,14 +43,17 @@
                 </svg>
             </button>
         </div>
-        <button class="action-button" onclick="toggleForm('property-form-container')">Add New Property</button>
+    <button class="action-button" 
+            hx-get="/admin/properties/form?form_type=add"
+            hx-swap="outerHTML"
+            hx-target="#property-form-container">
+        Add New Property
+    </button>
     </div>
     <div id="properties-content" class="section-content">
         {# Add Property Form #}
         <div id="property-form-container" class="form-container hidden">   
-          <div id="add-property-form">
-              {% include "admin/properties/form.html" %}
-          </div>
+          This wil be swapped out
         </div>
 
         {# Properties Stats #}
@@ -88,17 +94,17 @@
                 </svg>
             </button>
         </div>
-        <button class="action-button" onclick="toggleForm('agent-form-container')">Add New Agent</button>
+        <button class="action-button" 
+                hx-get="/admin/agents/form?form_type=add"
+                hx-swap="outerHTML"
+                hx-target="#agent-form-container">
+            Add New Agent
+        </button>
     </div>
     <div id="agents-content" class="section-content">
-      <div id="agent-form-container" class="form-container hidden"
-        <div id="add-agent-form">
-            {% include "admin/agents/form.html" %}
-        </div>
-      </div>
-        {% include "admin/agents/table.html" %}
-    </div>
-</div>
+  <div id="agent-form-container" class="form-container hidden">
+    This will be swapped out
+  </div>
 
 <div class="form-section">
     <h2 class="section-title">Create User Account</h2>

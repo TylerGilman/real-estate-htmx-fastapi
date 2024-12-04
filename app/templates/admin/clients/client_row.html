@@ -33,7 +33,7 @@
     </div>
     <div class="table-cell actions">
         <button class="action-button edit"
-                hx-get="/admin/clients/{{ client.client_id }}/edit"
+                hx-get="/admin/clients/form?form_type=edit&client_id={{ client.client_id }}"
                 hx-swap="outerHTML"
                 hx-target="#client-form-container">
             Edit

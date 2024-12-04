@@ -42,28 +42,44 @@ function toggleSection(button, content) {
     }
 }
 
-function toggleForm(formId) {
-    const form = document.getElementById(formId);
-    const isHidden = form.classList.contains('hidden');
-
-    // Hide all forms first
-    document.querySelectorAll('.form-container').forEach(otherForm => {
-        otherForm.classList.add('hidden');
-    });
-
-    // Toggle the clicked form
-    if (isHidden) {
-        form.classList.remove('hidden');
+function toggleForm(containerId, formType, propertyId = null) {
+    const container = document.getElementById(containerId);
+    
+    // If closing the form
+    if (container.classList.contains('hidden')) {
+        // Show container and load appropriate form
+        container.classList.remove('hidden');
         
-        // Ensure the section is expanded
-        const section = form.closest('.admin-section');
-        const content = section.querySelector('.section-content');
-        const toggle = section.querySelector('.toggle-button');
-        
-        if (content.classList.contains('collapsed')) {
-            toggleSection(toggle, content);
+        const url = `/admin/properties/form?form_type=${formType}` + 
+                   (propertyId ? `&property_id=${propertyId}` : '');
+                   
+        htmx.ajax('GET', url, {target: `#${containerId}`});
+    } else {
+        // If opening add form while edit form is open, or vice versa,
+        // load the new form
+        const currentFormType = container.querySelector('input[name="form_type"]').value;
+        if (currentFormType !== formType) {
+            const url = `/admin/properties/form?form_type=${formType}`;
+            htmx.ajax('GET', url, {target: `#${containerId}`});
         }
+        
+        // Otherwise just hide the container
+        container.classList.add('hidden');
     }
+}
+
+function cancelForm(containerId, defaultFormType) {
+    const container = document.getElementById(containerId);
+    
+    // Load the default (add) form
+    const url = `/admin/properties/form?form_type=${defaultFormType}`;
+    htmx.ajax('GET', url, {
+        target: `#${containerId}`,
+        swap: 'innerHTML'
+    });
+    
+    // Hide the container
+    container.classList.add('hidden');
 }
 
 function initializeKeyboardHandlers() {

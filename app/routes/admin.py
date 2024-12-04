@@ -1,13 +1,12 @@
-from fastapi import APIRouter, Request, Depends, HTTPException, Form, File, UploadFile
+from fastapi import APIRouter, Request, Depends, HTTPException, Query, Form
+from typing import Optional, List
+import json
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, JSONResponse, Response
-from typing import Optional
-from datetime import datetime, date
-from app.core.logging_config import logger
-from app.core.security import get_current_admin, get_password_hash
-from app.core.database import get_db_connection, execute_procedure
-from typing import List
-import mysql.connector
+from fastapi.responses import HTMLResponse
+from ..core.logging_config import logger
+from ..core.database import get_db_connection, execute_procedure
+from ..core.security import get_current_admin
+from datetime import date
 
 UPLOAD_DIR = "app/static/property_images"
 
@@ -140,77 +139,88 @@ async def agents_table(request: Request, conn=Depends(get_db_connection)):
         raise HTTPException(status_code=500, detail="Failed to load agents")
 
 
-@router.get("/clients/{client_id}/edit", response_class=HTMLResponse)
-async def edit_client_form(
+@router.get("/clients/form", response_class=HTMLResponse)
+async def client_form(
     request: Request,
-    client_id: int,
+    form_type: str = Query("add"),
+    client_id: Optional[int] = None,
+    conn=Depends(get_db_connection),
+):
+    """Unified route for client forms"""
+    try:
+        context = {"request": request}
+
+        if form_type == "edit" and client_id:
+            client_details = execute_procedure(conn, "get_client_details", (client_id,))
+            if not client_details:
+                raise HTTPException(status_code=404, detail="Client not found")
+
+            context["client"] = client_details[0]
+            logger.debug(f"Client data for editing: {client_details[0]}")
+
+        return templates.TemplateResponse("admin/clients/client_form.html", context)
+    except Exception as e:
+        logger.error(f"Error loading client form: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/properties/form", response_class=HTMLResponse)
+async def property_form(
+    request: Request,
+    form_type: str = Query("add"),  # 'add' or 'edit'
+    property_id: Optional[int] = None,
     current_user: dict = Depends(get_current_admin),
     conn=Depends(get_db_connection),
 ):
-    """Get the edit form for a client"""
+    """Unified route for property forms"""
     try:
-        # Get client details using stored procedure
-        client = execute_procedure(conn, "get_client_details", (client_id,))
-        if not client:
-            raise HTTPException(status_code=404, detail="Client not found")
+        context = {"request": request}
+
+        # If it's an edit form, get the property details
+        if form_type == "edit" and property_id:
+            property_details = execute_procedure(
+                conn, "get_property_details_with_images", (property_id,)
+            )
+            if not property_details:
+                raise HTTPException(status_code=404, detail="Property not found")
+
+            property_data = property_details[0]
+            context["property"] = property_data
+
+            # Log the property data to debug
+            logger.debug(f"Property data for editing: {property_data}")
 
         return templates.TemplateResponse(
-            "admin/clients/edit.html",
-            {"request": request, "client": client[0], "current_user": current_user},
+            "admin/properties/property_form.html", context
         )
     except Exception as e:
-        logger.error(f"Error fetching client edit form: {str(e)}", exc_info=True)
+        logger.error(f"Error loading property form: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.get("/properties/{property_id}/edit")
-async def edit_property_form(
-    request: Request, property_id: int, conn=Depends(get_db_connection)
+@router.get("/agents/form", response_class=HTMLResponse)
+async def agent_form(
+    request: Request,
+    form_type: str = Query("add"),
+    agent_id: Optional[int] = None,
+    conn=Depends(get_db_connection),
 ):
-    """Get the edit form for a property"""
+    """Unified route for agent forms"""
     try:
-        # Get property with images and details
-        property_details = execute_procedure(
-            conn, "get_property_details_with_images", (property_id,)
-        )
-        if not property_details:
-            raise HTTPException(status_code=404, detail="Property not found")
+        context = {"request": request}
 
-        # Get agents and clients for form dropdowns
-        agents = execute_procedure(conn, "get_all_agents")
-        clients = execute_procedure(conn, "get_all_clients")
+        if form_type == "edit" and agent_id:
+            agent_details = execute_procedure(conn, "get_agent_details", (agent_id,))
+            if not agent_details:
+                raise HTTPException(status_code=404, detail="Agent not found")
 
-        # Render the edit template
-        return templates.TemplateResponse(
-            "admin/properties/edit.html",  # Use edit.html instead of form.html
-            {
-                "request": request,
-                "property": property_details[0],
-                "agents": agents,
-                "clients": clients,
-            },
-        )
+            context["agent"] = agent_details[0]
+            logger.debug(f"Agent data for editing: {agent_details[0]}")
+
+        return templates.TemplateResponse("admin/agents/agent_form.html", context)
     except Exception as e:
-        logger.error(f"Error fetching property edit form: {str(e)}")
+        logger.error(f"Error loading agent form: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/agents/{agent_id}/edit", response_class=HTMLResponse)
-async def edit_agent_form(
-    request: Request, agent_id: int, conn=Depends(get_db_connection)
-):
-    """Render the edit form for an agent."""
-    try:
-        agent = execute_procedure(conn, "get_agent_details", (agent_id,))
-        if not agent:
-            raise HTTPException(status_code=404, detail="Agent not found")
-
-        return templates.TemplateResponse(
-            "admin/agents/edit.html", {"request": request, "agent": agent[0]}
-        )
-    except Exception as e:
-        logger.error(f"Error fetching agent edit form: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Error loading edit form")
 
 
 # POST routes

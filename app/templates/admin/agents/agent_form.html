@@ -1,0 +1,89 @@
+{# templates/admin/agents/agent_form.html #}
+<div id="agent-form-container" class="form-container">
+    <div class="admin-header">
+        <h2>{% if agent %}Edit{% else %}Add New{% endif %} Agent</h2>
+        <button type="button" class="close-button" onclick="cancelForm('agent-form-container')" aria-label="Close form">×</button>
+    </div>
+    
+    <form {% if agent %}
+          hx-put="/admin/agents/{{ agent.agent_id }}"
+          {% else %}
+          hx-post="/admin/agents"
+          {% endif %}
+          class="agent-form"
+          hx-target="#agents-list"
+          hx-swap="innerHTML">
+        
+        <div class="form-section">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" 
+                           name="agent_name" 
+                           value="{{ agent.agent_name if agent else '' }}"
+                           required 
+                           class="form-input"
+                           placeholder="Enter agent's full name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" 
+                           name="agent_phone" 
+                           value="{{ agent.agent_phone if agent else '' }}"
+                           required 
+                           class="form-input"
+                           oninput="formatPhoneNumber(this)"
+                           placeholder="(XXX) XXX-XXXX">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" 
+                           name="agent_email" 
+                           value="{{ agent.agent_email if agent else '' }}"
+                           required 
+                           class="form-input"
+                           placeholder="agent@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">License Number</label>
+                    <input type="text" 
+                           name="license_number" 
+                           value="{{ agent.license_number if agent else '' }}"
+                           required 
+                           class="form-input"
+                           placeholder="Enter license number">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">License Expiration</label>
+                    <input type="date" 
+                           name="license_expiration" 
+                           value="{{ agent.license_expiration.strftime('%Y-%m-%d') if agent and agent.license_expiration else '' }}"
+                           required 
+                           class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">NRDS Number</label>
+                    <input type="text" 
+                           name="NRDS" 
+                           value="{{ agent.NRDS if agent else '' }}"
+                           required 
+                           maxlength="7"
+                           class="form-input"
+                           placeholder="1234567">
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" onclick="cancelForm('agent-form-container')" class="cancel-button">Cancel</button>
+            <button type="submit" class="submit-button">
+                {% if agent %}Update{% else %}Create{% endif %} Agent
+            </button>
+        </div>
+    </form>
+</div>

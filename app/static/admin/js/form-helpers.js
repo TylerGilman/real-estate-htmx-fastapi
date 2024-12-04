@@ -175,12 +175,6 @@ function toggleForm(formId) {
     form.classList.toggle('hidden');
 }
 
-function cancelForm() {
-    document.querySelectorAll('.form-container').forEach(form => {
-        form.classList.add('hidden');
-    });
-}
-
 // Initialize all forms when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     // Add form validation to all client forms

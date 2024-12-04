@@ -40,13 +40,12 @@
     </div>
 
     <div class="table-cell actions">
-        <button class="action-button edit"
-                hx-get="/admin/properties/{{ property.property_id }}/edit"
-                hx-target="#property-form-container"
-                hx-swap="outerHTML"
-                hx-push-url="false">
-            Edit
-        </button>
+    <button class="action-button edit"
+            hx-get="/admin/properties/form?form_type=edit&property_id={{ property.property_id }}"
+            hx-swap="outerHTML"
+            hx-target="#property-form-container">
+        Edit
+    </button>
         <button class="action-button delete"
                 hx-delete="/admin/properties/{{ property.property_id }}"
                 hx-confirm="Are you sure you want to delete this property?"
