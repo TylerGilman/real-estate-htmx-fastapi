@@ -22,16 +22,11 @@ async def is_db_empty(conn) -> bool:
 async def index(request: Request, conn=Depends(get_db_connection)):
     """Homepage route"""
     try:
-        # First get debug info
-        logger.debug("Running debug query...")
-        debug_info = execute_procedure(conn, "debug_tables_data")
-        logger.debug(f"Debug info: {debug_info}")
-
         # Fetch all properties with their agent listings and details
         logger.debug("Fetching listings...")
         listings = execute_procedure(conn, "get_all_agent_listings_with_details")
         logger.debug(f"Found {len(listings) if listings else 0} listings")
-
+        logger.debug(listings)
         if not listings:
             logger.warning("No listings found in the database")
 
@@ -53,6 +48,57 @@ async def index(request: Request, conn=Depends(get_db_connection)):
             },
         )
 
+@router.get("/properties/{property_id}")
+async def property_detail(request: Request, property_id: int, conn=Depends(get_db_connection)):
+    """Get detailed property information"""
+    try:
+        # Get property details with agent info and residential/commercial details
+        property_details = execute_procedure(
+            conn, "get_property_details", (property_id,)
+        )
+
+        # Get all images for this property
+        property_images = execute_procedure(conn, "get_property_images", (property_id,))
+
+        if not property_details:
+            raise HTTPException(status_code=404, detail="Property not found")
+
+        logger.debug(f"Found property details: {property_details[0]}")
+
+        return templates.TemplateResponse(
+            "properties/detail.html",
+            {
+                "request": request, 
+                "property": property_details[0],
+                "property_id": property_details[0]["property_id"],
+                "images": property_images
+            }
+        )
+    except Exception as e:
+        logger.error(f"Error fetching property details: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/properties/{property_id}/image/{index}")
+async def change_property_image(
+    request: Request, 
+    property_id: int, 
+    index: int,
+    conn=Depends(get_db_connection)
+):
+    property_images = execute_procedure(conn, "get_property_images", (property_id,))
+    if not property_images or index >= len(property_images):
+        raise HTTPException(status_code=404, detail="Image not found")
+        
+    return templates.TemplateResponse(
+        "partials/property_image.html",
+        {
+            "request": request,
+            "image": property_images[index],
+            "current_index": index,
+            "total_images": len(property_images),
+            "property_id": property_id
+        }
+    )
 
 @router.get("/search")
 async def search(
@@ -93,33 +139,6 @@ async def search(
             },
         )
 
-
-@router.get("/properties/{property_id}")
-async def property_detail(
-    request: Request, property_id: int, conn=Depends(get_db_connection)
-):
-    """Get detailed property information"""
-    try:
-        # Get property details with agent info and residential/commercial details
-        property_details = execute_procedure(
-            conn, "get_property_details", (property_id,)
-        )
-
-        if not property_details:
-            raise HTTPException(status_code=404, detail="Property not found")
-
-        logger.debug(f"Found property details: {property_details[0]}")
-
-        return templates.TemplateResponse(
-            "properties/detail.html",
-            {"request": request, "property": property_details[0]},
-        )
-    except Exception as e:
-        logger.error(f"Error fetching property details: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# Keep other routes as is
 @router.get("/about")
 async def about(request: Request):
     """About page route"""

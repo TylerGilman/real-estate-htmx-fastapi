@@ -412,28 +412,34 @@ async def admin_add_property(
 # PUT Routes
 @router.put("/properties/images/{image_id}/primary")
 async def set_primary_image(
+    request: Request,
     image_id: int,
-    current_user: dict = Depends(get_current_admin),
     conn=Depends(get_db_connection),
 ):
-    """Set an image as the primary image"""
+    """Set an image as the primary image for its property"""
     try:
-        result = execute_procedure(conn, "set_primary_image", (image_id,))
-        if not result:
-            raise HTTPException(status_code=404, detail="Image not found")
-
-        # Get property ID to fetch all images
-        property_id = result[0]["property_id"]
-        property_images = execute_procedure(conn, "get_property_images", (property_id,))
-
+        # Execute the procedure to set primary image
+        execute_procedure(conn, "set_primary_image", (image_id,))
+        
         return templates.TemplateResponse(
-            "admin/properties/image_gallery.html",
-            {"request": {}, "property_id": property_id, "images": property_images},
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": "Primary image updated successfully",
+                "type": "success"
+            }
         )
 
     except Exception as e:
         logger.error(f"Error setting primary image: {str(e)}")
-        raise HTTPException(status_code=500, detail="Error setting primary image")
+        return templates.TemplateResponse(
+            "admin/components/toast.html",
+            {
+                "request": request,
+                "message": "Failed to set primary image",
+                "type": "error"
+            }
+        )
 
 
 @router.put("/clients/{client_id}", response_class=HTMLResponse)

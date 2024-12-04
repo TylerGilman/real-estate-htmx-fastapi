@@ -1,158 +1,182 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <div class="bg-swedish-white rounded-lg shadow-lg overflow-hidden">
-        <!-- Property Header -->
-        <div class="px-6 py-4 bg-swedish-accent">
-            <h1 class="text-2xl font-bold text-swedish-navy mb-2">{{ property.property_address }}</h1>
-            <div class="flex items-center justify-between">
-                <div class="text-xl font-semibold text-swedish-blue">${{ "{:,.2f}".format(property.price) }}</div>
+<div class="property-details-container">
+    <!-- Left Column - Images & Core Info -->
+    <div class="main-column">
+        <!-- Image Carousel -->
+        {% if images %}
+            {% with 
+                image=images[0],
+                current_index=0,
+                total_images=images|length,
+                property_id=property.property_id
+            %}
+                {% include "partials/property_image.html" %}
+            {% endwith %}
+        {% else %}
+            <div class="no-image-placeholder">
+                <span>No images available</span>
+            </div>
+        {% endif %}
+
+        <!-- Core Property Details -->
+        <div class="core-details">
+            <div class="property-header">
+                <div class="title-section">
+                    <h1>{{ property.property_address }}</h1>
+                    <div class="price">${{ "{:,.2f}".format(property.price) }}</div>
+                </div>
                 <div class="status-badge {{ property.status.value|lower|replace(' ', '-') }}">
                     {{ property.status.value }}
                 </div>
             </div>
-        </div>
 
-        <!-- Property Image -->
-        <div class="relative h-96 bg-swedish-gray">
-            <img src="{{ property.image_url|default('/static/noimage.webp') }}" 
-                 alt="{{ property.property_address }}"
-                 class="w-full h-full object-cover">
-        </div>
-
-        <!-- Property Details -->
-        <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Main Details -->
-                <div class="space-y-4">
-                    <h2 class="text-xl font-semibold text-swedish-navy">Property Details</h2>
-                    
-                    {% if property.residential %}
-                    <!-- Residential Details -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="detail-item">
-                            <span class="label">Bedrooms</span>
-                            <span class="value">{{ property.residential.bedrooms }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Bathrooms</span>
-                            <span class="value">{{ property.residential.bathrooms }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Type</span>
-                            <span class="value">{{ property.residential.r_type }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Square Feet</span>
-                            <span class="value">{{ "{:,.0f}".format(property.residential.square_feet) if property.residential.square_feet else 'N/A' }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Garage Spaces</span>
-                            <span class="value">{{ property.residential.garage_spaces or 'N/A' }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Features</span>
-                            <span class="value">
-                                {% if property.residential.has_basement %}Basement{% endif %}
-                                {% if property.residential.has_pool %}{% if property.residential.has_basement %}, {% endif %}Pool{% endif %}
-                            </span>
-                        </div>
-                    </div>
-                    {% elif property.commercial %}
-                    <!-- Commercial Details -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="detail-item">
-                            <span class="label">Square Feet</span>
-                            <span class="value">{{ "{:,.0f}".format(property.commercial.sqft) if property.commercial.sqft else 'N/A' }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Industry</span>
-                            <span class="value">{{ property.commercial.industry }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Type</span>
-                            <span class="value">{{ property.commercial.c_type }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Units</span>
-                            <span class="value">{{ property.commercial.num_units or 'N/A' }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Parking Spaces</span>
-                            <span class="value">{{ property.commercial.parking_spaces or 'N/A' }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Zoning</span>
-                            <span class="value">{{ property.commercial.zoning_type or 'N/A' }}</span>
-                        </div>
-                    </div>
-                    {% endif %}
+            {% if property.residential %}
+            <!-- Residential Highlights -->
+            <div class="highlights">
+                <div class="highlight-item">
+                    <span class="icon">🛏️</span>
+                    <span class="value">{{ property.residential.bedrooms or 0 }}</span>
+                    <span class="label">Bedrooms</span>
                 </div>
+                <div class="highlight-item">
+                    <span class="icon">🚿</span>
+                    <span class="value">{{ property.residential.bathrooms or 0 }}</span>
+                    <span class="label">Bathrooms</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📏</span>
+                    <span class="value">{{ "{:,.0f}".format(property.residential.square_feet) if property.residential.square_feet else 'N/A' }}</span>
+                    <span class="label">Square Feet</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🏠</span>
+                    <span class="value">{{ property.residential.r_type }}</span>
+                    <span class="label">Type</span>
+                </div>
+            </div>
+            {% elif property.commercial %}
+            <!-- Commercial Highlights -->
+            <div class="highlights">
+                <div class="highlight-item">
+                    <span class="icon">🏢</span>
+                    <span class="value">{{ property.commercial.c_type }}</span>
+                    <span class="label">Property Type</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📏</span>
+                    <span class="value">{{ "{:,.0f}".format(property.commercial.sqft) if property.commercial.sqft else 'N/A' }}</span>
+                    <span class="label">Square Feet</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🏗️</span>
+                    <span class="value">{{ property.commercial.industry }}</span>
+                    <span class="label">Industry</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🅿️</span>
+                    <span class="value">{{ property.commercial.parking_spaces or 'N/A' }}</span>
+                    <span class="label">Parking Spaces</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
 
-                <!-- Additional Details -->
-                <div class="space-y-4">
-                    <h2 class="text-xl font-semibold text-swedish-navy">Additional Information</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="detail-item">
+        <!-- Detailed Information -->
+        <div class="detailed-info">
+            <h2>Property Details</h2>
+            
+            <div class="info-grid">
+                <div class="info-section">
+                    <h3>Basic Information</h3>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <span class="label">Tax ID</span>
+                            <span class="value">{{ property.tax_id }}</span>
+                        </div>
+                        <div class="info-item">
                             <span class="label">Year Built</span>
                             <span class="value">{{ property.year_built or 'N/A' }}</span>
                         </div>
-                        <div class="detail-item">
+                        <div class="info-item">
                             <span class="label">Lot Size</span>
                             <span class="value">{{ "{:,.0f}".format(property.lot_size) if property.lot_size else 'N/A' }} sq ft</span>
                         </div>
-                        <div class="detail-item">
+                        <div class="info-item">
                             <span class="label">Property Tax</span>
                             <span class="value">${{ "{:,.2f}".format(property.property_tax) if property.property_tax else 'N/A' }}/year</span>
                         </div>
-                        <div class="detail-item">
+                        <div class="info-item">
                             <span class="label">Zoning</span>
                             <span class="value">{{ property.zoning or 'N/A' }}</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Contact Section -->
-            <div class="mt-8 p-6 bg-swedish-accent rounded-lg">
-                <h2 class="text-xl font-semibold text-swedish-navy mb-4">Interested in this property?</h2>
-                <div class="flex flex-wrap gap-4">
-                    <button class="bg-swedish-blue text-swedish-white px-6 py-3 rounded-lg hover:bg-swedish-navy transition-colors"
-                            onclick="showContactForm()">
-                        Contact Agent
-                    </button>
-                    <button class="border-2 border-swedish-blue text-swedish-blue px-6 py-3 rounded-lg hover:bg-swedish-accent transition-colors"
-                            onclick="scheduleShowing()">
-                        Schedule Showing
-                    </button>
+                {% if property.residential %}
+                <div class="info-section">
+                    <h3>Residential Features</h3>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <span class="label">Type</span>
+                            <span class="value">{{ property.residential.r_type }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Garage Spaces</span>
+                            <span class="value">{{ property.residential.garage_spaces or 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Basement</span>
+                            <span class="value">{{ 'Yes' if property.residential.has_basement else 'No' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Pool</span>
+                            <span class="value">{{ 'Yes' if property.residential.has_pool else 'No' }}</span>
+                        </div>
+                    </div>
                 </div>
+                {% elif property.commercial %}
+                <div class="info-section">
+                    <h3>Commercial Features</h3>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <span class="label">Number of Units</span>
+                            <span class="value">{{ property.commercial.num_units or 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Zoning Type</span>
+                            <span class="value">{{ property.commercial.zoning_type or 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Industry Type</span>
+                            <span class="value">{{ property.commercial.industry }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
+
+    <!-- Right Column - Agent Info & Actions -->
+    <div class="side-column">
+        <div class="contact-card">
+            <h3>Property Agent</h3>
+            {% if property.agent_name %}
+            <div class="agent-info">
+                <div class="agent-name">{{ property.agent_name }}</div>
+                <div class="agent-contact">
+                    <div class="phone">📞 {{ property.agent_phone }}</div>
+                    <div class="email">📧 {{ property.agent_email }}</div>
+                </div>
+                <button class="contact-button">Contact Agent</button>
+                <button class="schedule-button">Schedule Showing</button>
+            </div>
+            {% else %}
+            <p>No agent information available</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
-
-<style>
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-        background: var(--swedish-gray);
-        padding: 1rem;
-        border-radius: 0.5rem;
-    }
-    
-    .label {
-        font-size: 0.875rem;
-        color: var(--swedish-text);
-        opacity: 0.8;
-    }
-    
-    .value {
-        font-size: 1.125rem;
-        color: var(--swedish-navy);
-        font-weight: 500;
-        margin-top: 0.25rem;
-    }
-</style>
-
 {% endblock %}

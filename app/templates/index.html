@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/styles.css">
+{% endblock %}
+
 {% block content %}
 <div class="hero-section text-center py-10">
     <h1 class="section-title text-4xl font-bold text-swedish-blue">
@@ -11,48 +15,222 @@
 </div>
 
 <div class="container">
-    <!-- Available Properties Section -->
-<div class="properties-section mt-10">
-    <h2 class="text-2xl font-semibold text-swedish-blue">Available Properties</h2>
-<div id="listings-container" class="gridContainer">
-    {% for property in listings %}
-    <a href="/properties/{{ property.property_id }}" 
-       class="listing"
-       hx-boost="true">
-        <div class="listing-image">
-            <img src="{{ property.image_url|default('/static/noimage.webp') }}" 
-                 alt="{{ property.property_address }}"
-                 loading="lazy">
-            <div class="status-badge {{ property.status.value|lower|replace(' ', '-') }}">
-                {{ property.status.value }}
-            </div>
+    <div class="properties-section mt-10">
+        <h2 class="text-2xl font-semibold text-swedish-blue">Available Properties</h2>
+        <div class="property-grid mt-6">
+            {% for property in listings %}
+            <a href="/properties/{{ property.property_id }}" 
+               class="property-card"
+               hx-boost="true">
+                <div class="image-section">
+                    {% if property.image_url %}
+                        {% set primary_image = none %}
+                        {% for image in property.images %}
+                            {% if image.is_primary %}
+                                {% set primary_image = image %}
+                            {% endif %}
+                        {% endfor %}
+                        <img src="{{ property.image_url }}" 
+                             alt="{{ property.property_address }}"
+                             loading="lazy">
+                    {% else %}
+                        <img src="static/nophoto.jpg" 
+                             alt="No image available"
+                             loading="lazy">
+                    {% endif %}
+                    <div class="status-tag {{ property.status.value|lower|replace(' ', '-') }}">
+                        {{ property.status.value }}
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="price-section">
+                        <span class="price">${{ "{:,.0f}".format(property.price) }}</span>
+                    </div>
+
+                    <h3 class="address">{{ property.property_address }}</h3>
+
+                    <div class="details-section">
+                        {% if property.residential %}
+                            <div class="detail-item">
+                                <span class="icon">🛏️</span>
+                                <span>{{ property.residential.bedrooms or 0 }} Beds</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="icon">🚿</span>
+                                <span>{{ property.residential.bathrooms or 0 }} Baths</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="icon">📏</span>
+                                <span>{{ "{:,.0f}".format(property.residential.square_feet) if property.residential.square_feet else 'N/A' }} sqft</span>
+                            </div>
+                            {% if property.residential.garage_spaces %}
+                            <div class="detail-item">
+                                <span class="icon">🚗</span>
+                                <span>{{ property.residential.garage_spaces }} Car Garage</span>
+                            </div>
+                            {% endif %}
+                        {% elif property.commercial %}
+                            <div class="detail-item">
+                                <span class="icon">🏢</span>
+                                <span>{{ property.commercial.c_type }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="icon">📏</span>
+                                <span>{{ "{:,.0f}".format(property.commercial.sqft) if property.commercial.sqft else 'N/A' }} sqft</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="icon">🏗️</span>
+                                <span>{{ property.commercial.industry }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if property.agent_name %}
+                    <div class="agent-section">
+                        <span class="agent-label">Listed by:</span>
+                        <span class="agent-name">{{ property.agent_name }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
         </div>
-        <div class="listing-info">
-            <h2>{{ property.property_address }}</h2>
-            <p class="price">${{ "{:,.2f}".format(property.price) }}</p>
-            {% if property.bedrooms is not none %}
-                <p class="details">
-                    {{ property.bedrooms }} bd | 
-                    {{ property.bathrooms }} ba | 
-                    {{ property.r_type }}
-                </p>
-            {% elif property.sqft is not none %}
-                <p class="details">
-                    {{ "{:,.0f}".format(property.sqft) }} sqft | 
-                    {{ property.industry }} | 
-                    {{ property.c_type }}
-                </p>
-            {% endif %}
-            
-            {% if property.agent_name %}
-            <div class="agent-info">
-                <p class="text-sm text-swedish-text">Listed by: {{ property.agent_name }}</p>
-            </div>
-            {% endif %}
-        </div>
-    </a>
-    {% endfor %}
+    </div>
 </div>
-</div>
-</div>
+
+<style>
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.property-card {
+    background: var(--swedish-white);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-section {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.property-card:hover .image-section img {
+    transform: scale(1.05);
+}
+
+.status-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    background: var(--swedish-blue);
+}
+
+.status-tag.for-lease {
+    background: var(--swedish-accent);
+    color: var(--swedish-navy);
+}
+
+.status-tag.sold {
+    background: var(--swedish-text);
+}
+
+.content-section {
+    padding: 1.5rem;
+}
+
+.price-section {
+    margin-bottom: 0.75rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--swedish-blue);
+}
+
+.address {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--swedish-navy);
+    margin-bottom: 1rem;
+}
+
+.details-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--swedish-gray);
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--swedish-text);
+}
+
+.detail-item .icon {
+    font-size: 1.125rem;
+}
+
+.agent-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--swedish-gray);
+    font-size: 0.875rem;
+}
+
+.agent-label {
+    color: var(--swedish-text);
+    opacity: 0.8;
+}
+
+.agent-name {
+    font-weight: 500;
+    color: var(--swedish-navy);
+}
+
+@media (max-width: 768px) {
+    .property-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .image-section {
+        height: 200px;
+    }
+
+    .details-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
 {% endblock %}
