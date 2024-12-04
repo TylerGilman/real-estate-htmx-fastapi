@@ -23,22 +23,19 @@ CREATE PROCEDURE add_property_image(
     IN p_is_primary BOOLEAN
 )
 BEGIN
-    -- If this is marked as primary, unset any existing primary image
+    -- If this is marked as primary, clear other primary flags
     IF p_is_primary THEN
         UPDATE PropertyImages 
         SET is_primary = FALSE 
-        WHERE property_id = p_property_id AND is_primary = TRUE;
+        WHERE property_id = p_property_id;
     END IF;
     
-    INSERT INTO PropertyImages (
-        property_id,
-        file_path,
-        is_primary
-    ) VALUES (
-        p_property_id,
-        p_file_path,
-        p_is_primary
-    );
+    -- Insert new image
+    INSERT INTO PropertyImages (property_id, file_path, is_primary)
+    VALUES (p_property_id, p_file_path, p_is_primary);
+    
+    -- Return the new image id
+    SELECT LAST_INSERT_ID() as image_id;
 END //
 
 CREATE PROCEDURE get_property_images(
@@ -47,6 +44,7 @@ CREATE PROCEDURE get_property_images(
 BEGIN
     SELECT 
         image_id,
+        property_id,
         file_path,
         is_primary,
         uploaded_at
@@ -59,29 +57,44 @@ CREATE PROCEDURE set_primary_image(
     IN p_image_id INT
 )
 BEGIN
-    DECLARE v_property_id INT;
-    
     -- Get property_id for the image
-    SELECT property_id INTO v_property_id
-    FROM PropertyImages
+    DECLARE v_property_id INT;
+    SELECT property_id INTO v_property_id 
+    FROM PropertyImages 
     WHERE image_id = p_image_id;
     
-    -- Update all images for the property
-    UPDATE PropertyImages
-    SET is_primary = FALSE
+    -- Clear other primary flags
+    UPDATE PropertyImages 
+    SET is_primary = FALSE 
     WHERE property_id = v_property_id;
     
-    -- Set the selected image as primary
-    UPDATE PropertyImages
-    SET is_primary = TRUE
+    -- Set new primary
+    UPDATE PropertyImages 
+    SET is_primary = TRUE 
     WHERE image_id = p_image_id;
+    
+    -- Return property_id for refresh
+    SELECT p_image_id as image_id, v_property_id as property_id;
 END //
 
 CREATE PROCEDURE delete_property_image(
     IN p_image_id INT
 )
 BEGIN
-    DELETE FROM PropertyImages
+    DELETE FROM PropertyImages 
+    WHERE image_id = p_image_id;
+END //
+
+CREATE PROCEDURE get_image_info(
+    IN p_image_id INT
+)
+BEGIN
+    SELECT 
+        image_id,
+        property_id,
+        file_path,
+        is_primary
+    FROM PropertyImages
     WHERE image_id = p_image_id;
 END //
 

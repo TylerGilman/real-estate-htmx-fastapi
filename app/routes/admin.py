@@ -1,4 +1,13 @@
-from fastapi import APIRouter, Request, Depends, HTTPException, Query, Form
+from fastapi import (
+    APIRouter,
+    Request,
+    Depends,
+    HTTPException,
+    Query,
+    Form,
+    File,
+    UploadFile,
+)
 from typing import Optional, List
 import json
 from fastapi.templating import Jinja2Templates
@@ -224,6 +233,57 @@ async def agent_form(
 
 
 # POST routes
+@router.post("/properties/{property_id}/images")
+async def upload_property_images(
+    property_id: int,
+    files: list[UploadFile] = File(...),
+    current_user: dict = Depends(get_current_admin),
+    conn=Depends(get_db_connection),
+):
+    """Upload multiple property images"""
+    try:
+        uploaded_images = []
+        for file in files:
+            # Validate image
+            if not validate_image(file):
+                continue
+
+            # Save image and create thumbnail
+            main_path, thumb_path = await save_property_image(file, property_id)
+
+            # Add to database
+            image_result = execute_procedure(
+                conn,
+                "add_property_image",
+                (property_id, main_path, False),  # Not primary by default
+            )
+
+            if image_result:
+                uploaded_images.append(
+                    {
+                        "image_id": image_result[0]["image_id"],
+                        "file_path": main_path,
+                        "thumb_path": thumb_path,
+                    }
+                )
+
+        # Return the updated images section
+        property_images = execute_procedure(conn, "get_property_images", (property_id,))
+
+        return templates.TemplateResponse(
+            "admin/properties/image_gallery.html",
+            {
+                "request": {},  # Required by FastAPI
+                "property_id": property_id,
+                "images": property_images,
+            },
+        )
+
+    except Exception as e:
+        logger.error(f"Error uploading images: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error uploading images")
+
+
 @router.post("/clients")
 async def create_client(
     request: Request,
@@ -365,6 +425,30 @@ async def admin_add_property(
 
 
 # PUT Routes
+@router.put("/properties/images/{image_id}/primary")
+async def set_primary_image(
+    image_id: int,
+    current_user: dict = Depends(get_current_admin),
+    conn=Depends(get_db_connection),
+):
+    """Set an image as the primary image"""
+    try:
+        result = execute_procedure(conn, "set_primary_image", (image_id,))
+        if not result:
+            raise HTTPException(status_code=404, detail="Image not found")
+
+        # Get property ID to fetch all images
+        property_id = result[0]["property_id"]
+        property_images = execute_procedure(conn, "get_property_images", (property_id,))
+
+        return templates.TemplateResponse(
+            "admin/properties/image_gallery.html",
+            {"request": {}, "property_id": property_id, "images": property_images},
+        )
+
+    except Exception as e:
+        logger.error(f"Error setting primary image: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error setting primary image")
 
 
 @router.put("/clients/{client_id}", response_class=HTMLResponse)
@@ -596,6 +680,38 @@ async def update_agent(
 
 
 # DELETE Routes
+
+
+@router.delete("/properties/images/{image_id}")
+async def delete_image(
+    image_id: int,
+    current_user: dict = Depends(get_current_admin),
+    conn=Depends(get_db_connection),
+):
+    """Delete a property image"""
+    try:
+        # Get image info before deleting
+        image_info = execute_procedure(conn, "get_image_info", (image_id,))
+        if not image_info:
+            raise HTTPException(status_code=404, detail="Image not found")
+
+        property_id = image_info[0]["property_id"]
+        file_path = image_info[0]["file_path"]
+
+        # Delete from database
+        execute_procedure(conn, "delete_property_image", (image_id,))
+
+        # Return updated gallery
+        property_images = execute_procedure(conn, "get_property_images", (property_id,))
+
+        return templates.TemplateResponse(
+            "admin/properties/image_gallery.html",
+            {"request": {}, "property_id": property_id, "images": property_images},
+        )
+
+    except Exception as e:
+        logger.error(f"Error deleting image: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error deleting image")
 
 
 @router.delete("/clients/{client_id}")

@@ -17,9 +17,15 @@
           hx-target="#properties-list"
           hx-push-url="false"
           hx-swap="innerHTML">
-        
+         
         <!-- Hidden input to track form type -->
         <input type="hidden" name="form_type" value="{% if property %}edit{% else %}add{% endif %}">
+        {% if property %}
+        <div class="form-section">
+            <h3>Property Images</h3>
+            {% include "admin/properties/image_gallery.html" %}
+        </div>
+        {% endif %}
         
         {% include "admin/properties/form_fields.html" %}
 

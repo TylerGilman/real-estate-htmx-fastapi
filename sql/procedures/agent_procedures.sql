@@ -63,7 +63,6 @@ BEGIN
     LIMIT 5;
 END //
 
--- Modified main procedure with less restrictive conditions
 CREATE PROCEDURE get_all_agent_listings_with_details()
 BEGIN
     SELECT 
@@ -83,16 +82,21 @@ BEGIN
         c.c_type,
         c.num_units,
         c.parking_spaces,
-        c.zoning_type
+        c.zoning_type,
+        -- Add the primary image information
+        pi.file_path as image_url,
+        pi.image_id
     FROM Property p
     LEFT JOIN AgentListing al ON p.property_id = al.property_id
     LEFT JOIN Agent a ON al.agent_id = a.agent_id
     LEFT JOIN ResidentialProperty rp ON p.property_id = rp.property_id
     LEFT JOIN CommercialProperty c ON p.property_id = c.property_id
-    -- Let's see all properties first to debug
-    -- WHERE p.status IN ('For Sale', 'For Lease')
+    -- Add join for property images, getting only primary images
+    LEFT JOIN PropertyImages pi ON p.property_id = pi.property_id 
+        AND pi.is_primary = 1
     ORDER BY p.price DESC;
 END //
+
 
 CREATE PROCEDURE create_agent_listing(
     IN p_property_id INT,
