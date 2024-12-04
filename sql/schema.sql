@@ -2,7 +2,8 @@ SET FOREIGN_KEY_CHECKS=0;
 
 CREATE TABLE UserRole (
     role_id INT AUTO_INCREMENT PRIMARY KEY,
-    role_name VARCHAR(50) NOT NULL UNIQUE
+    role_name VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE User (
@@ -17,7 +18,7 @@ CREATE TABLE User (
 );
 
 -- Insert initial roles
-INSERT INTO UserRole (role_name) VALUES ('admin'), ('agent');
+INSERT IGNORE INTO UserRole (role_name) VALUES ('admin'), ('agent');
 
 -- Brokerage Table
 DROP TABLE IF EXISTS Brokerage;
