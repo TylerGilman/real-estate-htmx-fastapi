@@ -67,3 +67,4 @@
 {"timestamp": "2024-12-04T11:43:15.067409", "level": "ERROR", "message": "Authentication error: ", "module": "security", "function": "get_current_user", "line": 63, "thread_id": 140389143713600, "environment": "development"}
 {"timestamp": "2024-12-04T12:01:48.409580", "level": "ERROR", "message": "Error deleting image: 'property' is undefined", "module": "admin", "function": "delete_image", "line": 707, "thread_id": 140389143713600, "environment": "development"}
 {"timestamp": "2024-12-04T12:02:09.862519", "level": "ERROR", "message": "Error deleting image: 'property' is undefined", "module": "admin", "function": "delete_image", "line": 707, "thread_id": 123479092209472, "environment": "development"}
+{"timestamp": "2024-12-04T15:19:23.012502", "level": "ERROR", "message": "Error deleting image: 'property' is undefined", "module": "admin", "function": "delete_image", "line": 707, "thread_id": 127682462369600, "environment": "development"}
