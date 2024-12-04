@@ -1,4 +1,4 @@
-{# templates/admin/clients/table_row.html #}
+{# templates/admin/clients/client_row.html #}
 <div class="table-row" id="client-{{ client.client_id }}">
     <div class="table-cell">
         <div class="client-name">{{ client.client_name }}</div>
@@ -34,6 +34,7 @@
     <div class="table-cell actions">
         <button class="action-button edit"
                 hx-get="/admin/clients/{{ client.client_id }}/edit"
+                hx-swap="outerHTML"
                 hx-target="#client-form-container">
             Edit
         </button>

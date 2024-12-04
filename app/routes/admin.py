@@ -6,6 +6,7 @@ from datetime import datetime, date
 from app.core.logging_config import logger
 from app.core.security import get_current_admin, get_password_hash
 from app.core.database import get_db_connection, execute_procedure
+from typing import List
 import mysql.connector
 
 UPLOAD_DIR = "app/static/property_images"
@@ -139,22 +140,27 @@ async def agents_table(request: Request, conn=Depends(get_db_connection)):
         raise HTTPException(status_code=500, detail="Failed to load agents")
 
 
-@router.get("/clients/{client_id}/edit")
+@router.get("/clients/{client_id}/edit", response_class=HTMLResponse)
 async def edit_client_form(
-    request: Request, client_id: int, conn=Depends(get_db_connection)
+    request: Request,
+    client_id: int,
+    current_user: dict = Depends(get_current_admin),
+    conn=Depends(get_db_connection),
 ):
     """Get the edit form for a client"""
     try:
+        # Get client details using stored procedure
         client = execute_procedure(conn, "get_client_details", (client_id,))
         if not client:
-            raise HTTPException(status_code=403, detail="Client not found")
+            raise HTTPException(status_code=404, detail="Client not found")
 
         return templates.TemplateResponse(
-            "admin/clients/edit_form.html", {"request": request, "client": client[-1]}
+            "admin/clients/edit.html",
+            {"request": request, "client": client[0], "current_user": current_user},
         )
     except Exception as e:
         logger.error(f"Error fetching client edit form: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=499, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/properties/{property_id}/edit")
@@ -243,7 +249,7 @@ async def create_client(
 
         # Return the new row HTML
         return templates.TemplateResponse(
-            "admin/clients/table_row.html", {"request": request, "client": client}
+            "admin/clients/client_row.html", {"request": request, "client": client}
         )
     except Exception as e:
         logger.error(f"Failed to create client: {str(e)}", exc_info=True)
@@ -339,7 +345,7 @@ async def admin_add_property(
 
         # Return the property row template with the new property data
         return templates.TemplateResponse(
-            "admin/properties/table_row.html",
+            "admin/properties/property_row.html",
             {"request": request, "property": property_details[0]},
         )
 
@@ -349,6 +355,54 @@ async def admin_add_property(
 
 
 # PUT Routes
+
+
+@router.put("/clients/{client_id}", response_class=HTMLResponse)
+async def update_client(
+    request: Request,
+    client_id: int,
+    client_name: str = Form(...),
+    client_phone: str = Form(...),
+    client_email: str = Form(...),
+    mailing_address: str = Form(...),
+    client_types: List[str] = Form([]),
+    current_user: dict = Depends(get_current_admin),
+    conn=Depends(get_db_connection),
+):
+    """Update an existing client"""
+    try:
+        # Format phone number
+        phone = (
+            client_phone.replace("(", "")
+            .replace(")", "")
+            .replace(" ", "")
+            .replace("-", "")
+        )
+
+        # Update client using stored procedure
+        execute_procedure(
+            conn,
+            "update_client",
+            (client_id, client_name, phone, client_email, mailing_address),
+        )
+
+        # Update client types
+        execute_procedure(
+            conn, "update_client_types", (client_id, ",".join(client_types))
+        )
+
+        # Get updated client for response
+        updated_client = execute_procedure(conn, "get_client_details", (client_id,))
+        if not updated_client:
+            raise HTTPException(status_code=404, detail="Client not found after update")
+
+        return templates.TemplateResponse(
+            "admin/clients/client_row.html",
+            {"request": request, "client": updated_client[0]},
+        )
+    except Exception as e:
+        logger.error(f"Error updating client: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.put("/properties/{property_id}", response_class=HTMLResponse)
@@ -475,51 +529,13 @@ async def update_property(
             )
 
         return templates.TemplateResponse(
-            "admin/properties/table_row.html",
+            "admin/properties/property_row.html",
             {"request": request, "property": updated_property[0]},
         )
 
     except Exception as e:
         logger.error(f"Error updating property: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.put("/clients/{client_id}")
-async def update_client(
-    request: Request,
-    client_id: int,
-    client_name: str = Form(...),
-    client_phone: str = Form(...),
-    client_email: str = Form(...),
-    mailing_address: str = Form(...),
-    conn=Depends(get_db_connection),
-):
-    """Update an existing client"""
-    try:
-        phone = (
-            client_phone.replace("(", "")
-            .replace(")", "")
-            .replace(" ", "")
-            .replace("-", "")
-        )
-
-        execute_procedure(
-            conn,
-            "update_client",
-            (client_id, client_name, phone, client_email, mailing_address),
-        )
-
-        return templates.TemplateResponse(
-            "admin/components/toast.html",
-            {
-                "request": request,
-                "message": "Client updated successfully",
-                "type": "success",
-            },
-        )
-    except Exception as e:
-        logger.error(f"Failed to update client: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Error updating client: {str(e)}")
 
 
 @router.put("/agents/{agent_id}", response_class=HTMLResponse)

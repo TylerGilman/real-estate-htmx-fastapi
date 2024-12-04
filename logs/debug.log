@@ -4123,3 +4123,96 @@ Traceback (most recent call last):
     raise get_mysql_exception(
 mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
 2024-12-03 20:08:30,092 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:35:22,559 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:35:25,239 - app - DEBUG - Running debug query...
+2024-12-04 00:35:25,242 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 00:35:25,243 - app - DEBUG - Fetching listings...
+2024-12-04 00:35:25,245 - app - DEBUG - Found 3 listings
+2024-12-04 00:36:18,281 - app - DEBUG - Updating property 1
+2024-12-04 00:36:27,627 - app - DEBUG - Updating property 1
+2024-12-04 00:38:50,640 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:38:52,765 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:39:29,626 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:40:33,073 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:40:36,514 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:41:09,754 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:54:44,661 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:54:53,542 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:55:04,911 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:55:29,481 - app - INFO - Database connection pool created successfully.
+2024-12-04 00:57:11,761 - app - ERROR - Error fetching client edit form: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 706, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'last_modified' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 153, in edit_client_form
+    client = execute_procedure(conn, "get_client_details", (client_id,))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/core/database.py", line 50, in execute_procedure
+    cursor.callproc(procedure_name, params)
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/cursor_cext.py", line 566, in callproc
+    result = self._connection.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/mysql/connector/connection_cext.py", line 714, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'last_modified' in 'field list'
+2024-12-04 00:58:20,796 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:06:05,033 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:07:08,578 - app - ERROR - Error fetching client edit form: admin/clients/edit_form.html
+Traceback (most recent call last):
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/app/routes/admin.py", line 157, in edit_client_form
+    return templates.TemplateResponse(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 112, in TemplateResponse
+    template = self.get_template(name)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/starlette/templating.py", line 94, in get_template
+    return self.env.get_template(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tygilman/School/CS3200/real-estate-htmx-fastapi/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/clients/edit_form.html
+2024-12-04 01:07:28,237 - app - INFO - Database connection pool created successfully.
+2024-12-04 01:08:24,500 - app - DEBUG - Running debug query...
+2024-12-04 01:08:24,503 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 01:08:24,503 - app - DEBUG - Fetching listings...
+2024-12-04 01:08:24,505 - app - DEBUG - Found 3 listings
+2024-12-04 01:08:28,524 - app - DEBUG - Found property details: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '123 Main St, Boston, MA', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('5000.00'), 'year_built': 1990, 'zoning': 'Residential', 'property_tax': Decimal('5000.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'agent_id': 1, 'agent_name': 'John Smith', 'agent_phone': '555-111-2222', 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None}
+2024-12-04 01:08:30,928 - app - DEBUG - Running debug query...
+2024-12-04 01:08:30,932 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 3}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 01:08:30,932 - app - DEBUG - Fetching listings...
+2024-12-04 01:08:30,934 - app - DEBUG - Found 3 listings
+2024-12-04 01:09:05,566 - app - DEBUG - Updating property 1
+2024-12-04 01:09:08,627 - app - DEBUG - Running debug query...
+2024-12-04 01:09:08,634 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 01:09:08,635 - app - DEBUG - Fetching listings...
+2024-12-04 01:09:08,638 - app - DEBUG - Found 4 listings
+2024-12-04 01:09:11,108 - app - DEBUG - Found property details: {'property_id': 1, 'tax_id': 'TAX001', 'property_address': '69 road', 'status': 'For Sale', 'price': Decimal('500000.00'), 'lot_size': Decimal('0.00'), 'year_built': None, 'zoning': None, 'property_tax': Decimal('0.00'), 'created_at': datetime.datetime(2024, 12, 4, 0, 58, 17), 'updated_at': datetime.datetime(2024, 12, 4, 1, 9, 5), 'agent_id': 1, 'agent_name': 'John Smith', 'agent_phone': '555-111-2222', 'bedrooms': 3, 'bathrooms': Decimal('2.5'), 'r_type': 'Single Family', 'square_feet': Decimal('2000.00'), 'garage_spaces': 2, 'has_basement': 1, 'has_pool': 0, 'sqft': None, 'industry': None, 'c_type': None, 'num_units': None, 'parking_spaces': None, 'zoning_type': None}
+2024-12-04 01:09:17,558 - app - DEBUG - Running debug query...
+2024-12-04 01:09:17,565 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 01:09:17,565 - app - DEBUG - Fetching listings...
+2024-12-04 01:09:17,569 - app - DEBUG - Found 4 listings
+2024-12-04 01:17:06,949 - app - DEBUG - Running debug query...
+2024-12-04 01:17:06,952 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 01:17:06,952 - app - DEBUG - Fetching listings...
+2024-12-04 01:17:06,954 - app - DEBUG - Found 4 listings
+2024-12-04 01:17:13,687 - app - DEBUG - Running debug query...
+2024-12-04 01:17:13,690 - app - DEBUG - Debug info: [{'Debug_Info': 'Property Table:'}, {'property_count': 2, 'status': 'For Sale'}, {'property_count': 1, 'status': 'For Lease'}, {'Debug_Info': 'Agent Listings:'}, {'listing_count': 4}, {'Debug_Info': 'Agents:'}, {'agent_count': 3}, {'Debug_Info': 'Residential Properties:'}, {'residential_count': 2}, {'Debug_Info': 'Commercial Properties:'}, {'commercial_count': 1}, {'Debug_Info': 'Sample Properties:'}, {'property_id': 1, 'tax_id': 'TAX001', 'status': 'For Sale', 'price': Decimal('500000.00')}, {'property_id': 2, 'tax_id': 'TAX002', 'status': 'For Lease', 'price': Decimal('750000.00')}, {'property_id': 3, 'tax_id': 'TAX003', 'status': 'For Sale', 'price': Decimal('350000.00')}]
+2024-12-04 01:17:13,690 - app - DEBUG - Fetching listings...
+2024-12-04 01:17:13,692 - app - DEBUG - Found 4 listings

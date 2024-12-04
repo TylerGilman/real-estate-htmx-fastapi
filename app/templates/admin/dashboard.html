@@ -4,6 +4,7 @@
 <div class="error-message">{{ error }}</div>
 {% endif %}
 
+{# Clients Section #}
 <div class="admin-section" id="clients-section">
 <div class="admin-header">
     <div class="header-left">
@@ -15,12 +16,15 @@
             </svg>
         </button>
     </div>
-    <button class="action-button" onclick="toggleForm('add-client-form')">Add New Client</button>
+    <button class="action-button" onclick="toggleForm('client-form-container')">Add New Client</button>
 </div>
 <div id="clients-content" class="section-content">
-    <div id="add-client-form" class="form-container hidden">
+  <div id="client-form-container" class="form-container hidden">
+    <div id="add-client-form">
         {% include "admin/clients/form.html" %}
-    </div>{% include "admin/clients/table.html" %}
+    </div>
+  </div>
+    {% include "admin/clients/table.html" %}
 </div>
 </div>
 
@@ -36,12 +40,14 @@
                 </svg>
             </button>
         </div>
-        <button class="action-button" onclick="toggleForm('add-property-form')">Add New Property</button>
+        <button class="action-button" onclick="toggleForm('property-form-container')">Add New Property</button>
     </div>
     <div id="properties-content" class="section-content">
         {# Add Property Form #}
-        <div id="add-property-form" class="form-container hidden">
-            {% include "admin/properties/form.html" %}
+        <div id="property-form-container" class="form-container hidden">   
+          <div id="add-property-form">
+              {% include "admin/properties/form.html" %}
+          </div>
         </div>
 
         {# Properties Stats #}
@@ -61,7 +67,7 @@
             <div class="table-responsive">
                 <div class="properties-table" name="properties-list" id="properties-list">
                         {% for property in properties %}
-                            {% include "admin/properties/table_row.html" %}
+                            {% include "admin/properties/property_row.html" %}
                         <tr>
                         {% endfor %}
             </div>
@@ -82,12 +88,14 @@
                 </svg>
             </button>
         </div>
-        <button class="action-button" onclick="toggleForm('add-agent-form')">Add New Agent</button>
+        <button class="action-button" onclick="toggleForm('agent-form-container')">Add New Agent</button>
     </div>
     <div id="agents-content" class="section-content">
-        <div id="add-agent-form" name="add-agent-form" class="form-container hidden">
+      <div id="agent-form-container" class="form-container hidden"
+        <div id="add-agent-form">
             {% include "admin/agents/form.html" %}
         </div>
+      </div>
         {% include "admin/agents/table.html" %}
     </div>
 </div>

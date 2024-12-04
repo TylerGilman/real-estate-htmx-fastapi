@@ -81,8 +81,7 @@ BEGIN
         client_email,
         mailing_address,
         SSN,
-        created_at,
-        last_modified
+        created_at
     FROM Client
     WHERE client_id = p_client_id;
 END //
