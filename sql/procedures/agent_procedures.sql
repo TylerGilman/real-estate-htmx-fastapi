@@ -7,7 +7,8 @@ CREATE PROCEDURE update_agent_listing(
     IN p_agent_id INT,
     IN p_client_id INT,
     IN p_agent_role VARCHAR(20),
-    IN p_asking_price DECIMAL(15, 2)
+    IN p_asking_price DECIMAL(15, 2),
+    IN p_exclusive TINYINT(1)  -- Add parameter for 'exclusive'
 )
 BEGIN
     -- Update if exists, insert if doesn't exist
@@ -17,7 +18,8 @@ BEGIN
         client_id,
         agent_role,
         asking_price,
-        listing_date
+        listing_date,
+        exclusive  -- Include 'exclusive' column
     )
     VALUES (
         p_property_id, 
@@ -25,13 +27,15 @@ BEGIN
         p_client_id,
         p_agent_role,
         p_asking_price,
-        CURRENT_DATE
+        CURRENT_DATE,
+        p_exclusive  -- Pass value for 'exclusive'
     )
     ON DUPLICATE KEY UPDATE
         agent_id = p_agent_id,
         client_id = p_client_id,
         agent_role = p_agent_role,
-        asking_price = p_asking_price;
+        asking_price = p_asking_price,
+        exclusive = p_exclusive;  -- Update 'exclusive' value
 END //
 
 -- First, a procedure to check what's in each table

@@ -1,4 +1,4 @@
-<div id="add-property-form" class="form-container">
+<div id="edit-property-form" class="form-container">
     <div class="admin-header">
         <h2>Edit Property</h2>
         <button type="button" class="close-button" onclick="cancelForm()" aria-label="Close form">×</button>
@@ -6,9 +6,9 @@
     
     <form hx-put="/admin/properties/{{ property.property_id }}"
           class="property-form"
-          hx-target="#properties-list"
+          hx-target="#property-{{ property.property_id }}"
           hx-push-url="false"
-          hx-swap="OuterHTML"
+          hx-swap="outerHTML"
           >
         
         {% include "admin/properties/form_fields.html" %}

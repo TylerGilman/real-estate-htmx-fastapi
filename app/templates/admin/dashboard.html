@@ -85,7 +85,7 @@
         <button class="action-button" onclick="toggleForm('add-agent-form')">Add New Agent</button>
     </div>
     <div id="agents-content" class="section-content">
-        <div id="add-agent-form" class="form-container hidden">
+        <div id="add-agent-form" name="add-agent-form" class="form-container hidden">
             {% include "admin/agents/form.html" %}
         </div>
         {% include "admin/agents/table.html" %}

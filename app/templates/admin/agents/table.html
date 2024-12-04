@@ -1,4 +1,3 @@
-{# templates/admin/agents/table.html #}
 <div class="stats-grid">
     <div class="stat-card">
         <h3>Total Agents</h3>
@@ -41,40 +40,7 @@
         </div>
 
         {% for agent in agents|default([]) %}
-        <div class="table-row">
-            <div class="table-cell">
-                <div class="agent-name">{{ agent.agent_name }}</div>
-                <div class="agent-id">NRDS: {{ agent.NRDS }}</div>
-            </div>
-            <div class="table-cell">
-                <div>
-                    {% if agent.agent_phone|length == 10 %}
-                        ({{ agent.agent_phone[:3] }}) {{ agent.agent_phone[3:6] }}-{{ agent.agent_phone[6:] }}
-                    {% else %}
-                        {{ agent.agent_phone }}
-                    {% endif %}
-                </div>
-                <div>{{ agent.agent_email }}</div>
-            </div>
-            <div class="table-cell">
-                <div>License: {{ agent.license_number }}</div>
-                <div>Expires: {{ agent.license_expiration.strftime('%Y-%m-%d') }}</div>
-            </div>
-            <div class="table-cell">
-                <div>Listings: {{ agent.listings|default([])|length }}</div>
-                <div>Sales: ${{ "{:,.0f}".format(agent.total_sales|default(0) / 1000) }}K</div>
-            </div>
-            <div class="table-cell actions">
-                <button class="action-button edit"
-                        hx-get="/admin/agents/{{ agent.agent_id }}/edit"
-                        hx-target="#agent-form-container">Edit</button>
-                <button class="action-button delete"
-                        hx-delete="/admin/agents/{{ agent.agent_id }}"
-                        hx-confirm="Are you sure you want to delete this agent?"
-                        hx-target="closest .table-row"
-                        hx-swap="outerHTML">Delete</button>
-            </div>
-        </div>
+            {% include "admin/agents/agent_row.html" %}
         {% endfor %}
     </div>
 </div>

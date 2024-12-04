@@ -139,23 +139,6 @@ async def agents_table(request: Request, conn=Depends(get_db_connection)):
         raise HTTPException(status_code=500, detail="Failed to load agents")
 
 
-@router.get("/agents/{agent_id}/edit", response_class=HTMLResponse)
-async def edit_agent_form(
-    request: Request, agent_id: int, conn=Depends(get_db_connection)
-):
-    """Get the edit form for an agent using stored procedure"""
-    try:
-        agent = execute_procedure(conn, "get_agent_details", (agent_id,))
-        if not agent:
-            raise HTTPException(status_code=403, detail="Agent not found")
-
-        return templates.TemplateResponse(
-            "admin/agents/edit_form.html", {"request": request, "agent": agent[-1]}
-        )
-    except Exception as e:
-        logger.error(f"Error fetching agent edit form: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=499, detail=str(e))
-
 
 @router.get("/clients/{client_id}/edit")
 async def edit_client_form(
@@ -206,74 +189,25 @@ async def edit_property_form(
         logger.error(f"Error fetching property edit form: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/agents/{agent_id}/edit", response_class=HTMLResponse)
+async def edit_agent_form(
+    request: Request, agent_id: int, conn=Depends(get_db_connection)
+):
+    """Render the edit form for an agent."""
+    try:
+        agent = execute_procedure(conn, "get_agent_details", (agent_id,))
+        if not agent:
+            raise HTTPException(status_code=404, detail="Agent not found")
+
+        return templates.TemplateResponse(
+            "admin/agents/edit.html", {"request": request, "agent": agent[0]}
+        )
+    except Exception as e:
+        logger.error(f"Error fetching agent edit form: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Error loading edit form")
+
 
 # POST routes
-@router.post("/agents", response_class=HTMLResponse)
-async def create_agent(
-    request: Request,
-    agent_name: str = Form(...),
-    NRDS: str = Form(...),
-    agent_phone: str = Form(...),
-    agent_email: str = Form(...),
-    SSN: str = Form(...),
-    license_number: str = Form(...),
-    license_expiration: str = Form(...),
-    conn=Depends(get_db_connection),
-):
-    """Create a new agent using stored procedure."""
-    try:
-        expiration_date = datetime.strptime(license_expiration, "%Y-%m-%d").date()
-
-        # Call the procedure
-        agent_id_result = execute_procedure(
-            conn,
-            "create_agent",
-            (
-                agent_name,
-                NRDS,
-                agent_phone,
-                agent_email,
-                SSN,
-                license_number,
-                expiration_date,
-                1,
-            ),
-        )
-
-        # Log the raw result for debugging
-        logger.debug(f"Procedure result: {agent_id_result}")
-
-        # Check for empty result or improper format
-        if not agent_id_result or not isinstance(agent_id_result, list):
-            raise ValueError("Procedure returned no data or unexpected format.")
-
-        # Extract agent ID from the first row
-        agent_data = agent_id_result[
-            0
-        ]  # Assuming the procedure returns the agent record
-        agent_id = (
-            agent_data["agent_id"] if isinstance(agent_data, dict) else agent_data[0]
-        )
-
-        # Render the HTML row
-        return templates.TemplateResponse(
-            "admin/agents/agent_row.html",
-            {"request": request, "agent": agent_data},
-        )
-
-    except mysql.connector.errors.IntegrityError as e:
-        logger.error(f"Integrity error: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=400, detail="Duplicate entry or integrity constraint violation."
-        )
-    except ValueError as e:
-        logger.error(f"Value error: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Error creating agent: {e}")
-    except Exception as e:
-        logger.error(f"Failed to create agent: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Error creating agent: {e}")
-
-
 @router.post("/clients")
 async def create_client(
     request: Request,
@@ -484,6 +418,7 @@ async def update_property(
         )
 
         # Update agent listing with asking price
+        exclusive = 1 
         execute_procedure(
             conn,
             "update_agent_listing",
@@ -491,8 +426,9 @@ async def update_property(
                 property_id,
                 agent_id,
                 client_id,
-                'SellerAgent',
-                price  # Use the same price as asking price
+                'SellerAgent',  # Ensure this value is valid
+                price,
+                exclusive  # Explicitly set the value for `exclusive`
             )
         )
 
@@ -592,48 +528,49 @@ async def update_agent(
     request: Request,
     agent_id: int,
     agent_name: str = Form(...),
-    NRDS: str = Form(...),
     agent_phone: str = Form(...),
     agent_email: str = Form(...),
     license_number: str = Form(...),
     license_expiration: str = Form(...),
+    commission_rate: float = Form(...),
+    broker_id: int = Form(...),
     conn=Depends(get_db_connection),
 ):
-    """Update an existing agent using stored procedure"""
+    """Update an agent's details."""
     try:
-        phone = (
-            agent_phone.replace("(", "")
-            .replace(")", "")
-            .replace(" ", "")
-            .replace("-", "")
-        )
+        # Convert license expiration to a proper date
         expiration_date = datetime.strptime(license_expiration, "%Y-%m-%d").date()
 
+        # Execute the procedure with all 8 parameters
         execute_procedure(
             conn,
             "update_agent",
             (
                 agent_id,
                 agent_name,
-                NRDS,
-                phone,
+                agent_phone,
                 agent_email,
                 license_number,
                 expiration_date,
+                commission_rate,
+                broker_id,
             ),
         )
 
+        # Fetch the updated agent for rendering
+        updated_agent = execute_procedure(conn, "get_agent_details", (agent_id,))
+        if not updated_agent:
+            raise HTTPException(status_code=404, detail="Agent not found")
+
+        # Render the updated row
         return templates.TemplateResponse(
-            "admin/components/toast.html",
-            {
-                "request": request,
-                "message": "Agent updated successfully",
-                "type": "success",
-            },
+            "admin/agents/agent_row.html",
+            {"request": request, "agent": updated_agent[0]},
         )
+
     except Exception as e:
-        logger.error(f"Failed to update agent: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Error updating agent: {str(e)}")
+        logger.error(f"Error updating agent: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # DELETE Routes

@@ -159,4 +159,9 @@ document.addEventListener('htmx:afterSwap', function(evt) {
         // Show form when editing
         evt.detail.target.classList.remove('hidden');
     }
+
+    if (evt.detail.target.id === 'add-agent-form') {
+        // Show form when editing
+        evt.detail.target.classList.remove('hidden');
+    }
 });
